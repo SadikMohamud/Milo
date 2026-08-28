@@ -1,7 +1,11 @@
-anthropic>=0.40.0
+# anthropic 1.x is required: the engine uses output_config, adaptive thinking,
+# and the server-side fallback beta. 1.x runs on httpx2, not httpx.
+anthropic>=1.2.0
 alpaca-py>=0.33.0
 yfinance>=0.2.50
 pandas>=2.0.0
 numpy>=1.24.0
 pydantic>=2.0.0
 apscheduler>=3.10.0
+
+# Dev only: pytest

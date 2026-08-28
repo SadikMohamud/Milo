@@ -6,7 +6,8 @@ FORGE-TRADER: Autonomous Multi-Agent Paper Trading Engine
 
 Architecture Overview:
 - Pre-Market Data Ingestion: yfinance (Pricing, Indicators, News)
-- Multi-Agent Debate Engine: Anthropic Claude (Bull, Bear, Risk, PM)
+- Multi-Agent Debate Engine: Anthropic Claude (Bull, Bear, Risk, PM), model-selectable
+  per role: Opus 5 / Opus 4.8 / Sonnet 5 / Haiku 4.5 / Fable 5
 - Programmatic Risk Engine: Hard limits on sizing, cash buffer, stop-loss
 - Execution: Alpaca Paper Trading API (alpaca-py)
 - Storage & Audit: SQLite (decisions, executions, system events)
@@ -29,6 +30,8 @@ Installation & Quickstart:
        python forge_trader.py --reconcile        # Attach missing protective stop-losses
        python forge_trader.py --schedule         # Run background daemon for pre-market daily
        python forge_trader.py --status           # Inspect account & open positions
+       python forge_trader.py --models           # List models, pricing & agent routing
+       python forge_trader.py --run-once --model claude-opus-5   # Route all agents to Opus 5
        python forge_trader.py --setup            # View PM2 / autostart instructions
 
 ================================================================================
@@ -119,6 +122,9 @@ def _clamp(value: float, low: float, high: float) -> float:
     return max(low, min(high, value))
 
 
+VALID_EFFORT_LEVELS = {"low", "medium", "high", "xhigh", "max"}
+
+
 @dataclass
 class Config:
     """Runtime configuration. Values are read from the environment on instantiation."""
@@ -127,7 +133,15 @@ class Config:
     alpaca_secret_key: str = field(default_factory=lambda: os.getenv("ALPACA_SECRET_KEY", ""))
     alpaca_paper: bool = field(default_factory=lambda: os.getenv("ALPACA_PAPER", "True").lower() == "true")
     anthropic_api_key: str = field(default_factory=lambda: os.getenv("ANTHROPIC_API_KEY", ""))
-    claude_model: str = field(default_factory=lambda: os.getenv("CLAUDE_MODEL", "claude-sonnet-5"))
+    # Model routing. claude_model is the default for every agent; the analyst and
+    # PM roles can be pointed at different models (e.g. Sonnet 5 analysts feeding
+    # an Opus 5 portfolio manager).
+    claude_model: str = field(default_factory=lambda: os.getenv("CLAUDE_MODEL", "claude-opus-5"))
+    analyst_model: str = field(default_factory=lambda: os.getenv("ANALYST_MODEL", ""))
+    pm_model: str = field(default_factory=lambda: os.getenv("PM_MODEL", ""))
+    effort: str = field(default_factory=lambda: os.getenv("CLAUDE_EFFORT", "high"))
+    analyst_max_tokens: int = field(default_factory=lambda: _env_int("ANALYST_MAX_TOKENS", 8000))
+    pm_max_tokens: int = field(default_factory=lambda: _env_int("PM_MAX_TOKENS", 8000))
     watchlist: List[str] = field(default_factory=_env_watchlist)
 
     # Risk parameters (fractions, not percentages)
@@ -156,6 +170,22 @@ class Config:
         self.daily_loss_limit_percent = _clamp(self.daily_loss_limit_percent, 0.005, 0.50)
         self.min_conviction = _clamp(self.min_conviction, 0.0, 1.0)
         self.fill_wait_seconds = max(0, self.fill_wait_seconds)
+
+        # Per-role models fall back to the shared default.
+        self.analyst_model = self.analyst_model or self.claude_model
+        self.pm_model = self.pm_model or self.claude_model
+
+        if self.effort not in VALID_EFFORT_LEVELS:
+            print(f"[WARN] CLAUDE_EFFORT='{self.effort}' is not one of {sorted(VALID_EFFORT_LEVELS)}; using 'high'")
+            self.effort = "high"
+
+        self.analyst_max_tokens = max(1024, self.analyst_max_tokens)
+        self.pm_max_tokens = max(1024, self.pm_max_tokens)
+
+    def describe_models(self) -> str:
+        if self.analyst_model == self.pm_model:
+            return f"{self.analyst_model} (all agents), effort={self.effort}"
+        return f"analysts={self.analyst_model}, PM={self.pm_model}, effort={self.effort}"
 
 
 # Setup Logging
@@ -396,7 +426,115 @@ class MarketDataFetcher:
 
 
 # ==============================================================================
-# 4. MULTI-AGENT DEBATE ENGINE (ANTHROPIC CLAUDE)
+# 4. MODEL CATALOG & CAPABILITY PROFILES
+# ==============================================================================
+
+@dataclass(frozen=True)
+class ModelProfile:
+    """What a given Claude model supports, and what it costs to run."""
+
+    label: str
+    input_price: float          # USD per 1M input tokens
+    output_price: float         # USD per 1M output tokens
+    context: str
+    adaptive_thinking: bool     # accepts thinking={"type": "adaptive"}
+    effort: bool                # accepts output_config.effort
+    server_side_fallbacks: bool # accepts the server-side refusal fallback beta
+
+
+# Pricing and capabilities as published; see README for the source table.
+MODEL_CATALOG: Dict[str, ModelProfile] = {
+    "claude-opus-5":     ModelProfile("Claude Opus 5",     5.00, 25.00, "1M",   True,  True,  True),
+    "claude-opus-4-8":   ModelProfile("Claude Opus 4.8",   5.00, 25.00, "1M",   True,  True,  False),
+    "claude-opus-4-7":   ModelProfile("Claude Opus 4.7",   5.00, 25.00, "1M",   True,  True,  False),
+    "claude-opus-4-6":   ModelProfile("Claude Opus 4.6",   5.00, 25.00, "1M",   True,  True,  False),
+    "claude-fable-5":    ModelProfile("Claude Fable 5",   10.00, 50.00, "1M",   True,  True,  True),
+    "claude-sonnet-5":   ModelProfile("Claude Sonnet 5",   2.00, 10.00, "1M",   True,  True,  False),
+    "claude-sonnet-4-6": ModelProfile("Claude Sonnet 4.6", 3.00, 15.00, "1M",   True,  True,  False),
+    "claude-haiku-4-5":  ModelProfile("Claude Haiku 4.5",  1.00,  5.00, "200K", False, False, False),
+}
+
+# Conservative assumptions for a model released after this catalog was written:
+# send the plainest possible request rather than risk a 400 on every call.
+UNKNOWN_MODEL_PROFILE = ModelProfile("Unrecognized model", 0.0, 0.0, "unknown", False, False, False)
+
+
+def get_model_profile(model_id: str) -> ModelProfile:
+    return MODEL_CATALOG.get(model_id, UNKNOWN_MODEL_PROFILE)
+
+
+def print_model_catalog(config: "Config"):
+    print("\n" + "=" * 78)
+    print("                    MODELS AVAILABLE TO FORGE-TRADER")
+    print("=" * 78)
+    print(f"  {'Model ID':<20} {'Name':<20} {'Context':<9} {'$/1M in':>8} {'$/1M out':>9}")
+    print("-" * 78)
+    for model_id, p in MODEL_CATALOG.items():
+        print(f"  {model_id:<20} {p.label:<20} {p.context:<9} {p.input_price:>8.2f} {p.output_price:>9.2f}")
+    print("-" * 78)
+    print(f"  Analyst agents (Bull/Bear/Risk): {config.analyst_model}")
+    print(f"  Portfolio Manager (decides):     {config.pm_model}")
+    print(f"  Reasoning effort:                {config.effort}")
+    print("\n  Override with --model / --analyst-model / --pm-model, or set")
+    print("  CLAUDE_MODEL, ANALYST_MODEL, PM_MODEL, CLAUDE_EFFORT in .env")
+    print("=" * 78 + "\n")
+
+
+def apply_model_overrides(config: "Config", args: Any) -> None:
+    """Applies --model / --analyst-model / --pm-model / --effort on top of the env config."""
+    if getattr(args, "model", None):
+        config.claude_model = args.model
+        config.analyst_model = args.model
+        config.pm_model = args.model
+    if getattr(args, "analyst_model", None):
+        config.analyst_model = args.analyst_model
+    if getattr(args, "pm_model", None):
+        config.pm_model = args.pm_model
+    if getattr(args, "effort", None):
+        config.effort = args.effort
+
+    # An unknown ID is allowed through (models ship faster than this catalog), but
+    # it runs with every optional request feature disabled, so say so loudly.
+    for role, model_id in (("analyst", config.analyst_model), ("portfolio manager", config.pm_model)):
+        if model_id not in MODEL_CATALOG:
+            logger.warning(
+                f"Unrecognized {role} model '{model_id}'. It will be called with no thinking, "
+                f"effort, or structured-output settings, and its cost cannot be estimated. "
+                f"Known models: {', '.join(MODEL_CATALOG)}"
+            )
+
+
+class UsageLedger:
+    """Accumulates token spend so a daily cycle's API cost is visible in the log."""
+
+    def __init__(self):
+        self.input_tokens = 0
+        self.output_tokens = 0
+        self.cost_usd = 0.0
+        self.calls = 0
+
+    def record(self, model: str, usage: Any):
+        profile = get_model_profile(model)
+        inp = int(getattr(usage, "input_tokens", 0) or 0)
+        out = int(getattr(usage, "output_tokens", 0) or 0)
+        # Cached reads are billed at a fraction of the input rate; counting them at
+        # full rate keeps this an upper bound rather than an understatement.
+        inp += int(getattr(usage, "cache_read_input_tokens", 0) or 0)
+        inp += int(getattr(usage, "cache_creation_input_tokens", 0) or 0)
+        self.input_tokens += inp
+        self.output_tokens += out
+        self.cost_usd += (inp / 1_000_000) * profile.input_price + (out / 1_000_000) * profile.output_price
+        self.calls += 1
+
+    def summary(self) -> str:
+        return (
+            f"{self.calls} API calls | {self.input_tokens:,} in / {self.output_tokens:,} out tokens "
+            f"| ~${self.cost_usd:,.2f}"
+        )
+
+
+# ==============================================================================
+# 5. MULTI-AGENT DEBATE ENGINE (ANTHROPIC CLAUDE)
 # ==============================================================================
 
 class DecisionSchema(BaseModel):
@@ -411,40 +549,172 @@ class DecisionSchema(BaseModel):
     key_risks: List[str] = Field(default_factory=list, description="Top 2 downside risk factors")
 
 
+# Server-enforced shape for the PM verdict. Cheaper and far more reliable than
+# asking for JSON in the prompt and parsing whatever comes back.
+DECISION_JSON_SCHEMA: Dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "action": {"type": "string", "enum": ["BUY", "SELL", "HOLD"]},
+        "conviction_score": {"type": "number"},
+        "allocation_percentage": {"type": "number"},
+        "target_price": {"type": "number"},
+        "stop_loss_price": {"type": "number"},
+        "thesis_summary": {"type": "string"},
+        "key_risks": {"type": "array", "items": {"type": "string"}},
+    },
+    "required": [
+        "action", "conviction_score", "allocation_percentage",
+        "target_price", "stop_loss_price", "thesis_summary", "key_risks",
+    ],
+    "additionalProperties": False,
+}
+
+
+class ModelRefusal(RuntimeError):
+    """Raised when a safety classifier declines the request outright."""
+
+
 class MultiAgentDebateEngine:
     """Orchestrates adversarial Bull vs Bear debate, Risk check, and PM decision."""
 
     MAX_RETRIES = 3
 
-    def __init__(self, api_key: str, model: str, min_conviction: float = 0.65):
-        self.client = anthropic.Anthropic(api_key=api_key)
-        self.model = model
-        self.min_conviction = min_conviction
+    # Order in which optional request features are surrendered if the API rejects
+    # the request. Least essential first; the plain request is always reachable.
+    DEGRADE_ORDER = ("fallbacks", "json_schema", "effort", "thinking")
 
-    def _call_claude(self, system_prompt: str, user_content: str, max_tokens: int = 600) -> str:
+    def __init__(
+        self,
+        api_key: str,
+        analyst_model: str,
+        pm_model: str,
+        effort: str = "high",
+        min_conviction: float = 0.65,
+        analyst_max_tokens: int = 8000,
+        pm_max_tokens: int = 8000,
+    ):
+        self.client = anthropic.Anthropic(api_key=api_key)
+        self.analyst_model = analyst_model
+        self.pm_model = pm_model
+        self.effort = effort
+        self.min_conviction = min_conviction
+        self.analyst_max_tokens = analyst_max_tokens
+        self.pm_max_tokens = pm_max_tokens
+        self.usage = UsageLedger()
+
+    # -- request construction --------------------------------------------------
+
+    def supported_features(self, model: str, want_json_schema: bool) -> set:
+        profile = get_model_profile(model)
+        features = set()
+        if profile.adaptive_thinking:
+            features.add("thinking")
+        if profile.effort:
+            features.add("effort")
+        if profile.server_side_fallbacks:
+            features.add("fallbacks")
+        if want_json_schema:
+            features.add("json_schema")
+        return features
+
+    def build_request(
+        self,
+        model: str,
+        system_prompt: str,
+        user_content: str,
+        max_tokens: int,
+        features: set,
+    ) -> Dict[str, Any]:
+        request: Dict[str, Any] = {
+            "model": model,
+            "max_tokens": max_tokens,
+            "system": system_prompt,
+            "messages": [{"role": "user", "content": user_content}],
+        }
+        if "thinking" in features:
+            # budget_tokens is rejected on current models; adaptive is the on-mode.
+            request["thinking"] = {"type": "adaptive"}
+        output_config: Dict[str, Any] = {}
+        if "effort" in features:
+            output_config["effort"] = self.effort
+        if "json_schema" in features:
+            output_config["format"] = {"type": "json_schema", "schema": DECISION_JSON_SCHEMA}
+        if output_config:
+            request["output_config"] = output_config
+        if "fallbacks" in features:
+            # If a classifier declines, the API re-runs the turn on a fallback model
+            # inside the same call rather than returning nothing.
+            request["betas"] = ["server-side-fallback-2026-07-01"]
+            request["fallbacks"] = "default"
+        return request
+
+    def _send(self, request: Dict[str, Any], use_beta: bool) -> Any:
+        endpoint = self.client.beta.messages if use_beta else self.client.messages
+        return endpoint.create(**request)
+
+    def _call_claude(
+        self,
+        system_prompt: str,
+        user_content: str,
+        model: str,
+        max_tokens: int,
+        want_json_schema: bool = False,
+    ) -> str:
+        features = self.supported_features(model, want_json_schema)
+        attempt = 0
         last_error: Optional[Exception] = None
-        for attempt in range(1, self.MAX_RETRIES + 1):
+
+        while True:
+            request = self.build_request(model, system_prompt, user_content, max_tokens, features)
             try:
-                response = self.client.messages.create(
-                    model=self.model,
-                    max_tokens=max_tokens,
-                    system=system_prompt,
-                    messages=[{"role": "user", "content": user_content}],
+                response = self._send(request, use_beta="fallbacks" in features)
+            except anthropic.BadRequestError as e:
+                dropped = next((f for f in self.DEGRADE_ORDER if f in features), None)
+                if dropped is None:
+                    raise RuntimeError(f"Claude rejected the request for {model}: {e}") from e
+                features.discard(dropped)
+                logger.warning(
+                    f"{model} rejected '{dropped}' ({e}); retrying without it. "
+                    f"Remaining features: {sorted(features) or 'none'}"
                 )
-                return "".join(
-                    block.text for block in response.content if getattr(block, "type", "") == "text"
-                ).strip()
-            except Exception as e:
+                continue
+            except (anthropic.RateLimitError, anthropic.APIStatusError,
+                    anthropic.APIConnectionError, anthropic.APITimeoutError) as e:
                 last_error = e
+                attempt += 1
+                if attempt >= self.MAX_RETRIES:
+                    raise RuntimeError(f"Claude API unavailable after {self.MAX_RETRIES} attempts: {e}") from e
                 backoff = 2 ** attempt
                 logger.warning(f"Claude call failed (attempt {attempt}/{self.MAX_RETRIES}): {e}. Retrying in {backoff}s")
-                if attempt < self.MAX_RETRIES:
-                    time.sleep(backoff)
-        raise RuntimeError(f"Claude API unavailable after {self.MAX_RETRIES} attempts: {last_error}")
+                time.sleep(backoff)
+                continue
+
+            self.usage.record(model, getattr(response, "usage", None))
+            return self._read_text(response, model)
+
+        raise RuntimeError(f"Claude API unavailable: {last_error}")  # pragma: no cover
+
+    @staticmethod
+    def _read_text(response: Any, model: str) -> str:
+        stop_reason = getattr(response, "stop_reason", None)
+        if stop_reason == "refusal":
+            details = getattr(response, "stop_details", None)
+            category = getattr(details, "category", None)
+            raise ModelRefusal(f"{model} declined the request (category: {category})")
+        if stop_reason == "max_tokens":
+            logger.warning(f"{model} hit max_tokens; output may be truncated")
+        return "".join(
+            block.text for block in response.content if getattr(block, "type", "") == "text"
+        ).strip()
+
+    # -- parsing ---------------------------------------------------------------
 
     @staticmethod
     def extract_json(raw: str) -> Dict[str, Any]:
-        """Pulls a JSON object out of a model response, fenced or otherwise."""
+        """Pulls a JSON object out of a model response, fenced or otherwise.
+
+        Structured output makes this the fallback path, not the primary one.
+        """
         text = (raw or "").strip()
         if "```" in text:
             fenced = text.split("```")
@@ -503,6 +773,8 @@ class MultiAgentDebateEngine:
             "key_risks": [reason],
         }
 
+    # -- the debate ------------------------------------------------------------
+
     def run_debate(self, data: Dict[str, Any]) -> Tuple[Dict[str, Any], Dict[str, str]]:
         context = f"""
 Ticker: {data['ticker']}
@@ -514,58 +786,50 @@ SMA 20: ${data['sma_20']} | SMA 50: ${data['sma_50']}
 Recent News:
 {data['news_summary']}
 """
-
+        brevity = " Keep your argument under 300 words."
         debate_log = {"bull": "", "bear": "", "risk": ""}
+
+        def analyst(system_prompt: str, user_content: str) -> str:
+            return self._call_claude(
+                system_prompt + brevity, user_content,
+                model=self.analyst_model, max_tokens=self.analyst_max_tokens,
+            )
 
         try:
             # 1. Bull Analyst Agent
-            bull_prompt = (
+            debate_log["bull"] = analyst(
                 "You are an aggressive Growth & Momentum Analyst. Highlight upward catalysts, "
-                "technical breakouts, and bullish market drivers."
+                "technical breakouts, and bullish market drivers.",
+                f"Build the maximum Bull Case for:\n{context}",
             )
-            bull_case = self._call_claude(bull_prompt, f"Build the maximum Bull Case for:\n{context}")
-            debate_log["bull"] = bull_case
 
             # 2. Bear Analyst Agent (Adversarial)
-            bear_prompt = (
+            debate_log["bear"] = analyst(
                 "You are a skeptical Short-Seller & Risk Auditor. Identify valuation traps, overbought "
-                "indicators, macroeconomic headwinds, and downside vulnerabilities."
-            )
-            bear_case = self._call_claude(
-                bear_prompt,
+                "indicators, macroeconomic headwinds, and downside vulnerabilities.",
                 f"Debate and dismantle this Bull case for {data['ticker']}.\n"
-                f"Market Context:\n{context}\nBull Argument:\n{bull_case}",
+                f"Market Context:\n{context}\nBull Argument:\n{debate_log['bull']}",
             )
-            debate_log["bear"] = bear_case
 
             # 3. Risk Committee Agent
-            risk_prompt = (
+            debate_log["risk"] = analyst(
                 "You are the Chief Risk Officer. Review volatility (ATR), RSI overextension, and market "
-                "regime risks. Formulate stop-loss boundaries."
+                "regime risks. Formulate stop-loss boundaries.",
+                f"Evaluate risk for {data['ticker']}.\nBull:\n{debate_log['bull']}\n"
+                f"Bear:\n{debate_log['bear']}\nTechnicals:\n{context}",
             )
-            risk_case = self._call_claude(
-                risk_prompt,
-                f"Evaluate risk for {data['ticker']}.\nBull:\n{bull_case}\nBear:\n{bear_case}\nTechnicals:\n{context}",
-            )
-            debate_log["risk"] = risk_case
-        except RuntimeError as e:
+        except (RuntimeError, ModelRefusal) as e:
             logger.error(f"Debate aborted for {data['ticker']}: {e}")
             return self.fallback_decision(data, "Claude API unavailable during debate"), debate_log
 
         # 4. Portfolio Manager Agent (Synthesizer & Structured Output)
         pm_prompt = f"""You are the Senior Portfolio Manager with final execution authority.
-Synthesize the Bull, Bear, and Risk arguments.
-You MUST output ONLY valid JSON conforming to this exact schema:
-{{
-  "action": "BUY" | "SELL" | "HOLD",
-  "conviction_score": <float between 0.0 and 1.0>,
-  "allocation_percentage": <float between 0.0 and 0.10>,
-  "target_price": <float>,
-  "stop_loss_price": <float>,
-  "thesis_summary": "<string>",
-  "key_risks": ["<string>", "<string>"]
-}}
-Strict Rule: If conviction_score < {self.min_conviction}, action MUST be 'HOLD' and allocation_percentage MUST be 0.0."""
+Synthesize the Bull, Bear, and Risk arguments into a single execution decision.
+Fields: action (BUY/SELL/HOLD), conviction_score (0.0-1.0), allocation_percentage
+(0.0-0.10 of portfolio), target_price, stop_loss_price (8-12% below entry),
+thesis_summary (2-3 sentences), key_risks (the top 2 downside factors).
+Strict Rule: If conviction_score < {self.min_conviction}, action MUST be 'HOLD' and
+allocation_percentage MUST be 0.0."""
 
         pm_input = (
             f"Market Context:\n{context}\n\nBull Case:\n{debate_log['bull']}\n\n"
@@ -573,8 +837,11 @@ Strict Rule: If conviction_score < {self.min_conviction}, action MUST be 'HOLD' 
         )
 
         try:
-            pm_response = self._call_claude(pm_prompt, pm_input, max_tokens=1000)
-        except RuntimeError as e:
+            pm_response = self._call_claude(
+                pm_prompt, pm_input,
+                model=self.pm_model, max_tokens=self.pm_max_tokens, want_json_schema=True,
+            )
+        except (RuntimeError, ModelRefusal) as e:
             logger.error(f"PM synthesis failed for {data['ticker']}: {e}")
             return self.fallback_decision(data, "Claude API unavailable during PM synthesis"), debate_log
 
@@ -588,7 +855,7 @@ Strict Rule: If conviction_score < {self.min_conviction}, action MUST be 'HOLD' 
 
 
 # ==============================================================================
-# 5. HARDCODED PROGRAMMATIC RISK ENGINE
+# 6. HARDCODED PROGRAMMATIC RISK ENGINE
 # ==============================================================================
 
 class ProgrammaticRiskEngine:
@@ -693,7 +960,7 @@ class ProgrammaticRiskEngine:
 
 
 # ==============================================================================
-# 6. BROKER EXECUTION ENGINE (ALPACA PAPER API)
+# 7. BROKER EXECUTION ENGINE (ALPACA PAPER API)
 # ==============================================================================
 
 class AlpacaBroker:
@@ -931,7 +1198,7 @@ class AlpacaBroker:
 
 
 # ==============================================================================
-# 7. MASTER WORKFLOW CONTROLLER
+# 8. MASTER WORKFLOW CONTROLLER
 # ==============================================================================
 
 class ForgeTrader:
@@ -944,14 +1211,22 @@ class ForgeTrader:
         self.broker = AlpacaBroker(config, self.db)
         self.agent_engine = MultiAgentDebateEngine(
             api_key=config.anthropic_api_key,
-            model=config.claude_model,
+            analyst_model=config.analyst_model,
+            pm_model=config.pm_model,
+            effort=config.effort,
             min_conviction=config.min_conviction,
+            analyst_max_tokens=config.analyst_max_tokens,
+            pm_max_tokens=config.pm_max_tokens,
         )
 
     def run_cycle(self, dry_run: bool = False):
         mode = "DRY-RUN" if dry_run else "LIVE PAPER"
         logger.info(f"=== Starting FORGE-TRADER Workflow ({mode}) ===")
-        self.db.log_event("INFO", "cycle_start", f"mode={mode} watchlist={','.join(self.config.watchlist)}")
+        logger.info(f"Models: {self.config.describe_models()}")
+        self.db.log_event(
+            "INFO", "cycle_start",
+            f"mode={mode} watchlist={','.join(self.config.watchlist)} models={self.config.describe_models()}",
+        )
 
         # 1. Inspect Account State
         try:
@@ -1043,7 +1318,9 @@ class ForgeTrader:
             else:
                 rejected += 1
 
-        summary = f"executed={executed} rejected={rejected} skipped={skipped}"
+        spend = self.agent_engine.usage.summary()
+        summary = f"executed={executed} rejected={rejected} skipped={skipped} | {spend}"
+        logger.info(f"Agent spend this cycle: {spend}")
         logger.info(f"=== Workflow Completed ({summary}) ===")
         self.db.log_event("INFO", "cycle_complete", summary)
 
@@ -1083,7 +1360,7 @@ class ForgeTrader:
 
 
 # ==============================================================================
-# 8. SETUP DOCUMENTATION PRINTER
+# 9. SETUP DOCUMENTATION PRINTER
 # ==============================================================================
 
 def print_setup_instructions():
@@ -1103,12 +1380,17 @@ def print_setup_instructions():
    ALPACA_SECRET_KEY=your_alpaca_paper_secret_here
    ANTHROPIC_API_KEY=your_anthropic_api_key_here
    ALPACA_PAPER=True
+   CLAUDE_MODEL=claude-opus-5
+   CLAUDE_EFFORT=high
    WATCHLIST=AAPL,MSFT,NVDA,AMZN,GOOGL,TSLA
    MAX_POSITION_PERCENT=0.10
    MIN_CASH_BUFFER_PERCENT=0.20
    HARD_STOP_LOSS_PERCENT=0.10
    DAILY_LOSS_LIMIT_PERCENT=0.03
    -----------------------------------------------------------------------------
+
+   (Run 'python forge_trader.py --models' to see every selectable model, its
+    pricing, and which agent is currently routed to it.)
 
 3. CONFIGURE SILENT AUTOSTART ON LAPTOP BOOT:
 
@@ -1153,7 +1435,7 @@ def print_setup_instructions():
 
 
 # ==============================================================================
-# 9. CLI ENTRY POINT & SCHEDULER
+# 10. CLI ENTRY POINT & SCHEDULER
 # ==============================================================================
 
 def main():
@@ -1164,6 +1446,12 @@ def main():
     parser.add_argument("--schedule", action="store_true", help="Run scheduler daemon for automated daily execution")
     parser.add_argument("--status", action="store_true", help="Display Alpaca account metrics & positions")
     parser.add_argument("--setup", action="store_true", help="Print complete setup and autostart instructions")
+    parser.add_argument("--models", action="store_true", help="List selectable Claude models, pricing, and current routing")
+    parser.add_argument("--model", metavar="ID", help="Model for every agent (e.g. claude-opus-5, claude-opus-4-8)")
+    parser.add_argument("--analyst-model", metavar="ID", help="Override the model for the Bull/Bear/Risk agents")
+    parser.add_argument("--pm-model", metavar="ID", help="Override the model for the Portfolio Manager agent")
+    parser.add_argument("--effort", metavar="LEVEL", choices=sorted(VALID_EFFORT_LEVELS),
+                        help="Reasoning effort: low, medium, high, xhigh, max")
 
     args = parser.parse_args()
 
@@ -1172,6 +1460,11 @@ def main():
         return
 
     config = Config()
+    apply_model_overrides(config, args)
+
+    if args.models:
+        print_model_catalog(config)
+        return
 
     if not config.alpaca_api_key or not config.anthropic_api_key:
         print("\n[ERROR] Missing API keys. Ensure ALPACA_API_KEY and ANTHROPIC_API_KEY are in your environment or .env file.")
