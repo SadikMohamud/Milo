@@ -1,0 +1,46 @@
+id: ASAL-DATA-20261002-sample-pipeline-ce46c2
+kind: DATA
+description: Data pipeline on the v0.1 validation sample (not for training).
+created: '2026-10-02T10:34:40+00:00'
+status: superseded
+config:
+  mode: validation
+  primary_lid: asal-heuristic
+  quality_thresholds: {}
+  near_dup_threshold: 0.8
+  boilerplate_min_docs: 3
+  boilerplate_min_fraction: 0.01
+  boilerplate_min_chars: 15
+  decontam_n:
+  - 13
+  - 8
+  manifest: sample-v0.1
+model: not_applicable
+track: not_applicable
+base_model: unknown
+parameters: unknown
+dataset: sample-v0.1
+dataset_fingerprint: 62090746f04df9d101953b7be669a9a19752d2c24916991ed8a6839afcd38a70
+epochs: unknown
+tokenizer: unknown
+tokenizer_version: unknown
+context_length: unknown
+batch_size: unknown
+learning_rate: unknown
+optimizer: unknown
+scheduler: unknown
+precision: unknown
+steps: unknown
+seed: unknown
+hardware: unknown
+gpu_hours: unknown
+estimated_cost: unknown
+git_commit: 5f051039dcc021dc1e7c2ece81654474be46a338-dirty
+results:
+  input_records: 1722
+  final_records: 1604
+  report: evaluation/reports/data_intelligence_v0.1/pipeline_summary.json
+  outputs: data/interim/ASAL-DATA-20261002-sample-pipeline-ce46c2
+superseded_reason: Re-run after adding the matched-n-gram histogram to the decontamination
+  summary; stage counts were identical in intent. Its report file was overwritten
+  by the re-run.

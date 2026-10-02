@@ -1,0 +1,67 @@
+id: flores-200-som
+name: FLORES-200 (som_Latn)
+provider: Meta AI (NLLB team)
+type:
+- parallel
+- translation
+- evaluation
+roles:
+- evaluation
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+  others:
+  - eng
+  - 200+ languages
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: false
+  derived_from:
+  - Wikinews
+  - Wikijunior
+  - Wikivoyage
+  machine_translated: false
+  machine_translated_basis: provider_claim
+  religious_text: false
+  domains:
+  - wikipedia
+  human_translated: true
+license:
+  corpus_license: unknown
+  license_basis: unknown
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: ''
+  repository: https://github.com/facebookresearch/flores
+  dataset_url: ''
+  discovered_via: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
+notes: Standard MT benchmark. Data tarball host (dl.fbaipublicfiles.com) was blocked on 2026-10-02. Register its
+  devtest as a decontamination target as soon as it can be fetched.

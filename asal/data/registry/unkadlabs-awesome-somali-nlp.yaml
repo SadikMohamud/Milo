@@ -1,0 +1,61 @@
+id: unkadlabs-awesome-somali-nlp
+name: Awesome Somali NLP
+provider: Unkad Labs
+type:
+- resource-index
+roles:
+- reference
+language:
+  primary: english
+  iso_639_1: en
+  iso_639_3: eng
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: false
+  derived_from: []
+  machine_translated: false
+  machine_translated_basis: verified_in_source
+  religious_text: false
+  domains:
+  - resource-index
+license:
+  corpus_license: CC0-1.0
+  license_basis: verified_in_source
+  per_source_licenses: not_applicable
+  commercial_use: true
+  redistribution: true
+  attribution_required: false
+  license_claim_source: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: false
+  decontaminated: false
+status:
+  discovered: true
+  inspected: true
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: https://unkad.com
+  repository: https://github.com/unkadlabs/awesome-somali-nlp
+  dataset_url: ''
+  discovered_via: Asal build specification
+  pinned_revision: de1aaadfa3af4b2580a97bc9192cc9de5f5488d4
+  access_date: '2026-10-02'
+notes: A curated list, not a corpus. Read in full on 2026-10-02 (CC0-1.0 per its README). Every figure it gives
+  about other resources is recorded in those entries as a secondary-source claim. Studied in RESEARCH_LOG.md.

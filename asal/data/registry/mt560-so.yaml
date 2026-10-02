@@ -1,0 +1,61 @@
+id: mt560-so
+name: MT560 (Somali)
+provider: unknown (Gowda et al., to confirm)
+type:
+- parallel
+- translation
+roles:
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+  others:
+  - eng
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: true
+  derived_from:
+  - review_required
+  machine_translated: unknown
+  machine_translated_basis: unknown
+  religious_text: review_required
+  domains:
+  - mixed
+license:
+  corpus_license: unknown
+  license_basis: unknown
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: ''
+  repository: ''
+  dataset_url: ''
+  discovered_via: SomNLP-Corpus derived_from list
+notes: Many-to-English aggregation; upstream composition and licences unknown to Asal.

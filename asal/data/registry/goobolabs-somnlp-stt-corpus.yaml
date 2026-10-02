@@ -1,0 +1,59 @@
+id: goobolabs-somnlp-stt-corpus
+name: SomNLP-STT-Corpus
+provider: Goobo Labs
+type:
+- speech
+- asr
+roles:
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: unknown
+  derived_from: []
+  machine_translated: unknown
+  machine_translated_basis: unknown
+  religious_text: unknown
+  domains: []
+license:
+  corpus_license: unknown
+  license_basis: unknown
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: ''
+  repository: ''
+  dataset_url: ''
+  discovered_via: Asal build specification
+notes: 'Goobo Labs resource named in the Asal build specification. Only goobolabs/somnlp-corpus has been located
+  (2026-10-02); this resource''s location is not confirmed, so URLs are left empty rather than guessed. Speech recordings
+  are personal data: consent and speaker metadata must be established before use (docs/DATA_POLICY.md).'

@@ -1,0 +1,59 @@
+# Every evaluation set Asal will report on is registered here, with its source.
+# Before any training run, the training corpus is checked for n-gram overlap
+# against every set with status "indexed" (docs/EVALUATION.md, "Decontamination").
+# Sets that cannot be fetched yet stay registered as "pending" so they are not forgotten.
+eval_sets:
+  - id: masakhanews-som-dev
+    registry_id: masakhanews-som
+    manifest: sample-v0.1
+    split: dev
+    task: news topic classification
+    status: indexed
+  - id: masakhanews-som-test
+    registry_id: masakhanews-som
+    manifest: sample-v0.1
+    split: test
+    task: news topic classification
+    status: indexed
+  - id: sib200-som-dev
+    registry_id: sib200-som
+    manifest: sample-v0.1
+    split: dev
+    task: topic classification (FLORES-200 sentences)
+    status: indexed
+  - id: sib200-som-test
+    registry_id: sib200-som
+    manifest: sample-v0.1
+    split: test
+    task: topic classification (FLORES-200 sentences)
+    status: indexed
+  - id: flores-200-som-devtest
+    registry_id: flores-200-som
+    task: translation
+    status: pending
+    blocker: dl.fbaipublicfiles.com blocked by session network policy (2026-10-02)
+  - id: belebele-som
+    registry_id: belebele-som
+    task: reading comprehension
+    status: pending
+    blocker: huggingface.co blocked by session network policy (2026-10-02)
+  - id: xlsum-somali-test
+    registry_id: xlsum-somali
+    task: summarisation
+    status: pending
+    blocker: huggingface.co blocked by session network policy (2026-10-02)
+  - id: sombench
+    registry_id: goobolabs-sombench
+    task: multiple (to be confirmed)
+    status: pending
+    blocker: location not yet confirmed
+  - id: somalibench-v0
+    registry_id: unkadlabs-somalibench-v0
+    task: safety / refusal
+    status: pending
+    blocker: huggingface.co blocked by session network policy (2026-10-02)
+  - id: fleurs-so-test-transcripts
+    registry_id: fleurs-so
+    task: ASR (transcripts are FLORES text)
+    status: pending
+    blocker: huggingface.co blocked by session network policy (2026-10-02)

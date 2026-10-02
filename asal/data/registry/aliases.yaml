@@ -1,0 +1,22 @@
+# Upstream names used in derived_from -> registry entry id.
+# Lets the registry detect when two aggregated corpora share an upstream
+# (double counting) even when providers spell the upstream differently.
+HPLT: hplt-v2-so
+HPLT v2: hplt-v2-so
+CC100: cc100-so
+mC4: mc4-so
+MADLAD: madlad-400-so
+OPUS: opus-en-so
+NLLB: nllb-en-so
+MT560: mt560-so
+Wikipedia: wikipedia-so
+XL-Sum: xlsum-somali
+Glot500: glot500-c-so
+Somali-Web-Corpus: somali-web-corpus
+QuranEnc: quranenc-so
+Tanzil: tanzil-so
+FLORES-200: flores-200-som
+FinePDFs: finepdfs-so
+FineWeb-2: fineweb-2-so
+Somali Alpaca: somali-alpaca
+Somali TinyStories: somali-tinystories

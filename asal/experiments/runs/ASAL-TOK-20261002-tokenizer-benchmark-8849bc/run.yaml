@@ -1,0 +1,43 @@
+id: ASAL-TOK-20261002-tokenizer-benchmark-8849bc
+kind: TOK
+description: Tokenizer metrics on held-out Somali test splits.
+created: '2026-10-02T10:41:10+00:00'
+status: completed
+config:
+  tokenizers:
+  - utf8-bytes (reference)
+  - tokenizer/artifacts/goobo-somnlp-v2-48k/tokenizer.json
+model: unknown
+track: not_applicable
+base_model: unknown
+parameters: unknown
+dataset: sample-v0.1 test splits
+dataset_fingerprint: unknown
+epochs: unknown
+tokenizer: unknown
+tokenizer_version: unknown
+context_length: unknown
+batch_size: unknown
+learning_rate: unknown
+optimizer: unknown
+scheduler: unknown
+precision: unknown
+steps: unknown
+seed: unknown
+hardware: unknown
+gpu_hours: unknown
+estimated_cost: unknown
+git_commit: 5f051039dcc021dc1e7c2ece81654474be46a338-dirty
+results:
+- tokenizer: utf8-bytes (reference)
+  texts: 498
+  fertility: 6.4759
+  bytes_per_token: 1.0
+  tokens_per_apostrophe_word: 7.9882
+  roundtrip_fidelity: 1.0
+- tokenizer: tokenizer/artifacts/goobo-somnlp-v2-48k/tokenizer.json
+  texts: 498
+  fertility: 1.2812
+  bytes_per_token: 5.0545
+  tokens_per_apostrophe_word: 3.1017
+  roundtrip_fidelity: 1.0

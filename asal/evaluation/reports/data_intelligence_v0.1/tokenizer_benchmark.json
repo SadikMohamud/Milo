@@ -1,0 +1,21 @@
+{
+  "experiment_id": "ASAL-TOK-20261002-tokenizer-benchmark-8849bc",
+  "results": [
+    {
+      "tokenizer": "utf8-bytes (reference)",
+      "texts": 498,
+      "fertility": 6.4759,
+      "bytes_per_token": 1.0,
+      "tokens_per_apostrophe_word": 7.9882,
+      "roundtrip_fidelity": 1.0
+    },
+    {
+      "tokenizer": "tokenizer/artifacts/goobo-somnlp-v2-48k/tokenizer.json",
+      "texts": 498,
+      "fertility": 1.2812,
+      "bytes_per_token": 5.0545,
+      "tokens_per_apostrophe_word": 3.1017,
+      "roundtrip_fidelity": 1.0
+    }
+  ]
+}

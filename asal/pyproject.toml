@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asal"
+version = "0.1.0"
+description = "Asal: Somali-native AI foundation model research (data intelligence v0.1)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "PyYAML>=6.0",
+  "jsonschema>=4.0",
+  "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+lid = ["lingua-language-detector>=2.0"]
+fasttext = ["fasttext-wheel>=0.9.2"]
+dev = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "tokenizer/tests", "training/tests"]
+pythonpath = ["src"]
+markers = ["slow: loads large models (e.g. Lingua); deselect with -m 'not slow'"]

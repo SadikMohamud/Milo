@@ -1,0 +1,62 @@
+id: somali-tinystories
+name: Somali TinyStories (Zyroxx66/somali-tinystories)
+provider: Zyroxx66 (Hugging Face user)
+type:
+- text
+roles:
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: false
+  derived_from:
+  - TinyStories (review_required)
+  machine_translated: unknown
+  machine_translated_basis: unknown
+  religious_text: unknown
+  domains:
+  - stories
+license:
+  corpus_license: unknown
+  license_basis: secondary_source
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+  license_claim_source: 'goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02)
+    (states: unspecified upstream)'
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: ''
+  repository: ''
+  dataset_url: https://huggingface.co/datasets/Zyroxx66/somali-tinystories
+  discovered_via: goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02)
+notes: 'TinyStories-style data is usually model-generated; synthetic status unknown and must be resolved before
+  use. Licence unspecified upstream. Not verified by Asal: huggingface.co was blocked by the session network policy
+  on 2026-10-02.'

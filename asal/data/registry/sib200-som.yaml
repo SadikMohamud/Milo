@@ -1,0 +1,73 @@
+id: sib200-som
+name: SIB-200 (Somali, som_Latn)
+provider: Adelani et al.
+type:
+- text
+- classification
+- evaluation
+roles:
+- evaluation
+- pipeline_validation_sample
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: 1004
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+    measured_by: scripts/data/run_sample_pipeline.py
+provenance:
+  aggregation: false
+  derived_from:
+  - FLORES-200
+  machine_translated: false
+  machine_translated_basis: provider_claim
+  religious_text: false
+  domains:
+  - wikipedia
+  human_translated: true
+license:
+  corpus_license: review_required
+  license_basis: verified_in_source
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+  license_claim_source: 'dadelani/sib-200@efad32e LICENSE (Apache-2.0, repository) '
+  terms_notes: 'Repository LICENSE is Apache-2.0, but the sentences are FLORES-200 text, which carries its own licence
+    (CC BY-SA 4.0 per FLORES documentation, to be confirmed). Effective data licence: review_required.'
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: true
+    cleaned: unknown
+    provenance_preserved: true
+evaluation_overlap:
+  contains_known_eval_sources: true
+  decontaminated: false
+  known_eval_sources:
+  - FLORES-200
+  - Belebele (built on FLORES-200 passages)
+status:
+  discovered: true
+  inspected: true
+  sampled: true
+  approved_for_training: false
+source:
+  homepage: ''
+  repository: https://github.com/dadelani/sib-200
+  dataset_url: https://huggingface.co/datasets/Davlan/sib200
+  discovered_via: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  access_date: '2026-10-02'
+notes: 'FLORES-200 sentences, professionally translated from English (translationese). Every SIB-200 sentence is
+  a FLORES-200 sentence, so it is evaluation data for MT as well: must never enter training. Verified documents
+  = 701+99+204 rows at the pinned revision.'

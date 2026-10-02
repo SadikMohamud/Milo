@@ -1,0 +1,53 @@
+id: ASAL-LID-20261002-lid-comparison-835374
+kind: LID
+description: Somali LID comparison on held-out SIB-200 / MasakhaNEWS test data.
+created: '2026-10-02T10:36:01+00:00'
+status: completed
+config:
+  backends:
+  - asal-heuristic
+  - lingua
+  items:
+    som:masakhanews-article: 294
+    som:sib200-sentence: 204
+    neg:eng_Latn: 204
+    neg:swh_Latn: 204
+    neg:gaz_Latn: 204
+    neg:hau_Latn: 204
+    neg:arb_Arab: 204
+    neg:amh_Ethi: 204
+    neg:tir_Ethi: 204
+    neg:yor_Latn: 204
+    neg:afr_Latn: 204
+    neg:ind_Latn: 204
+    cs:som-eng-synthetic: 204
+model: unknown
+track: not_applicable
+base_model: unknown
+parameters: unknown
+dataset: sample-v0.1 + lid-eval-v0.1
+dataset_fingerprint: unknown
+epochs: unknown
+tokenizer: unknown
+tokenizer_version: unknown
+context_length: unknown
+batch_size: unknown
+learning_rate: unknown
+optimizer: unknown
+scheduler: unknown
+precision: unknown
+steps: unknown
+seed: unknown
+hardware: unknown
+gpu_hours: unknown
+estimated_cost: unknown
+git_commit: 5f051039dcc021dc1e7c2ece81654474be46a338-dirty
+results:
+  asal-heuristic:
+    f1: 0.9724
+    precision: 0.9537
+    recall: 0.992
+  lingua:
+    f1: 0.8737
+    precision: 0.7757
+    recall: 1.0

@@ -1,0 +1,94 @@
+manifest_id: sample-v0.1
+created: '2026-10-02'
+purpose: Pipeline validation sample for milestone ASAL DATA INTELLIGENCE v0.1. Not approved for training. Train splits run
+  through the pipeline; dev/test splits are registered evaluation sets used by the decontamination check.
+notes: Hugging Face, Wikimedia and OPUS hosts were blocked by the session network policy on 2026-10-02, so the sample uses
+  GitHub-hosted Somali data pinned to commit SHAs.
+files:
+- source_id: masakhanews-som
+  split: train
+  role: pipeline_validation_sample
+  url: https://raw.githubusercontent.com/masakhane-io/masakhane-news/819be052e79e0a600e0ed4a7356594681cb5c4f3/data/som/train.tsv
+  pinned_revision: 819be052e79e0a600e0ed4a7356594681cb5c4f3
+  sha256: e2505c2c6ee1cd3ac5c7d69cdaf7241f26ea70a1cf611ef2f8123ecdbd0f8e6c
+  bytes: 3834693
+  path: masakhanews-som/819be052e79e/train.tsv
+  format: tsv
+  text_fields:
+  - headline
+  - text
+  meta_fields:
+  - category
+  - url
+- source_id: masakhanews-som
+  split: dev
+  role: evaluation
+  url: https://raw.githubusercontent.com/masakhane-io/masakhane-news/819be052e79e0a600e0ed4a7356594681cb5c4f3/data/som/dev.tsv
+  pinned_revision: 819be052e79e0a600e0ed4a7356594681cb5c4f3
+  sha256: e77c760a1e77cc83bfba338141cdd0b12f26e3a8921c64ee0738eaa7158a31b1
+  bytes: 560797
+  path: masakhanews-som/819be052e79e/dev.tsv
+  format: tsv
+  text_fields:
+  - headline
+  - text
+  meta_fields:
+  - category
+  - url
+- source_id: masakhanews-som
+  split: test
+  role: evaluation
+  url: https://raw.githubusercontent.com/masakhane-io/masakhane-news/819be052e79e0a600e0ed4a7356594681cb5c4f3/data/som/test.tsv
+  pinned_revision: 819be052e79e0a600e0ed4a7356594681cb5c4f3
+  sha256: ba62c5c97a2950c8fd4d67fdad366c268df4c720abad3ad7ca7adfc186fc1269
+  bytes: 1083738
+  path: masakhanews-som/819be052e79e/test.tsv
+  format: tsv
+  text_fields:
+  - headline
+  - text
+  meta_fields:
+  - category
+  - url
+- source_id: sib200-som
+  split: train
+  role: pipeline_validation_sample
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/som_Latn/train.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: 16b8a04f910d819426556170f7d47f1dbffdffaf31b8fd57112f0c561d1947b4
+  bytes: 115899
+  path: sib200-som/efad32e0fc60/train.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-som
+  split: dev
+  role: evaluation
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/som_Latn/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: 423275242f172b15e02c8957a4712d684b74b832b8dc68262519d2145e72e8e8
+  bytes: 15613
+  path: sib200-som/efad32e0fc60/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-som
+  split: test
+  role: evaluation
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/som_Latn/test.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: b71f4b611b590d43e2683db542c2ee1eeeebd94a4b8ac238e479e3e4162cb47b
+  bytes: 34141
+  path: sib200-som/efad32e0fc60/test.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category

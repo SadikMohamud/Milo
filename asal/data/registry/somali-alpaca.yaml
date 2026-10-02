@@ -1,0 +1,61 @@
+id: somali-alpaca
+name: Somali Alpaca (burtugeey/Somali_dataset)
+provider: burtugeey (Hugging Face user)
+type:
+- instruction
+roles:
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: false
+  derived_from:
+  - Alpaca (review_required)
+  machine_translated: unknown
+  machine_translated_basis: unknown
+  religious_text: unknown
+  domains:
+  - instruction
+license:
+  corpus_license: MIT
+  license_basis: secondary_source
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+  license_claim_source: goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02)
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: ''
+  repository: ''
+  dataset_url: https://huggingface.co/datasets/burtugeey/Somali_dataset
+  discovered_via: goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02)
+notes: 'Alpaca-style instructions are often machine-translated from English model-generated data; treat as synthetic
+  until verified. Instruction data belongs to Phase 6, not pretraining. Not verified by Asal: huggingface.co was
+  blocked by the session network policy on 2026-10-02.'

@@ -1,0 +1,64 @@
+id: unkadlabs-somalibench-v0
+name: SomaliBench v0
+provider: Unkad Labs
+type:
+- evaluation
+- safety
+roles:
+- evaluation
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+  others:
+  - eng
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported:
+    claim_source: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
+    items: 200
+    categories: 7
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: unknown
+  derived_from: []
+  machine_translated: unknown
+  machine_translated_basis: unknown
+  religious_text: unknown
+  domains: []
+license:
+  corpus_license: unknown
+  license_basis: unknown
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: https://huggingface.co/spaces/unkadlabs/somalibench
+  repository: ''
+  dataset_url: ''
+  discovered_via: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
+  paper: https://arxiv.org/abs/2605.25420
+notes: 'Paired English-Somali refusal evaluation. Safety prompts: keep out of any training corpus. Not verified
+  by Asal: huggingface.co was blocked by the session network policy on 2026-10-02.'

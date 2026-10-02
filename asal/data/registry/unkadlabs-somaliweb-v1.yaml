@@ -1,0 +1,75 @@
+id: unkadlabs-somaliweb-v1
+name: SomaliWeb v1
+provider: Unkad Labs (per Awesome Somali NLP)
+type:
+- text
+- pretraining
+roles:
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported:
+    claim_source: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
+    documents: 819000
+    tokens: 303000000
+    tokenizer_used_for_count: unknown (list says a matched 16K-vocab Somali tokenizer exists)
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: true
+  derived_from:
+  - HPLT v2
+  - CC100
+  - Wikipedia
+  machine_translated: unknown
+  machine_translated_basis: unknown
+  religious_text: unknown
+  domains:
+  - web
+  - news
+  - wikipedia
+license:
+  corpus_license: CC-BY-SA-4.0
+  license_basis: secondary_source
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: true
+  license_claim_source: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
+quality:
+  provider_claims:
+    deduplicated: true
+    quality_filtered: true
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+  known_eval_sources:
+  - Wikipedia
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: ''
+  repository: ''
+  dataset_url: https://huggingface.co/datasets/khaledyusuf44/somaliweb-v1
+  discovered_via: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
+  paper: https://arxiv.org/abs/2605.18232
+notes: 'Figures are approximate as written in the Unkad list ("819K documents, ~303M tokens"). Shares HPLT v2, CC100
+  and Wikipedia with SomNLP-Corpus: expect heavy overlap. Not verified by Asal: huggingface.co was blocked by the
+  session network policy on 2026-10-02.'

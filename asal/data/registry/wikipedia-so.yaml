@@ -1,0 +1,63 @@
+id: wikipedia-so
+name: Somali Wikipedia
+provider: Wikimedia Foundation
+type:
+- text
+- pretraining
+roles:
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: false
+  derived_from: []
+  machine_translated: unknown
+  machine_translated_basis: unknown
+  religious_text: partial
+  domains:
+  - wikipedia
+  - religion
+license:
+  corpus_license: unknown
+  license_basis: unknown
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+  known_eval_sources:
+  - FLORES-200 (Wikinews/Wikivoyage/Wikibooks source sentences, English side)
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+  sensitivity_review: required
+source:
+  homepage: https://so.wikipedia.org/
+  repository: ''
+  dataset_url: https://dumps.wikimedia.org/sowiki/
+  discovered_via: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
+notes: Small but clean per the Unkad list. Wikipedia text is generally CC BY-SA; some articles may be machine-translated
+  stubs. Contains religion articles (tracked as a domain). dumps.wikimedia.org was blocked on 2026-10-02.

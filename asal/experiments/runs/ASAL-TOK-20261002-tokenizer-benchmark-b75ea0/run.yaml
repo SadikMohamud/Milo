@@ -1,0 +1,38 @@
+id: ASAL-TOK-20261002-tokenizer-benchmark-b75ea0
+kind: TOK
+description: Tokenizer metrics on held-out Somali test splits.
+created: '2026-10-02T10:37:10+00:00'
+status: superseded
+config:
+  tokenizers:
+  - utf8-bytes (reference)
+model: unknown
+track: not_applicable
+base_model: unknown
+parameters: unknown
+dataset: sample-v0.1 test splits
+dataset_fingerprint: unknown
+epochs: unknown
+tokenizer: unknown
+tokenizer_version: unknown
+context_length: unknown
+batch_size: unknown
+learning_rate: unknown
+optimizer: unknown
+scheduler: unknown
+precision: unknown
+steps: unknown
+seed: unknown
+hardware: unknown
+gpu_hours: unknown
+estimated_cost: unknown
+git_commit: 5f051039dcc021dc1e7c2ece81654474be46a338-dirty
+results:
+- tokenizer: utf8-bytes (reference)
+  texts: 498
+  fertility: 6.4759
+  bytes_per_token: 1.0
+  tokens_per_apostrophe_word: 7.9882
+  roundtrip_fidelity: 1.0
+superseded_reason: Harness smoke run with the byte reference only; superseded by ASAL-TOK-20261002-tokenizer-benchmark-8849bc,
+  which also measures the Goobo v2 tokenizer. Report file overwritten.

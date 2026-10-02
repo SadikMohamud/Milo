@@ -1,0 +1,35 @@
+# Tokenizer candidates for Asal (docs/TOKENIZER.md). Nothing here is measured yet
+# unless a result is linked. Measure on the held-out set before deciding.
+candidates:
+  - id: goobo-48k-bytelevel-bpe
+    description: Goobo Labs Somali tokenizer, 48K ByteLevel BPE (per Asal build specification)
+    role: baseline (reuse / adapt / replace decided by measurement)
+    location: https://github.com/goobolabs/somnlp-corpus/blob/add401b27137180d1eab8387f92f2b76e10c17e5/tokenizer/v2/tokenizer.json
+    sha256: b18237a500edaeb5e4e041df756e764f2ceb878e62ae35faa907c55c3b001ec6
+    licence: unknown (the repository has no LICENSE file at add401b); local copy in tokenizer/artifacts/ is not committed
+    status: measured_v0.1
+    result: evaluation/reports/data_intelligence_v0.1/tokenizer_benchmark.json (experiment ASAL-TOK-20261002-tokenizer-benchmark-8849bc)
+    findings:
+      - fertility 1.2812 tokens/word and 5.05 bytes/token on Asal's held-out set (MasakhaNEWS + SIB-200 Somali test splits); round trip exact
+      - glottal-stop words average 3.10 tokens: the apostrophe is never merged into a word (ba'an -> ba ' an)
+      - the typographic apostrophe U+2019 is a separate 3-byte token, so ba'an and ba’an tokenize differently; Asal normalisation maps both to U+0027
+      - caveat: Goobo trained on XL-Sum (BBC Somali); MasakhaNEWS is also BBC Somali, so the held-out set may overlap its training data and flatter it
+  - id: somaliweb-16k
+    description: 16K-vocab Somali tokenizer released with SomaliWeb v1 (per Unkad Labs awesome list)
+    location: https://huggingface.co/datasets/khaledyusuf44/somaliweb-v1 (per the list; not verified)
+    licence: unknown
+    status: to_locate
+  - id: asal-bpe-{16k,32k,48k,64k}
+    description: Asal-trained byte-level BPE at four vocabulary sizes
+    training_data: approved Asal corpus only (none approved yet); held-out set excluded
+    status: blocked_on_approved_corpus
+  - id: asal-unigram-{16k,32k,48k,64k}
+    description: SentencePiece unigram with byte fallback, same sizes, as an algorithm comparison
+    status: blocked_on_approved_corpus
+  - id: base-model-tokenizers
+    description: tokenizers of every Asal-Adapted candidate (models/asal_adapted/candidates.yaml), measured on the same held-out set to decide on vocabulary extension
+    status: blocked_on_network (huggingface.co not reachable from this environment on 2026-10-02)
+held_out_set:
+  description: Somali text never used for tokenizer training. v0.1 uses the registered evaluation splits (MasakhaNEWS Somali test, SIB-200 som_Latn test), which are excluded from all training by policy.
+  must_add: [Maay text, code-switched Somali-English text, Somali with numbers/URLs, code]
+metrics: [fertility, bytes_per_token, roundtrip_fidelity, byte_fallback_rate, unknown_rate, tokens_per_apostrophe_word, per-dialect fertility, English fertility, code fertility]

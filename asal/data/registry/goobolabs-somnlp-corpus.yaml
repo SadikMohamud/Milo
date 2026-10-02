@@ -1,0 +1,134 @@
+id: goobolabs-somnlp-corpus
+name: SomNLP-Corpus
+provider: Goobo Labs
+type:
+- text
+- pretraining
+roles:
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02); the
+      2026-09-02 figures also appear in Asal build specification v1 (section 5 example; figures supplied by the
+      project owner, not yet checked against the provider)
+    documents: 7981982
+    words: 832264349
+    tokens: 1136027958
+    tokenizer_used_for_count: Goobo somali-bpe v2 (48K ByteLevel BPE)
+    jsonl_size_gb: 8.4
+    build_date: '2026-09-24'
+    sources: 17
+    previous_build_2026_09_02_documents: 7352961
+    previous_build_2026_09_02_words: 665985672
+    previous_build_2026_09_02_tokens: 911824557
+    previous_build_2026_09_02_storage_gb: 7.2
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: true
+  derived_from:
+  - HPLT
+  - CC100
+  - mC4
+  - OPUS
+  - MADLAD
+  - MT560
+  - Wikipedia
+  - XL-Sum
+  - NLLB
+  - Glot500
+  - Somali-Web-Corpus
+  - QuranEnc
+  - Tanzil
+  - FinePDFs
+  - FineWeb-2
+  - Somali Alpaca
+  - Somali TinyStories
+  machine_translated: partial
+  machine_translated_basis: secondary_source
+  religious_text: true
+  domains:
+  - web
+  - news
+  - wikipedia
+  - religion
+  - instruction
+  - stories
+license:
+  corpus_license: mixed-upstream
+  license_basis: provider_claim
+  per_source_licenses:
+    HPLT 2.0: CC0-1.0
+    CC-100: CC-BY-SA-4.0
+    mC4: ODC-BY
+    MADLAD-400: ODC-BY
+    Glot500: source-specific
+    Somali Web Corpus V1: MIT
+    FinePDFs: ODC-BY
+    FineWeb-2: ODC-BY
+    Somali Alpaca: MIT
+    Somali TinyStories: unspecified upstream
+    Somali Wikipedia: CC-BY-SA-4.0
+    XL-Sum: CC-BY-4.0
+    OPUS ParaCrawl en-so: CC0-1.0
+    MT560 en-so: CC-BY-4.0
+    NLLB: ODC-BY
+    QuranEnc Somali (Yacob Yusuf): source-specific
+    Tanzil Somali (Abduh): source-specific
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: true
+  license_claim_source: goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02)
+  terms_notes: Per-source licences above are as stated by Goobo Labs (provider claims), not verified by Asal. The
+    README says there is no single corpus-wide licence. The repository has no LICENSE file at add401b, so the licence
+    of its code and tokenizer is unknown.
+quality:
+  provider_claims:
+    deduplicated: true
+    language_identified: true
+    deep_cleaned: true
+    provenance_preserved: true
+    decontaminated: unknown
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: true
+  decontaminated: false
+  known_eval_sources:
+  - XL-Sum (included as a source)
+  - Wikipedia
+  - SomBench (same provider)
+  - MasakhaNEWS (BBC Somali, like XL-Sum)
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+  sensitivity_review: required
+source:
+  homepage: ''
+  repository: https://github.com/goobolabs/somnlp-corpus
+  dataset_url: ''
+  discovered_via: Asal build specification
+  pinned_revision: add401b27137180d1eab8387f92f2b76e10c17e5
+  access_date: '2026-10-02'
+notes: 'Studied in RESEARCH_LOG.md (2026-10-02). The corpus text is not in Git; it is rebuilt by a Rust pipeline
+  from 17 upstream downloads. Aggregates CC100, mC4, MADLAD and HPLT, which overlap heavily: never add its size
+  to theirs. Its LID gate is Lingua (min confidence 0.5), which in Asal''s v0.1 comparison labelled 68% of Oromo
+  test sentences as Somali, so Oromo contamination is a risk to measure. Sentence-class sources (OPUS, MT560, NLLB,
+  Quran) are not LID-gated or near-deduplicated, per the README. No decontamination stage was found in the repository.
+  OPUS/NLLB/MT560 parts may be machine-translated; Somali TinyStories and Somali Alpaca may be model-generated (unknown).
+  QuranEnc/Tanzil need licence and sensitivity review and are tracked as the religion domain.'

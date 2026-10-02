@@ -1,0 +1,427 @@
+{
+  "experiment_id": "ASAL-LID-20261002-lid-comparison-835374",
+  "results": [
+    {
+      "backend": "asal-heuristic",
+      "somali_precision": 0.9537,
+      "somali_recall": 0.992,
+      "somali_f1": 0.9724,
+      "true_positives": 494,
+      "false_negatives": 4,
+      "false_positives": 24,
+      "seconds": 0.19,
+      "per_group": {
+        "cs:som-eng-synthetic": {
+          "n": 204,
+          "called_somali": 7,
+          "called_somali_rate": 0.0343,
+          "top_labels": [
+            [
+              "eng",
+              141
+            ],
+            [
+              "und",
+              56
+            ],
+            [
+              "som",
+              7
+            ]
+          ]
+        },
+        "neg:afr_Latn": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "und",
+              187
+            ],
+            [
+              "eng",
+              17
+            ]
+          ]
+        },
+        "neg:amh_Ethi": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "und",
+              204
+            ]
+          ]
+        },
+        "neg:arb_Arab": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "und",
+              204
+            ]
+          ]
+        },
+        "neg:eng_Latn": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "eng",
+              202
+            ],
+            [
+              "und",
+              2
+            ]
+          ]
+        },
+        "neg:gaz_Latn": {
+          "n": 204,
+          "called_somali": 22,
+          "called_somali_rate": 0.1078,
+          "top_labels": [
+            [
+              "und",
+              182
+            ],
+            [
+              "som",
+              22
+            ]
+          ]
+        },
+        "neg:hau_Latn": {
+          "n": 204,
+          "called_somali": 1,
+          "called_somali_rate": 0.0049,
+          "top_labels": [
+            [
+              "und",
+              203
+            ],
+            [
+              "som",
+              1
+            ]
+          ]
+        },
+        "neg:ind_Latn": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "und",
+              204
+            ]
+          ]
+        },
+        "neg:swh_Latn": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "und",
+              204
+            ]
+          ]
+        },
+        "neg:tir_Ethi": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "und",
+              204
+            ]
+          ]
+        },
+        "neg:yor_Latn": {
+          "n": 204,
+          "called_somali": 1,
+          "called_somali_rate": 0.0049,
+          "top_labels": [
+            [
+              "und",
+              202
+            ],
+            [
+              "eng",
+              1
+            ],
+            [
+              "som",
+              1
+            ]
+          ]
+        },
+        "som:masakhanews-article": {
+          "n": 294,
+          "called_somali": 293,
+          "called_somali_rate": 0.9966,
+          "top_labels": [
+            [
+              "som",
+              293
+            ],
+            [
+              "eng",
+              1
+            ]
+          ]
+        },
+        "som:sib200-sentence": {
+          "n": 204,
+          "called_somali": 201,
+          "called_somali_rate": 0.9853,
+          "top_labels": [
+            [
+              "som",
+              201
+            ],
+            [
+              "und",
+              2
+            ],
+            [
+              "eng",
+              1
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "backend": "lingua",
+      "somali_precision": 0.7757,
+      "somali_recall": 1.0,
+      "somali_f1": 0.8737,
+      "true_positives": 498,
+      "false_negatives": 0,
+      "false_positives": 144,
+      "seconds": 27.37,
+      "per_group": {
+        "cs:som-eng-synthetic": {
+          "n": 204,
+          "called_somali": 179,
+          "called_somali_rate": 0.8775,
+          "top_labels": [
+            [
+              "som",
+              179
+            ],
+            [
+              "eng",
+              15
+            ],
+            [
+              "tgl",
+              5
+            ]
+          ]
+        },
+        "neg:afr_Latn": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "afr",
+              199
+            ],
+            [
+              "nld",
+              4
+            ],
+            [
+              "yor",
+              1
+            ]
+          ]
+        },
+        "neg:amh_Ethi": {
+          "n": 204,
+          "called_somali": 1,
+          "called_somali_rate": 0.0049,
+          "top_labels": [
+            [
+              "und",
+              190
+            ],
+            [
+              "lit",
+              2
+            ],
+            [
+              "slk",
+              2
+            ]
+          ]
+        },
+        "neg:arb_Arab": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "ara",
+              204
+            ]
+          ]
+        },
+        "neg:eng_Latn": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "eng",
+              204
+            ]
+          ]
+        },
+        "neg:gaz_Latn": {
+          "n": 204,
+          "called_somali": 138,
+          "called_somali_rate": 0.6765,
+          "top_labels": [
+            [
+              "som",
+              138
+            ],
+            [
+              "lug",
+              32
+            ],
+            [
+              "fin",
+              16
+            ]
+          ]
+        },
+        "neg:hau_Latn": {
+          "n": 204,
+          "called_somali": 4,
+          "called_somali_rate": 0.0196,
+          "top_labels": [
+            [
+              "swa",
+              43
+            ],
+            [
+              "yor",
+              42
+            ],
+            [
+              "sna",
+              25
+            ]
+          ]
+        },
+        "neg:ind_Latn": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "ind",
+              168
+            ],
+            [
+              "msa",
+              35
+            ],
+            [
+              "tgl",
+              1
+            ]
+          ]
+        },
+        "neg:swh_Latn": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "swa",
+              202
+            ],
+            [
+              "xho",
+              1
+            ],
+            [
+              "lat",
+              1
+            ]
+          ]
+        },
+        "neg:tir_Ethi": {
+          "n": 204,
+          "called_somali": 1,
+          "called_somali_rate": 0.0049,
+          "top_labels": [
+            [
+              "und",
+              193
+            ],
+            [
+              "lit",
+              2
+            ],
+            [
+              "lug",
+              2
+            ]
+          ]
+        },
+        "neg:yor_Latn": {
+          "n": 204,
+          "called_somali": 0,
+          "called_somali_rate": 0.0,
+          "top_labels": [
+            [
+              "yor",
+              203
+            ],
+            [
+              "tso",
+              1
+            ]
+          ]
+        },
+        "som:masakhanews-article": {
+          "n": 294,
+          "called_somali": 294,
+          "called_somali_rate": 1.0,
+          "top_labels": [
+            [
+              "som",
+              294
+            ]
+          ]
+        },
+        "som:sib200-sentence": {
+          "n": 204,
+          "called_somali": 204,
+          "called_somali_rate": 1.0,
+          "top_labels": [
+            [
+              "som",
+              204
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

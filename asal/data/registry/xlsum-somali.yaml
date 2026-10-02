@@ -1,0 +1,64 @@
+id: xlsum-somali
+name: XL-Sum (Somali)
+provider: BUET CSE NLP
+type:
+- summarisation
+- evaluation
+roles:
+- evaluation
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: false
+  derived_from:
+  - BBC News Somali
+  machine_translated: unknown
+  machine_translated_basis: unknown
+  religious_text: unknown
+  domains:
+  - news
+license:
+  corpus_license: review_required
+  license_basis: unknown
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+  terms_notes: 'Conflicting information: Goobo Labs lists XL-Sum as CC-BY-4.0; Asal maintainers recalled a non-commercial
+    licence. Verify on the dataset card.'
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: ''
+  repository: ''
+  dataset_url: https://huggingface.co/datasets/csebuetnlp/xlsum
+  discovered_via: SomNLP-Corpus derived_from list
+notes: 'BBC Somali articles with summaries. Included inside SomNLP-Corpus, so its test split is a known contamination
+  risk. Likely overlaps MasakhaNEWS (also BBC Somali). Not verified by Asal: huggingface.co was blocked by the session
+  network policy on 2026-10-02.'

@@ -1,0 +1,61 @@
+id: quranenc-so
+name: QuranEnc (Somali translation)
+provider: QuranEnc
+type:
+- text
+- parallel
+roles:
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: false
+  derived_from: []
+  machine_translated: false
+  machine_translated_basis: unknown
+  religious_text: true
+  domains:
+  - religion
+license:
+  corpus_license: unknown
+  license_basis: unknown
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+  sensitivity_review: required
+source:
+  homepage: ''
+  repository: ''
+  dataset_url: ''
+  discovered_via: SomNLP-Corpus derived_from list
+notes: Religious translation. Requires its own licence review (translation copyright is held per translator/publisher)
+  and a sensitivity review before inclusion; tracked as a separate religion domain. machine_translated=false is
+  an expectation, not verified.

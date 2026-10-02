@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use Asal, please cite it as below."
+title: "Asal: Somali-native AI foundation model research"
+version: 0.1.0
+date-released: 2026-10-02
+license: Apache-2.0
+authors:
+  - name: "Asal contributors"
+keywords:
+  - Somali
+  - Maay
+  - low-resource NLP
+  - language models
+  - data provenance

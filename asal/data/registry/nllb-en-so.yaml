@@ -1,0 +1,62 @@
+id: nllb-en-so
+name: NLLB mined bitext (English-Somali)
+provider: Meta AI / AllenAI
+type:
+- parallel
+- translation
+roles:
+- training_candidate
+language:
+  primary: somali
+  iso_639_1: so
+  iso_639_3: som
+  others:
+  - eng
+dialects:
+  observed: unknown
+  provider_claim: unknown
+size:
+  provider_reported: {}
+  verified:
+    documents: unknown
+    words: unknown
+    tokens: unknown
+    after_cross_source_dedup: unknown
+provenance:
+  aggregation: false
+  derived_from:
+  - Common Crawl
+  machine_translated: partial
+  machine_translated_basis: secondary_source
+  religious_text: unknown
+  domains:
+  - web
+license:
+  corpus_license: unknown
+  license_basis: unknown
+  per_source_licenses: review_required
+  commercial_use: review_required
+  redistribution: review_required
+  attribution_required: review_required
+quality:
+  provider_claims: {}
+  verified_by_asal:
+    deduplicated: unknown
+    language_identified: unknown
+    cleaned: unknown
+    provenance_preserved: unknown
+evaluation_overlap:
+  contains_known_eval_sources: review_required
+  decontaminated: false
+status:
+  discovered: true
+  inspected: false
+  sampled: false
+  approved_for_training: false
+source:
+  homepage: ''
+  repository: ''
+  dataset_url: ''
+  discovered_via: SomNLP-Corpus derived_from list
+notes: 'Mined (not human-verified) bitext; alignment quality varies; treat like synthetic data until a native-speaker
+  sample review. Not verified by Asal: huggingface.co was blocked by the session network policy on 2026-10-02.'

@@ -1,0 +1,49 @@
+# Candidate open base models for Asal-Adapted (docs/MODEL.md).
+# Licence and Somali-coverage entries are HINTS from Asal maintainers' prior
+# knowledge, recorded so they can be checked; none was verified in-session
+# (huggingface.co was unreachable on 2026-10-02). Selection happens in Phase 4,
+# on measured tokenizer fertility and AsalBench scores, not on these hints.
+selection_criteria:
+  - licence permits continued pretraining, fine-tuning and release of derivatives (and commercial use, if Asal needs it)
+  - Somali in the pretraining mix, demonstrated by measurement (bits per byte on held-out Somali), not by claims
+  - tokenizer fertility on held-out Somali (docs/TOKENIZER.md)
+  - decoder-only, size that fits docs/COMPUTE.md (start at 0.5B-3B)
+candidates:
+  - family: Qwen (2.5 / 3), small sizes
+    architecture: decoder-only
+    licence_hint: Apache-2.0 for most small sizes (check per checkpoint)
+    somali_coverage: unknown
+    status: to_measure
+  - family: Gemma (2 / 3), small sizes
+    architecture: decoder-only
+    licence_hint: Gemma Terms of Use (custom; has use restrictions) - review_required
+    somali_coverage: unknown (Gemma 3 is described by its provider as broadly multilingual)
+    status: to_measure
+  - family: Llama 3.x, small sizes
+    architecture: decoder-only
+    licence_hint: Llama Community License (custom; attribution and naming conditions) - review_required
+    somali_coverage: unknown
+    status: to_measure
+  - family: Aya (Aya-101 is mT5-based; Aya Expanse / Aya Vision are decoder-only)
+    architecture: encoder-decoder (Aya-101) / decoder-only (Expanse)
+    licence_hint: Aya-101 Apache-2.0; Aya Expanse non-commercial (CC-BY-NC) - review_required
+    somali_coverage: claimed by provider for Aya-101 (101 languages); to verify
+    status: to_measure
+  - family: mT5 / byT5
+    architecture: encoder-decoder
+    licence_hint: Apache-2.0
+    somali_coverage: Somali is one of the mC4 languages (provider claim)
+    status: reference_only (not decoder-only; useful as an MT/encoder baseline)
+  - family: Apertus (Swiss AI)
+    architecture: decoder-only
+    licence_hint: Apache-2.0 (to verify)
+    somali_coverage: claimed broad multilingual coverage; to verify
+    status: to_measure
+  - family: SmolLM / other small open decoders
+    architecture: decoder-only
+    licence_hint: Apache-2.0 (to verify)
+    somali_coverage: likely minimal; useful as a low-cost control
+    status: to_measure
+reference_models_for_evaluation:
+  note: Every evaluation compares Asal-Scratch, Asal-Adapted and at least one strong commercial or open reference on the same items. Check each provider's terms before using outputs for anything other than evaluation.
+encoders_for_classification_baselines: [AfroXLMR, AfriBERTa, SERENGETI, SomBERTa]

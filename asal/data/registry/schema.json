@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asal.local/schemas/dataset-registry-entry.json",
+  "title": "Asal dataset registry entry",
+  "description": "Provider claims and Asal-verified values are kept in separate fields. Unknown facts are 'unknown' or 'review_required', never guessed.",
+  "type": "object",
+  "required": ["id", "name", "provider", "type", "roles", "language", "dialects", "size", "provenance", "license", "quality", "evaluation_overlap", "status", "source", "notes"],
+  "additionalProperties": false,
+  "$defs": {
+    "flag": {"enum": [true, false, "unknown", "review_required", "partial"]},
+    "count": {"anyOf": [{"type": "integer", "minimum": 0}, {"type": "number", "minimum": 0}, {"const": "unknown"}]},
+    "basis": {"enum": ["verified_in_source", "provider_claim", "secondary_source", "unknown"]}
+  },
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "name": {"type": "string", "minLength": 1},
+    "provider": {"type": "string", "minLength": 1},
+    "type": {
+      "type": "array", "minItems": 1,
+      "items": {"enum": ["text", "pretraining", "instruction", "reasoning", "parallel", "translation", "speech", "asr", "tts",
+                          "evaluation", "classification", "qa", "ner", "summarisation", "safety", "lexicon", "names", "resource-index"]}
+    },
+    "roles": {
+      "type": "array", "minItems": 1,
+      "items": {"enum": ["training_candidate", "evaluation", "reference", "pipeline_validation_sample"]}
+    },
+    "language": {
+      "type": "object", "required": ["primary"],
+      "properties": {
+        "primary": {"type": "string"},
+        "iso_639_1": {"type": "string"},
+        "iso_639_3": {"type": "string"},
+        "others": {"type": "array", "items": {"type": "string"}},
+        "script": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "dialects": {
+      "type": "object", "required": ["observed", "provider_claim"],
+      "properties": {
+        "observed": {"anyOf": [{"const": "unknown"}, {"type": "object"}]},
+        "provider_claim": {"anyOf": [{"const": "unknown"}, {"type": "string"}, {"type": "array", "items": {"type": "string"}}]}
+      },
+      "additionalProperties": false
+    },
+    "size": {
+      "type": "object", "required": ["provider_reported", "verified"],
+      "properties": {
+        "provider_reported": {
+          "type": "object",
+          "properties": {"claim_source": {"type": "string"}},
+          "additionalProperties": {"anyOf": [{"$ref": "#/$defs/count"}, {"type": "string"}]}
+        },
+        "verified": {
+          "type": "object",
+          "properties": {
+            "documents": {"$ref": "#/$defs/count"},
+            "words": {"$ref": "#/$defs/count"},
+            "tokens": {"$ref": "#/$defs/count"},
+            "after_cross_source_dedup": {"$ref": "#/$defs/count"},
+            "measured_by": {"type": "string"}
+          },
+          "additionalProperties": {"$ref": "#/$defs/count"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object", "required": ["aggregation", "derived_from", "machine_translated", "religious_text", "domains"],
+      "properties": {
+        "aggregation": {"$ref": "#/$defs/flag"},
+        "derived_from": {"type": "array", "items": {"type": "string"}},
+        "machine_translated": {"$ref": "#/$defs/flag"},
+        "machine_translated_basis": {"$ref": "#/$defs/basis"},
+        "human_translated": {"$ref": "#/$defs/flag"},
+        "religious_text": {"$ref": "#/$defs/flag"},
+        "domains": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "license": {
+      "type": "object",
+      "required": ["corpus_license", "license_basis", "commercial_use", "redistribution", "attribution_required"],
+      "properties": {
+        "corpus_license": {"type": "string"},
+        "license_basis": {"$ref": "#/$defs/basis"},
+        "license_claim_source": {"type": "string"},
+        "per_source_licenses": {"anyOf": [{"const": "review_required"}, {"const": "not_applicable"}, {"type": "object"}]},
+        "commercial_use": {"$ref": "#/$defs/flag"},
+        "redistribution": {"$ref": "#/$defs/flag"},
+        "attribution_required": {"$ref": "#/$defs/flag"},
+        "terms_notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "quality": {
+      "type": "object", "required": ["provider_claims", "verified_by_asal"],
+      "properties": {
+        "provider_claims": {"type": "object", "additionalProperties": {"$ref": "#/$defs/flag"}},
+        "verified_by_asal": {"type": "object", "additionalProperties": {"$ref": "#/$defs/flag"}}
+      },
+      "additionalProperties": false
+    },
+    "evaluation_overlap": {
+      "type": "object", "required": ["contains_known_eval_sources", "decontaminated"],
+      "properties": {
+        "contains_known_eval_sources": {"$ref": "#/$defs/flag"},
+        "known_eval_sources": {"type": "array", "items": {"type": "string"}},
+        "decontaminated": {"$ref": "#/$defs/flag"}
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "type": "object", "required": ["discovered", "inspected", "sampled", "approved_for_training"],
+      "properties": {
+        "discovered": {"type": "boolean"},
+        "inspected": {"type": "boolean"},
+        "sampled": {"type": "boolean"},
+        "approved_for_training": {"type": "boolean"},
+        "sensitivity_review": {"enum": ["not_required", "required", "in_progress", "done"]}
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object", "required": ["homepage", "repository", "dataset_url"],
+      "properties": {
+        "homepage": {"type": "string"},
+        "repository": {"type": "string"},
+        "dataset_url": {"type": "string"},
+        "paper": {"type": "string"},
+        "version": {"type": "string"},
+        "pinned_revision": {"type": "string"},
+        "access_date": {"type": "string"},
+        "discovered_via": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "notes": {"type": "string"}
+  }
+}
