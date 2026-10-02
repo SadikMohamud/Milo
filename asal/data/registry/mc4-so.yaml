@@ -14,7 +14,11 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    documents: 893012
+    goobo_final_documents: 586265
+    goobo_final_words: 214035586
   verified:
     documents: unknown
     words: unknown
@@ -30,12 +34,13 @@ provenance:
   domains:
   - web
 license:
-  corpus_license: unknown
-  license_basis: unknown
+  corpus_license: ODC-BY
+  license_basis: secondary_source
   per_source_licenses: review_required
   commercial_use: review_required
   redistribution: review_required
   attribution_required: review_required
+  license_claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
 quality:
   provider_claims: {}
   verified_by_asal:

@@ -7,6 +7,7 @@ that is the pipeline's job.
 from __future__ import annotations
 
 import csv
+import zlib
 from pathlib import Path
 
 csv.field_size_limit(1 << 30)
@@ -39,7 +40,42 @@ def read_tsv(entry: dict, raw_dir: Path) -> list[dict]:
     return records
 
 
-READERS = {"tsv": read_tsv}
+NLLB_COLUMNS = ["eng", "som", "laser_score", "eng_lid_score", "som_lid_score",
+                "eng_source", "eng_url", "som_source", "som_url"]
+
+
+def read_nllb_gz_prefix(entry: dict, raw_dir: Path) -> list[dict]:
+    """Read the Somali side of an NLLB mined-bitext file from a gzip *prefix*.
+
+    The file is a single gzip stream, so a byte-range prefix decompresses to a
+    prefix of the text; the last (truncated) line is dropped. Columns follow
+    NLLB_COLUMNS. Record ids are 0-based line numbers in the upstream file.
+    """
+    raw = (raw_dir / entry["path"]).read_bytes()
+    text = zlib.decompressobj(16 + zlib.MAX_WBITS).decompress(raw).decode("utf-8", errors="replace")
+    lines = text.split("\n")[:-1]  # last line may be truncated
+    records = []
+    for i, line in enumerate(lines):
+        cols = line.split("\t")
+        if len(cols) < 5:
+            continue
+        row = dict(zip(NLLB_COLUMNS, cols))
+        rid = f"{entry['split']}-{i}"
+        url = row.get("som_url", "_")
+        records.append({
+            "id": f"{entry['source_id']}:{rid}",
+            "source": entry["source_id"],
+            "source_record_id": rid,
+            "split": entry["split"],
+            "text": row["som"].strip(),
+            "meta": {"laser_score": float(row["laser_score"]), "som_lid_score": float(row["som_lid_score"]),
+                     "som_source": row.get("som_source"), "url": None if url in ("_", "") else url},
+            "raw_file_sha256": entry.get("sha256"),
+        })
+    return records
+
+
+READERS = {"tsv": read_tsv, "nllb_gz_prefix": read_nllb_gz_prefix}
 
 
 def read(entry: dict, raw_dir: Path) -> list[dict]:

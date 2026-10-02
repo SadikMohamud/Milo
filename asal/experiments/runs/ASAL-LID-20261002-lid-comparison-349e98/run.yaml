@@ -1,0 +1,61 @@
+id: ASAL-LID-20261002-lid-comparison-349e98
+kind: LID
+description: Somali LID comparison on held-out SIB-200 / MasakhaNEWS test data.
+created: '2026-10-02T15:39:39+00:00'
+status: completed
+config:
+  backends:
+  - asal-heuristic
+  - lingua
+  - asal-ensemble
+  ensemble_tuning:
+    tuned_on: SIB-200 dev (11 languages) + MasakhaNEWS Somali dev
+    selected_low_threshold: 0.5
+  items:
+    som:masakhanews-article: 294
+    som:sib200-sentence: 204
+    neg:eng_Latn: 204
+    neg:swh_Latn: 204
+    neg:gaz_Latn: 204
+    neg:hau_Latn: 204
+    neg:arb_Arab: 204
+    neg:amh_Ethi: 204
+    neg:tir_Ethi: 204
+    neg:yor_Latn: 204
+    neg:afr_Latn: 204
+    neg:ind_Latn: 204
+    cs:som-eng-synthetic: 204
+model: unknown
+track: not_applicable
+base_model: unknown
+parameters: unknown
+dataset: sample-v0.1 + lid-eval-v0.1
+dataset_fingerprint: unknown
+epochs: unknown
+tokenizer: unknown
+tokenizer_version: unknown
+context_length: unknown
+batch_size: unknown
+learning_rate: unknown
+optimizer: unknown
+scheduler: unknown
+precision: unknown
+steps: unknown
+seed: unknown
+hardware: unknown
+gpu_hours: unknown
+estimated_cost: unknown
+git_commit: f4016eb8f1f263bd6bef644d7fa4be75731f7721-dirty
+results:
+  asal-heuristic:
+    f1: 0.9724
+    precision: 0.9537
+    recall: 0.992
+  lingua:
+    f1: 0.8737
+    precision: 0.7757
+    recall: 1.0
+  asal-ensemble:
+    f1: 0.9724
+    precision: 0.9537
+    recall: 0.992

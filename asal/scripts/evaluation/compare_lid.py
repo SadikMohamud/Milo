@@ -25,16 +25,16 @@ from asal import experiments, lid, paths, readers
 from asal.download import load_manifest
 from asal.textutil import words
 
-REPORT_DIR = paths.REPORTS / "data_intelligence_v0.1"
+REPORT_DIR = paths.REPORTS / "data_v0.2_nllb"
 
 
-def build_items():
+def build_items(split: str = "test"):
     sample = load_manifest(paths.MANIFESTS / "sample-v0.1.yaml")
     lid_m = load_manifest(paths.MANIFESTS / "lid-eval-v0.1.yaml")
     items = []
     by_id = defaultdict(dict)
     for f in sample["files"]:
-        if f["split"] != "test":
+        if f["split"] != split:
             continue
         group = "som:sib200-sentence" if f["source_id"] == "sib200-som" else "som:masakhanews-article"
         for r in readers.read(f, paths.RAW):
@@ -42,11 +42,15 @@ def build_items():
             if f["source_id"] == "sib200-som":
                 by_id[r["source_record_id"]]["som"] = r["text"]
     for f in lid_m["files"]:
+        if f["split"] != split:
+            continue
         code = f["language"].split("_")[0]
         for r in readers.read(f, paths.RAW):
             items.append({"group": f"neg:{f['language']}", "gold": code, "text": r["text"]})
             if code == "eng":
                 by_id[r["source_record_id"]]["eng"] = r["text"]
+    if split != "test":
+        return items
     for rid, pair in sorted(by_id.items()):
         if "som" in pair and "eng" in pair:
             so, en = words(pair["som"]), pair["eng"].split()
@@ -104,6 +108,25 @@ def markdown(results, items, exp_id):
     return "\n".join(lines)
 
 
+def tune_ensemble(heuristic, lingua_backend) -> tuple[float, list]:
+    """Pick the ensemble's low threshold by Somali F1 on the dev splits (never on test)."""
+    dev = build_items("dev")
+    h_scores = [heuristic.score(it["text"]) for it in dev]
+    l_labels = [lingua_backend.predict(it["text"]).label for it in dev]
+    curve = []
+    for t in [round(0.05 * i, 2) for i in range(0, 11)]:
+        pred = [h >= heuristic.threshold or (lab == "som" and h >= t) for h, lab in zip(h_scores, l_labels)]
+        tp = sum(p and it["gold"] == "som" for p, it in zip(pred, dev))
+        fp = sum(p and it["gold"] != "som" for p, it in zip(pred, dev))
+        fn = sum((not p) and it["gold"] == "som" for p, it in zip(pred, dev))
+        prec = tp / (tp + fp) if tp + fp else 0.0
+        rec = tp / (tp + fn) if tp + fn else 0.0
+        f1 = 2 * prec * rec / (prec + rec) if prec + rec else 0.0
+        curve.append({"low_threshold": t, "precision": round(prec, 4), "recall": round(rec, 4), "f1": round(f1, 4)})
+    best = max(curve, key=lambda c: (c["f1"], c["low_threshold"]))
+    return best["low_threshold"], curve
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--fasttext-model")
@@ -111,15 +134,29 @@ def main() -> int:
     args = ap.parse_args()
     items = build_items()
     backends = lid.available_backends(args.fasttext_model, args.glotlid_model)
+    tuning = None
+    lingua_b = next((b for b in backends if b.name == "lingua"), None)
+    if lingua_b is not None:
+        heur = next(b for b in backends if b.name == "asal-heuristic")
+        t, curve = tune_ensemble(heur, lingua_b)
+        tuning = {"tuned_on": "SIB-200 dev (11 languages) + MasakhaNEWS Somali dev", "selected_low_threshold": t,
+                  "curve": curve}
+        backends.append(lid.EnsembleLID(heur, lingua_b, low_threshold=t))
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
     exp_id, _ = experiments.register("LID", "lid-comparison", config={"backends": [b.name for b in backends],
+                                     "ensemble_tuning": {k: v for k, v in (tuning or {}).items() if k != "curve"},
                                      "items": dict(Counter(it["group"] for it in items))},
                                      description="Somali LID comparison on held-out SIB-200 / MasakhaNEWS test data.",
                                      dataset="sample-v0.1 + lid-eval-v0.1", track="not_applicable")
     results = [evaluate(b, items) for b in backends]
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
-    (REPORT_DIR / "lid_comparison.json").write_text(json.dumps({"experiment_id": exp_id, "results": results},
+    (REPORT_DIR / "lid_comparison.json").write_text(json.dumps({"experiment_id": exp_id, "ensemble_tuning": tuning,
+                                                                "results": results},
                                                                indent=2, ensure_ascii=False), encoding="utf-8")
     md = markdown(results, items, exp_id)
+    if tuning:
+        md += (f"\nasal-ensemble low threshold {tuning['selected_low_threshold']} was selected by F1 on dev splits "
+               "only; the numbers above are on test splits.\n")
     (REPORT_DIR / "lid_comparison.md").write_text(md, encoding="utf-8")
     experiments.update(exp_id, status="completed",
                        results={r["backend"]: {"f1": r["somali_f1"], "precision": r["somali_precision"],

@@ -1,0 +1,23 @@
+manifest_id: nllb-sample-v0.2
+created: '2026-10-02'
+purpose: 'Pipeline validation on web-mined Somali text. The first 8 MiB of the NLLB eng_Latn-som_Latn mined-bitext file, which
+  is sorted by LASER alignment score (descending), so this is the top-scored ~52K pairs out of ~10.2M: NOT a random sample.
+  Somali side only. Not approved for training.'
+notes: Pinned by GCS object generation 1659916954735522 (full-object md5 gS5eDvCrd26LRP7o8YsB7Q==, 1,703,902,544 bytes) and
+  by the SHA-256 of the byte range.
+files:
+- source_id: nllb-en-so
+  split: head8m
+  role: pipeline_validation_sample
+  url: https://storage.googleapis.com/allennlp-data-bucket/nllb/eng_Latn-som_Latn.gz
+  upstream_generation: '1659916954735522'
+  upstream_md5_base64: gS5eDvCrd26LRP7o8YsB7Q==
+  upstream_bytes: 1703902544
+  byte_range:
+  - 0
+  - 8388607
+  sha256: 5937a1218563551ba5065e0bf9c35ed37704c33b3f03d568667dea5664e9a789
+  bytes: 8388608
+  path: nllb-en-so/1659916954735522/eng_Latn-som_Latn.head8m.gz
+  format: nllb_gz_prefix
+  record_class: sentence

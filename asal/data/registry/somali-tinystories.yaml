@@ -13,7 +13,12 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    rows: 42000
+    verbatim_duplicate_rows: 20900
+    goobo_final_documents: 21100
+    goobo_final_words: 2396895
   verified:
     documents: unknown
     words: unknown
@@ -59,4 +64,5 @@ source:
   discovered_via: goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02)
 notes: 'TinyStories-style data is usually model-generated; synthetic status unknown and must be resolved before
   use. Licence unspecified upstream. Not verified by Asal: huggingface.co was blocked by the session network policy
-  on 2026-10-02.'
+  on 2026-10-02. Goobo categorises it as "synthetic stories" and notes 20,900 of 42,000 rows are verbatim duplicates
+  upstream.'

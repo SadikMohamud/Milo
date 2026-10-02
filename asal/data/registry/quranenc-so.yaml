@@ -14,7 +14,11 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    rows: 7373
+    goobo_final_documents: 7072
+    goobo_final_words: 160068
   verified:
     documents: unknown
     words: unknown
@@ -54,7 +58,7 @@ status:
 source:
   homepage: ''
   repository: ''
-  dataset_url: ''
+  dataset_url: https://quranenc.com/api/v1/translation/sura/somali_yacob/1
   discovered_via: SomNLP-Corpus derived_from list
 notes: Religious translation. Requires its own licence review (translation copyright is held per translator/publisher)
   and a sensitivity review before inclusion; tracked as a separate religion domain. machine_translated=false is

@@ -14,7 +14,11 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    documents: 217528
+    goobo_final_documents: 121764
+    goobo_final_words: 4890563
   verified:
     documents: unknown
     words: unknown
@@ -28,12 +32,13 @@ provenance:
   religious_text: unknown
   domains: []
 license:
-  corpus_license: unknown
-  license_basis: unknown
+  corpus_license: MIT
+  license_basis: secondary_source
   per_source_licenses: review_required
   commercial_use: review_required
   redistribution: review_required
   attribution_required: review_required
+  license_claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
 quality:
   provider_claims: {}
   verified_by_asal:
@@ -52,6 +57,6 @@ status:
 source:
   homepage: ''
   repository: ''
-  dataset_url: ''
+  dataset_url: https://huggingface.co/datasets/maanka2/somali-web-corpus
   discovered_via: SomNLP-Corpus derived_from list
 notes: Named only as an upstream of SomNLP-Corpus. Provider, location and licence unknown.

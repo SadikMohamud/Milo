@@ -123,6 +123,37 @@ class LinguaLID:
         return LIDPrediction(label=label, somali_score=round(float(score), 4), backend=self.name)
 
 
+# --- Ensemble ------------------------------------------------------------------
+
+class EnsembleLID:
+    """Somali if the heuristic is confident, or if Lingua says Somali and the
+    heuristic gives at least weak Somali evidence (``low_threshold``).
+
+    Motivation (v0.2): the heuristic alone rejects many short Somali web
+    sentences; Lingua alone labels most Oromo as Somali. ``low_threshold`` is
+    tuned on SIB-200 *dev* splits (scripts/evaluation/compare_lid.py --tune)
+    and reported on test splits.
+    """
+
+    name = "asal-ensemble"
+
+    def __init__(self, heuristic: AsalHeuristicLID | None = None, lingua: "LinguaLID | None" = None,
+                 low_threshold: float = 0.2):
+        self.heuristic = heuristic or AsalHeuristicLID()
+        self.lingua = lingua or LinguaLID()
+        self.low_threshold = low_threshold
+
+    def predict(self, text: str) -> LIDPrediction:
+        h = self.heuristic.score(text)
+        lp = self.lingua.predict(text)
+        if h >= self.heuristic.threshold or (lp.label == SOMALI and h >= self.low_threshold):
+            label = SOMALI
+        else:
+            label = lp.label if lp.label != SOMALI else UNDETERMINED
+        return LIDPrediction(label=label, somali_score=round(max(h, lp.somali_score if label == SOMALI else h), 4),
+                             backend=self.name)
+
+
 # --- fastText-format models (lid.176, GlotLID) --------------------------------
 
 class FastTextLID:
@@ -160,6 +191,32 @@ def fasttext_lid176(model_path: str | Path) -> FastTextLID:
 
 def glotlid(model_path: str | Path) -> FastTextLID:
     return FastTextLID("glotlid", model_path, label_map={}, somali_labels={"som_Latn"})
+
+
+# --- segment-level LID (code-switching) ----------------------------------------
+
+import re as _re
+
+_SEGMENT_RE = _re.compile(r"(?<=[.!?\n])\s+")
+
+
+def segment_lid(text: str, backend=None, min_words: int = 4) -> dict:
+    """Label each sentence-like segment and summarise.
+
+    Segments shorter than ``min_words`` are not labelled (LID is unreliable on
+    them). ``code_switched`` is True when at least one segment is Somali and at
+    least one is labelled a different, determined language. Intra-sentence
+    switching is not detected by this function.
+    """
+    backend = backend or AsalHeuristicLID()
+    counts: dict[str, int] = {}
+    for seg in _SEGMENT_RE.split(text):
+        if len(words(seg)) < min_words:
+            continue
+        label = backend.predict(seg).label
+        counts[label] = counts.get(label, 0) + 1
+    other = {k for k in counts if k not in (SOMALI, UNDETERMINED)}
+    return {"segments": counts, "code_switched": SOMALI in counts and bool(other)}
 
 
 def available_backends(fasttext_model: str | None = None, glotlid_model: str | None = None) -> list:

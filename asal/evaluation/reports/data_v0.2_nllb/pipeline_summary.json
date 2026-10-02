@@ -1,0 +1,985 @@
+{
+  "experiment_id": "ASAL-DATA-20261002-nllb-head-pipeline-961d5c",
+  "pipeline_version": "asal-data-pipeline-0.1.0",
+  "mode": "validation",
+  "input_records": 51806,
+  "stages": [
+    {
+      "stage": "normalise",
+      "input": 51806,
+      "kept": 51806,
+      "rejected": 0,
+      "rejected_by_reason": {},
+      "stats": {
+        "changes": {
+          "whitespace": 454,
+          "apostrophe_variant": 33
+        }
+      },
+      "log": []
+    },
+    {
+      "stage": "format_validation",
+      "input": 51806,
+      "kept": 51806,
+      "rejected": 0,
+      "rejected_by_reason": {},
+      "stats": {},
+      "log": []
+    },
+    {
+      "stage": "language_identification",
+      "input": 51806,
+      "kept": 45214,
+      "rejected": 6592,
+      "rejected_by_reason": {
+        "lid_not_somali": 6592
+      },
+      "stats": {
+        "primary_backend": "asal-heuristic",
+        "backends": [
+          "asal-heuristic"
+        ],
+        "backend_agreement_on_is_somali": {
+          "all_agree": 51806
+        },
+        "code_switched_documents (segment-level, asal-heuristic)": 68
+      },
+      "log": []
+    },
+    {
+      "stage": "quality_filter",
+      "input": 45214,
+      "kept": 44122,
+      "rejected": 1092,
+      "rejected_by_reason": {
+        "too_short": 1040,
+        "url_heavy": 18,
+        "replacement_character": 17,
+        "mojibake": 15,
+        "html_markup": 2
+      },
+      "stats": {
+        "thresholds": {
+          "min_words": 5,
+          "max_chars": 200000,
+          "max_html_tags": 2,
+          "max_url_char_ratio": 0.2,
+          "max_punct_ratio": 0.25,
+          "max_duplicate_line_ratio": 0.3,
+          "min_unique_word_ratio": 0.2,
+          "min_alpha_ratio": 0.6
+        }
+      },
+      "log": []
+    },
+    {
+      "stage": "pii_filter",
+      "input": 44122,
+      "kept": 44122,
+      "rejected": 0,
+      "rejected_by_reason": {},
+      "stats": {
+        "documents_with_redactions": 0,
+        "redactions": {}
+      },
+      "log": []
+    },
+    {
+      "stage": "exact_dedup",
+      "input": 44122,
+      "kept": 32195,
+      "rejected": 11927,
+      "rejected_by_reason": {
+        "exact_duplicate": 11927
+      },
+      "stats": {
+        "input": 44122,
+        "kept": 32195,
+        "removed": 11927,
+        "reason": "exact_duplicate",
+        "removed_within_source": 11927,
+        "removed_cross_source": 0,
+        "removed_by_source_pair": {
+          "nllb-en-so->nllb-en-so": 11927
+        }
+      },
+      "log": []
+    },
+    {
+      "stage": "near_dedup",
+      "input": 32195,
+      "kept": 31813,
+      "rejected": 382,
+      "rejected_by_reason": {
+        "near_duplicate": 382
+      },
+      "stats": {
+        "input": 32195,
+        "kept": 31813,
+        "removed": 382,
+        "reason": "near_duplicate",
+        "removed_within_source": 382,
+        "removed_cross_source": 0,
+        "removed_by_source_pair": {
+          "nllb-en-so->nllb-en-so": 382
+        },
+        "threshold": 0.8,
+        "num_perm": 128,
+        "bands": 32,
+        "shingle_size": 5
+      },
+      "log": []
+    },
+    {
+      "stage": "boilerplate_removal",
+      "input": 31813,
+      "kept": 31813,
+      "rejected": 0,
+      "rejected_by_reason": {},
+      "stats": {
+        "boilerplate_line_types": {
+          "nllb-en-so": 0
+        },
+        "lines_removed": {
+          "nllb-en-so": 0
+        }
+      },
+      "log": [
+        "nllb-en-so: 0 recurring line type(s) removed"
+      ]
+    },
+    {
+      "stage": "machine_translation_flagging",
+      "input": 31813,
+      "kept": 31813,
+      "rejected": 0,
+      "rejected_by_reason": {},
+      "stats": {
+        "machine_translated": {
+          "partial": 23909,
+          "suspected": 7904
+        },
+        "suspected_by_rule": {
+          "language_path": 4244,
+          "language_subdomain": 3660
+        },
+        "top_suspected_hosts": [
+          [
+            "2fish.co",
+            700
+          ],
+          [
+            "so.rayhaber.com",
+            549
+          ],
+          [
+            "so.eturbonews.com",
+            441
+          ],
+          [
+            "halal-travel.ehalal.io",
+            424
+          ],
+          [
+            "so.lezgka.ru",
+            315
+          ],
+          [
+            "so.urdolls.com",
+            314
+          ],
+          [
+            "so.wondershare.com",
+            182
+          ],
+          [
+            "www.actualidadiphone.com",
+            161
+          ],
+          [
+            "so.minnetonkaschools.org",
+            160
+          ],
+          [
+            "www.lawhelpmn.org",
+            148
+          ],
+          [
+            "www.martinvrijland.nl",
+            131
+          ],
+          [
+            "www.apg29.nu",
+            120
+          ],
+          [
+            "so.aasraw.com",
+            104
+          ],
+          [
+            "so.millionmakers.com",
+            103
+          ],
+          [
+            "www.mcknight.org",
+            98
+          ],
+          [
+            "blog.desdelinux.net",
+            94
+          ],
+          [
+            "so.rewardfoundation.org",
+            94
+          ],
+          [
+            "www.rikoooo.com",
+            93
+          ],
+          [
+            "www.jw.org",
+            86
+          ],
+          [
+            "www.bezzia.com",
+            83
+          ]
+        ]
+      },
+      "log": [
+        "Source-level flag from the registry, overridden to 'suspected' by the URL language-subdomain/path heuristic (asal.flags). Suspected records are kept, not removed."
+      ]
+    },
+    {
+      "stage": "dialect_classification",
+      "input": 31813,
+      "kept": 31813,
+      "rejected": 0,
+      "rejected_by_reason": {},
+      "stats": {
+        "dialect": {
+          "unknown": 31813
+        }
+      },
+      "log": [
+        "No human-labelled dialect set exists yet (docs/ANNOTATION_GUIDELINES.md), so no classifier can be trained or evaluated. Every record is 'unknown'."
+      ]
+    },
+    {
+      "stage": "domain_classification",
+      "input": 31813,
+      "kept": 31813,
+      "rejected": 0,
+      "rejected_by_reason": {},
+      "stats": {
+        "domain": {
+          "web": 29426,
+          "religion": 2387
+        }
+      },
+      "log": [
+        "Source default domain from the registry, overridden to 'religion' by the religious-lexicon heuristic (asal.flags). No general document classifier yet."
+      ]
+    },
+    {
+      "stage": "evaluation_decontamination",
+      "input": 31813,
+      "kept": 31803,
+      "rejected": 10,
+      "rejected_by_reason": {
+        "eval_contamination": 10
+      },
+      "stats": {
+        "n=13": {
+          "n": 13,
+          "contaminated_by_matched_ngrams": {
+            "1": 1,
+            "2-4": 0,
+            "5-19": 3,
+            "20+": 0
+          },
+          "min_matches": 1,
+          "training_records_checked": 31813,
+          "training_records_contaminated": 4,
+          "per_eval_set": {
+            "masakhanews-som-dev": {
+              "eval_items_indexed": 148,
+              "eval_items_skipped_too_short": 0,
+              "training_records_overlapping": 2,
+              "eval_items_found_in_training": 2
+            },
+            "masakhanews-som-test": {
+              "eval_items_indexed": 294,
+              "eval_items_skipped_too_short": 0,
+              "training_records_overlapping": 2,
+              "eval_items_found_in_training": 2
+            },
+            "sib200-som-dev": {
+              "eval_items_indexed": 99,
+              "eval_items_skipped_too_short": 0,
+              "training_records_overlapping": 0,
+              "eval_items_found_in_training": 0
+            },
+            "sib200-som-test": {
+              "eval_items_indexed": 204,
+              "eval_items_skipped_too_short": 0,
+              "training_records_overlapping": 0,
+              "eval_items_found_in_training": 0
+            }
+          }
+        },
+        "n=8": {
+          "n": 8,
+          "contaminated_by_matched_ngrams": {
+            "1": 4,
+            "2-4": 2,
+            "5-19": 0,
+            "20+": 0
+          },
+          "min_matches": 1,
+          "training_records_checked": 31809,
+          "training_records_contaminated": 6,
+          "per_eval_set": {
+            "masakhanews-som-dev": {
+              "eval_items_indexed": 148,
+              "eval_items_skipped_too_short": 0,
+              "training_records_overlapping": 0,
+              "eval_items_found_in_training": 0
+            },
+            "masakhanews-som-test": {
+              "eval_items_indexed": 294,
+              "eval_items_skipped_too_short": 0,
+              "training_records_overlapping": 6,
+              "eval_items_found_in_training": 6
+            },
+            "sib200-som-dev": {
+              "eval_items_indexed": 99,
+              "eval_items_skipped_too_short": 0,
+              "training_records_overlapping": 0,
+              "eval_items_found_in_training": 0
+            },
+            "sib200-som-test": {
+              "eval_items_indexed": 204,
+              "eval_items_skipped_too_short": 0,
+              "training_records_overlapping": 0,
+              "eval_items_found_in_training": 0
+            }
+          }
+        }
+      },
+      "log": []
+    },
+    {
+      "stage": "license_validation",
+      "input": 31803,
+      "kept": 31803,
+      "rejected": 0,
+      "rejected_by_reason": {},
+      "stats": {
+        "license_status": {
+          "not_approved_validation_only": 31803
+        }
+      },
+      "log": [
+        "mode=validation",
+        "Validation mode: unapproved sources pass but are marked not_approved_validation_only. The output must not be used for training."
+      ]
+    },
+    {
+      "stage": "provenance_attachment",
+      "input": 31803,
+      "kept": 31803,
+      "rejected": 0,
+      "rejected_by_reason": {},
+      "stats": {},
+      "log": []
+    }
+  ],
+  "final_records": 31803,
+  "final_stats": {
+    "documents": 31803,
+    "words": 479385,
+    "characters": 3008350,
+    "bytes_utf8": 3008787,
+    "words_per_doc": {
+      "mean": 15.1,
+      "median": 14,
+      "p05": 6,
+      "p95": 28,
+      "max": 72
+    },
+    "vocabulary_size_casefolded": 54309,
+    "type_token_ratio": 0.1133,
+    "words_with_apostrophe_per_1k": 5.0,
+    "distinct_characters": 175,
+    "non_ascii_characters": {
+      "•": 29,
+      "£": 20,
+      "€": 17,
+      "ı": 15,
+      "→": 13,
+      "ğ": 12,
+      "ü": 11,
+      "ö": 10,
+      "é": 10,
+      "Â": 9,
+      "İ": 8,
+      "←": 7,
+      "Ş": 6,
+      "●": 6,
+      "ş": 6,
+      "⁄": 5,
+      "Ü": 5,
+      "Ø": 5,
+      "ç": 5,
+      "ï": 4,
+      "¿": 4,
+      "😉": 4,
+      "🙂": 4,
+      "ô": 4,
+      "à": 3,
+      "¬": 3,
+      "í": 3,
+      "🤔": 3,
+      "á": 3,
+      "è": 3,
+      "†": 2,
+      "ä": 2,
+      "ì": 2,
+      "ó": 2,
+      "·": 2,
+      "Ç": 2,
+      "×": 2,
+      "â": 2,
+      "😭": 2,
+      "✔": 2
+    },
+    "top_words": [
+      [
+        "oo",
+        14667
+      ],
+      [
+        "ka",
+        10501
+      ],
+      [
+        "ah",
+        9916
+      ],
+      [
+        "ku",
+        9756
+      ],
+      [
+        "u",
+        9418
+      ],
+      [
+        "ay",
+        6476
+      ],
+      [
+        "iyo",
+        6378
+      ],
+      [
+        "in",
+        6338
+      ],
+      [
+        "waa",
+        6184
+      ],
+      [
+        "ee",
+        5423
+      ],
+      [
+        "la",
+        5392
+      ],
+      [
+        "aad",
+        4673
+      ],
+      [
+        "soo",
+        4224
+      ],
+      [
+        "uu",
+        3876
+      ],
+      [
+        "waxay",
+        3731
+      ],
+      [
+        "aan",
+        3438
+      ],
+      [
+        "si",
+        3262
+      ],
+      [
+        "waxaan",
+        3212
+      ],
+      [
+        "ugu",
+        3136
+      ],
+      [
+        "mid",
+        3063
+      ],
+      [
+        "wax",
+        3018
+      ],
+      [
+        "ayaa",
+        2995
+      ],
+      [
+        "ma",
+        2961
+      ],
+      [
+        "waxaa",
+        2892
+      ],
+      [
+        "kale",
+        2885
+      ],
+      [
+        "waxa",
+        2627
+      ],
+      [
+        "badan",
+        2544
+      ],
+      [
+        "wuxuu",
+        2290
+      ],
+      [
+        "sida",
+        2147
+      ],
+      [
+        "tahay",
+        2012
+      ]
+    ]
+  },
+  "dataset_fingerprint": "927b2e4a28601ecb6cf51315b63eb525338c10134769c01ffc03103fc5d1f842",
+  "raw_stats": {
+    "per_source": {
+      "nllb-en-so": {
+        "documents": 51806,
+        "words": 708028,
+        "characters": 4456701,
+        "bytes_utf8": 4457847,
+        "words_per_doc": {
+          "mean": 13.7,
+          "median": 12.0,
+          "p05": 5,
+          "p95": 27,
+          "max": 72
+        },
+        "vocabulary_size_casefolded": 61185,
+        "type_token_ratio": 0.0864,
+        "words_with_apostrophe_per_1k": 5.52,
+        "distinct_characters": 233,
+        "non_ascii_characters": {
+          "€": 44,
+          "•": 41,
+          "Â": 40,
+          "£": 36,
+          "�": 28,
+          "â": 27,
+          "ı": 26,
+          "→": 25,
+          "ʼ": 22,
+          "ü": 18,
+          "ğ": 16,
+          "😉": 14,
+          "←": 14,
+          "🙂": 13,
+          "İ": 12,
+          "é": 12,
+          "ö": 11,
+          "ô": 10,
+          "⁄": 9,
+          "ï": 8,
+          "¿": 8,
+          "ç": 8,
+          "😚": 8,
+          "á": 8,
+          "′": 8,
+          "😍": 8,
+          "●": 7,
+          "í": 7,
+          "Ş": 6,
+          "à": 6,
+          "☆": 6,
+          "¦": 6,
+          "ş": 6,
+          "ũ": 6,
+          "ä": 6,
+          "📖": 6,
+          "Ü": 5,
+          "Ø": 5,
+          "ค": 4,
+          "¬": 4
+        },
+        "top_words": [
+          [
+            "oo",
+            21009
+          ],
+          [
+            "ka",
+            14478
+          ],
+          [
+            "ah",
+            13829
+          ],
+          [
+            "ku",
+            13687
+          ],
+          [
+            "u",
+            12768
+          ],
+          [
+            "waa",
+            9530
+          ],
+          [
+            "in",
+            9386
+          ],
+          [
+            "iyo",
+            8914
+          ],
+          [
+            "ay",
+            8648
+          ],
+          [
+            "la",
+            7501
+          ]
+        ]
+      }
+    },
+    "all": {
+      "documents": 51806,
+      "words": 708028,
+      "characters": 4456701,
+      "bytes_utf8": 4457847,
+      "words_per_doc": {
+        "mean": 13.7,
+        "median": 12.0,
+        "p05": 5,
+        "p95": 27,
+        "max": 72
+      },
+      "vocabulary_size_casefolded": 61185,
+      "type_token_ratio": 0.0864,
+      "words_with_apostrophe_per_1k": 5.52,
+      "distinct_characters": 233,
+      "non_ascii_characters": {
+        "€": 44,
+        "•": 41,
+        "Â": 40,
+        "£": 36,
+        "�": 28,
+        "â": 27,
+        "ı": 26,
+        "→": 25,
+        "ʼ": 22,
+        "ü": 18,
+        "ğ": 16,
+        "😉": 14,
+        "←": 14,
+        "🙂": 13,
+        "İ": 12,
+        "é": 12,
+        "ö": 11,
+        "ô": 10,
+        "⁄": 9,
+        "ï": 8,
+        "¿": 8,
+        "ç": 8,
+        "😚": 8,
+        "á": 8,
+        "′": 8,
+        "😍": 8,
+        "●": 7,
+        "í": 7,
+        "Ş": 6,
+        "à": 6,
+        "☆": 6,
+        "¦": 6,
+        "ş": 6,
+        "ũ": 6,
+        "ä": 6,
+        "📖": 6,
+        "Ü": 5,
+        "Ø": 5,
+        "ค": 4,
+        "¬": 4
+      },
+      "top_words": [
+        [
+          "oo",
+          21009
+        ],
+        [
+          "ka",
+          14478
+        ],
+        [
+          "ah",
+          13829
+        ],
+        [
+          "ku",
+          13687
+        ],
+        [
+          "u",
+          12768
+        ],
+        [
+          "waa",
+          9530
+        ],
+        [
+          "in",
+          9386
+        ],
+        [
+          "iyo",
+          8914
+        ],
+        [
+          "ay",
+          8648
+        ],
+        [
+          "la",
+          7501
+        ],
+        [
+          "ee",
+          7155
+        ],
+        [
+          "aad",
+          6346
+        ],
+        [
+          "soo",
+          5959
+        ],
+        [
+          "uu",
+          5175
+        ],
+        [
+          "waxay",
+          5147
+        ],
+        [
+          "ma",
+          4998
+        ],
+        [
+          "waxaan",
+          4802
+        ],
+        [
+          "aan",
+          4741
+        ],
+        [
+          "wax",
+          4343
+        ],
+        [
+          "ugu",
+          4185
+        ],
+        [
+          "si",
+          4124
+        ],
+        [
+          "mid",
+          4063
+        ],
+        [
+          "waxaa",
+          3976
+        ],
+        [
+          "ayaa",
+          3886
+        ],
+        [
+          "kale",
+          3659
+        ],
+        [
+          "waxa",
+          3588
+        ],
+        [
+          "wuxuu",
+          3501
+        ],
+        [
+          "badan",
+          3378
+        ],
+        [
+          "sida",
+          2846
+        ],
+        [
+          "tahay",
+          2720
+        ]
+      ]
+    }
+  },
+  "final_stats_per_source": {
+    "nllb-en-so": {
+      "documents": 31803,
+      "words": 479385,
+      "characters": 3008350,
+      "bytes_utf8": 3008787,
+      "words_per_doc": {
+        "mean": 15.1,
+        "median": 14,
+        "p05": 6,
+        "p95": 28,
+        "max": 72
+      },
+      "vocabulary_size_casefolded": 54309,
+      "type_token_ratio": 0.1133,
+      "words_with_apostrophe_per_1k": 5.0,
+      "distinct_characters": 175,
+      "non_ascii_characters": {
+        "•": 29,
+        "£": 20,
+        "€": 17,
+        "ı": 15,
+        "→": 13,
+        "ğ": 12,
+        "ü": 11,
+        "ö": 10,
+        "é": 10,
+        "Â": 9,
+        "İ": 8,
+        "←": 7,
+        "Ş": 6,
+        "●": 6,
+        "ş": 6,
+        "⁄": 5,
+        "Ü": 5,
+        "Ø": 5,
+        "ç": 5,
+        "ï": 4,
+        "¿": 4,
+        "😉": 4,
+        "🙂": 4,
+        "ô": 4,
+        "à": 3,
+        "¬": 3,
+        "í": 3,
+        "🤔": 3,
+        "á": 3,
+        "è": 3,
+        "†": 2,
+        "ä": 2,
+        "ì": 2,
+        "ó": 2,
+        "·": 2,
+        "Ç": 2,
+        "×": 2,
+        "â": 2,
+        "😭": 2,
+        "✔": 2
+      },
+      "top_words": [
+        [
+          "oo",
+          14667
+        ],
+        [
+          "ka",
+          10501
+        ],
+        [
+          "ah",
+          9916
+        ],
+        [
+          "ku",
+          9756
+        ],
+        [
+          "u",
+          9418
+        ],
+        [
+          "ay",
+          6476
+        ],
+        [
+          "iyo",
+          6378
+        ],
+        [
+          "in",
+          6338
+        ],
+        [
+          "waa",
+          6184
+        ],
+        [
+          "ee",
+          5423
+        ]
+      ]
+    }
+  },
+  "eval_sets_indexed": [
+    "masakhanews-som-dev",
+    "masakhanews-som-test",
+    "sib200-som-dev",
+    "sib200-som-test"
+  ],
+  "eval_sets_pending": [
+    "flores-200-som-devtest",
+    "belebele-som",
+    "xlsum-somali-test",
+    "sombench",
+    "somalibench-v0",
+    "fleurs-so-test-transcripts"
+  ]
+}

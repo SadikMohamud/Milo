@@ -34,4 +34,6 @@ partly contaminated.
 
 ## Language-ID evaluation
 `scripts/evaluation/compare_lid.py`: held-out SIB-200 test in 11 languages, MasakhaNEWS Somali
-test, and a synthetic Somali-English mix. Maay and natural code-switched text are still missing.
+test, and a synthetic Somali-English mix. Thresholds (e.g. the ensemble's) are tuned on the dev
+splits only. Maay, natural code-switched text and short informal web sentences are still missing
+from the labelled data. The v0.2 NLLB run shows the last of these is where the tools disagree most.

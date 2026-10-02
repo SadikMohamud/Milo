@@ -9,7 +9,7 @@ RESEARCH_LOG.md, naming who reviewed it.
 - [x] Pipeline runs end to end with per-stage outputs and reason codes
 - [x] Dedup within and across sources; LID compared across ≥2 tools; decontamination runs
 - [x] Experiment ID system; training guard; tests pass
-- [ ] Native-speaker review of pipeline samples logged (**open**: no reviewer yet)
+- [ ] Native-speaker review of pipeline samples logged (**open**: sheets and tooling ready, no reviewer yet)
 - [ ] Network access to the main data hosts (**open**: environment constraint)
 
 ## G1: Corpus v1 → Phase 2

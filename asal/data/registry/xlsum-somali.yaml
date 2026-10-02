@@ -15,7 +15,11 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    documents: 7452
+    goobo_final_documents: 5027
+    goobo_final_words: 1758807
   verified:
     documents: unknown
     words: unknown
@@ -31,14 +35,15 @@ provenance:
   domains:
   - news
 license:
-  corpus_license: review_required
-  license_basis: unknown
+  corpus_license: CC-BY-4.0
+  license_basis: secondary_source
   per_source_licenses: review_required
   commercial_use: review_required
   redistribution: review_required
   attribution_required: review_required
   terms_notes: 'Conflicting information: Goobo Labs lists XL-Sum as CC-BY-4.0; Asal maintainers recalled a non-commercial
     licence. Verify on the dataset card.'
+  license_claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
 quality:
   provider_claims: {}
   verified_by_asal:

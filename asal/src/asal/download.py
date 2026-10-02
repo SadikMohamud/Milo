@@ -4,6 +4,8 @@ A manifest (data/manifests/*.yaml) pins every file by URL (including an
 immutable upstream revision where the host supports one), byte size and
 SHA-256. ``fetch`` refuses to accept a file whose hash differs from the
 manifest, so a changed upstream is detected instead of silently ingested.
+An entry may set ``byte_range: [start, end]`` (inclusive) to pin a prefix of a
+large object; the hash then covers exactly those bytes.
 Downloads land under data/raw/, which is never committed.
 """
 
@@ -55,9 +57,19 @@ def fetch(entry: dict, raw_dir: Path = paths.RAW, timeout: int = 60) -> FetchRes
 
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_suffix(dest.suffix + ".part")
-    req = urllib.request.Request(entry["url"], headers={"User-Agent": "asal-data/0.1"})
+    headers = {"User-Agent": "asal-data/0.1"}
+    if entry.get("byte_range"):
+        start, end = entry["byte_range"]
+        headers["Range"] = f"bytes={start}-{end}"
+    req = urllib.request.Request(entry["url"], headers=headers)
     with urllib.request.urlopen(req, timeout=timeout) as resp, tmp.open("wb") as out:
-        shutil.copyfileobj(resp, out)
+        if entry.get("byte_range") and getattr(resp, "status", None) != 206:
+            # Server (or file:// URL) ignored the Range header: cut the range out locally.
+            start, end = entry["byte_range"]
+            resp.read(start)
+            out.write(resp.read(end - start + 1))
+        else:
+            shutil.copyfileobj(resp, out)
     digest = sha256_file(tmp)
     if expected and digest != expected:
         tmp.unlink()

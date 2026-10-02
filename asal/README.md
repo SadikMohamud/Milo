@@ -7,7 +7,7 @@ goal is to build, understand, evaluate and progressively train a Somali-native A
 covering Standard Somali, Benaadir, Waqooyi/Northern Somali, Maay (as its own variety),
 Somali-English code-switching, speech, reasoning, translation, coding, retrieval and agents.
 
-> **Status: Phase 0, milestone ASAL DATA INTELLIGENCE v0.1.** No model has been trained.
+> **Status: Phase 0, milestone ASAL DATA INTELLIGENCE v0.1, plus a v0.2 run on web-mined Somali (NLLB).** No model has been trained.
 > No dataset is approved for training. Every number below was measured in this repository,
 > on a small validation sample, and is reproducible with the commands shown.
 
@@ -28,9 +28,11 @@ track wins on measured Somali performance is carried forward (docs/MODEL.md).
 | Component | Where | State |
 |---|---|---|
 | Dataset registry (29 entries), schema, policy rules, catalogue | `data/registry/` | Provider claims and Asal-verified values kept apart; overlap between aggregated corpora detected |
-| Reproducible sample download (SHA-256 pinned) | `data/manifests/`, `scripts/data/download_sample.py` | 16 files, GitHub-hosted, pinned to commit SHAs |
+| Reproducible sample download (SHA-256 pinned, byte ranges) | `data/manifests/`, `scripts/data/download_sample.py` | MasakhaNEWS + SIB-200 (GitHub) and an 8 MiB NLLB prefix (GCS) |
 | 14-stage data pipeline with per-stage outputs, stats, logs, rejected records and reason codes | `src/asal/pipeline.py` | Runs end to end on the sample |
 | Somali normalisation (apostrophe = glottal stop, never stripped) | `src/asal/normalize.py` | Tested |
+| Suspected-MT (URL), religion (lexicon) and code-switch (segment LID) flags | `src/asal/flags.py`, `src/asal/lid.py` | Flags only; precision awaiting native review |
+| Native-speaker review sheets and error-rate summaries | `src/asal/review.py`, `scripts/data/draw_review_sample.py` | Sheets drawn; no reviewer yet |
 | Exact + MinHash near deduplication, within and across sources | `src/asal/dedup.py` | Tested |
 | Language ID with 2 working backends (+ fastText lid.176 / GlotLID adapters) | `src/asal/lid.py` | Compared on held-out data |
 | Evaluation-set registry and n-gram decontamination | `evaluation/decontamination/`, `src/asal/decontam.py` | Runs on the sample |
@@ -38,20 +40,25 @@ track wins on measured Somali performance is carried forward (docs/MODEL.md).
 | Asal-Adapted base-model candidates | `models/asal_adapted/candidates.yaml` | Listed, not measured |
 | Experiment ID system and training guard | `src/asal/experiments.py`, `training/scripts/train.py` | Training refuses to start without an approved TRAIN experiment |
 
-Results: [`evaluation/reports/data_intelligence_v0.1/README.md`](evaluation/reports/data_intelligence_v0.1/README.md).
+Results: [v0.1 sample](evaluation/reports/data_intelligence_v0.1/README.md) ·
+[v0.2 NLLB web-mined Somali](evaluation/reports/data_v0.2_nllb/README.md).
 
 ## Quick start
 
 ```bash
 cd asal
 pip install -r requirements.txt          # PyYAML, jsonschema, numpy, pytest, lingua (optional)
-python -m pytest -q                       # 43 tests (add -m "not slow" to skip loading Lingua)
+python -m pytest -q                       # 49 tests (add -m "not slow" to skip loading Lingua)
 
 python scripts/data/validate_registry.py  # validate registry, regenerate CATALOGUE.md
 python scripts/data/download_sample.py    # fetch + verify the pinned sample (~6 MB)
 python scripts/data/run_sample_pipeline.py      # full pipeline on the sample (needs ~1 GB RAM with Lingua)
 python scripts/evaluation/compare_lid.py        # LID comparison
 python scripts/tokenizer/benchmark_tokenizers.py
+python scripts/data/download_sample.py data/manifests/nllb-sample-v0.2.yaml
+python scripts/data/run_sample_pipeline.py --manifest data/manifests/nllb-sample-v0.2.yaml \
+    --no-lingua --slug nllb-head-pipeline --report-dir evaluation/reports/data_v0.2_nllb
+python scripts/data/draw_review_sample.py draw <ASAL-DATA-id>    # review sheets for a native speaker
 ```
 
 Each run registers an experiment under `experiments/runs/<id>/run.yaml`.

@@ -1,7 +1,8 @@
 manifest_id: lid-eval-v0.1
 created: '2026-10-02'
-purpose: Non-Somali negatives for the language-identification comparison. SIB-200 is sentence-parallel (FLORES-200 sentences),
+purpose: 'Non-Somali negatives for the language-identification comparison. SIB-200 is sentence-parallel (FLORES-200 sentences),
   so every language has the same content. Somali positives come from sample-v0.1 (sib200-som test, masakhanews-som test).
+  v0.2 adds the dev splits (role lid_tuning): LID thresholds are tuned on dev only and reported on test.'
 files:
 - source_id: sib200-eng
   split: test
@@ -147,6 +148,156 @@ files:
   sha256: b74f0ef860af5a0e322cd10099fb2a83abfaaf61c6ca6da5628e396d791d60c5
   bytes: 32336
   path: sib200-lid/efad32e0fc60/ind_Latn/test.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-eng
+  split: dev
+  role: lid_tuning
+  language: eng_Latn
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/eng_Latn/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: 48fe23ed3c66e6978c6cdeff3f661ab9ea6451001d967e23d94796b009777181
+  bytes: 13639
+  path: sib200-lid/efad32e0fc60/eng_Latn/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-swh
+  split: dev
+  role: lid_tuning
+  language: swh_Latn
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/swh_Latn/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: b8dfce0f80e7fd5b94a1fdc224fe4bbac6d237061d4a75ec4bb311d8493b3add
+  bytes: 14589
+  path: sib200-lid/efad32e0fc60/swh_Latn/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-gaz
+  split: dev
+  role: lid_tuning
+  language: gaz_Latn
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/gaz_Latn/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: ef78ec5eb1f40ee55abdc76e26b497d05a40f8f6f2d53755a2988bba0ebe2eb9
+  bytes: 16234
+  path: sib200-lid/efad32e0fc60/gaz_Latn/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-hau
+  split: dev
+  role: lid_tuning
+  language: hau_Latn
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/hau_Latn/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: dbba8629e41ca9a4b8fce968f33e3685a7572afb47208ba94d9d3c98f5c44b01
+  bytes: 14917
+  path: sib200-lid/efad32e0fc60/hau_Latn/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-arb
+  split: dev
+  role: lid_tuning
+  language: arb_Arab
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/arb_Arab/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: 3e41235ba03924643a9ccffe9606d892005df116ed1e669363a82de67041a19c
+  bytes: 21210
+  path: sib200-lid/efad32e0fc60/arb_Arab/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-amh
+  split: dev
+  role: lid_tuning
+  language: amh_Ethi
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/amh_Ethi/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: 68fe9ef59a3a08b88f9da3ee08688987994cba825afe1769ea5cf464bc7680cd
+  bytes: 22111
+  path: sib200-lid/efad32e0fc60/amh_Ethi/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-tir
+  split: dev
+  role: lid_tuning
+  language: tir_Ethi
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/tir_Ethi/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: 4d79b773587445ec354bb853eebbd5ccb570c22720a17c39bf97a0acb3b4ddfd
+  bytes: 22659
+  path: sib200-lid/efad32e0fc60/tir_Ethi/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-yor
+  split: dev
+  role: lid_tuning
+  language: yor_Latn
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/yor_Latn/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: 1cbbfccf4997bb583ee18241482856e3bca815097a5195261d56f6fd98242295
+  bytes: 17048
+  path: sib200-lid/efad32e0fc60/yor_Latn/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-afr
+  split: dev
+  role: lid_tuning
+  language: afr_Latn
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/afr_Latn/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: eb0eba9f5fd19243ede8ab5f5a020822b100619a702c0b80fa16512263b09a05
+  bytes: 14573
+  path: sib200-lid/efad32e0fc60/afr_Latn/dev.tsv
+  format: tsv
+  text_fields:
+  - text
+  id_field: index_id
+  meta_fields:
+  - category
+- source_id: sib200-ind
+  split: dev
+  role: lid_tuning
+  language: ind_Latn
+  url: https://raw.githubusercontent.com/dadelani/sib-200/efad32e0fc601cfbfdf5ca80672f29697f6f401f/data/annotated/ind_Latn/dev.tsv
+  pinned_revision: efad32e0fc601cfbfdf5ca80672f29697f6f401f
+  sha256: df0a3b6d63bdeb451c1622593063857aa53e1553797e388b3f63731b9a2eec91
+  bytes: 14875
+  path: sib200-lid/efad32e0fc60/ind_Latn/dev.tsv
   format: tsv
   text_fields:
   - text

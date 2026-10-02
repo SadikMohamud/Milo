@@ -14,7 +14,11 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    ayahs: 6236
+    goobo_final_documents: 5773
+    goobo_final_words: 106282
   verified:
     documents: unknown
     words: unknown
@@ -54,7 +58,7 @@ status:
 source:
   homepage: ''
   repository: ''
-  dataset_url: ''
+  dataset_url: https://tanzil.net/trans/?transID=so.abduh&type=txt-2&agree=true
   discovered_via: SomNLP-Corpus derived_from list
 notes: Religious translation. Requires its own licence review (translation copyright is held per translator/publisher)
   and a sensitivity review before inclusion; tracked as a separate religion domain. machine_translated=false is

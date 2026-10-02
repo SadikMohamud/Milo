@@ -31,3 +31,6 @@ A superseded run is kept and gets a `superseded_reason`. Run records are never d
 | ASAL-LID-20261002-lid-comparison-835374 | completed |
 | ASAL-TOK-20261002-tokenizer-benchmark-b75ea0 | superseded |
 | ASAL-TOK-20261002-tokenizer-benchmark-8849bc | completed |
+| ASAL-DATA-20261002-nllb-head-pipeline-ca4c88 | failed (crash while writing its run record) |
+| ASAL-DATA-20261002-nllb-head-pipeline-961d5c | completed |
+| ASAL-LID-20261002-lid-comparison-349e98 | completed (adds the ensemble, tuned on dev) |

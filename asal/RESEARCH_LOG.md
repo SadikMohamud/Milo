@@ -5,6 +5,55 @@ still unknown. Experiment IDs refer to `experiments/runs/<id>/run.yaml`.
 
 ---
 
+## 2026-10-02 (later): v0.2, real web-mined Somali, review tooling, MT/religion flags
+
+### Access
+Still blocked: Hugging Face, Wikimedia, OPUS, arXiv, statmt.org, quranenc.com, tanzil.net.
+**Reachable:** `storage.googleapis.com`, which hosts NLLB's mined bitext (the location is
+documented in Goobo's SOURCES.md).
+
+### Registry enriched from Goobo SOURCES.md (somnlp-corpus@add401b)
+Upstream URLs, provider licences and sizes were added as `secondary_source` claims for 17
+upstream entries, including each source's contribution to SomNLP-Corpus's final build
+(`goobo_final_documents`/`_words`). Notable claims: NLLB is 4.1M of 8.0M final documents;
+20,900 of 42,000 Somali TinyStories rows are verbatim duplicates upstream; TinyStories has no
+licence on its dataset card. None of this is verified by Asal.
+
+### Experiment ASAL-DATA-20261002-nllb-head-pipeline-961d5c
+The pipeline ran on the top-scored 8 MiB prefix of NLLB eng-som (51,806 pairs, a biased
+sample). The full report is `evaluation/reports/data_v0.2_nllb/README.md`. Summary: verbatim
+MasakhaNEWS dev/test sentences appear in the mined bitext; 24.9% of the final sentences come
+from suspected-MT URLs; at least 7.5% is religious text; 27% exact duplicates; the heuristic LID
+gate falsely rejects many short Somali sentences (Lingua calls 76.8% of a 400-sample of
+rejections Somali). ASAL-DATA-…-ca4c88 crashed while writing its run record after the
+pipeline had finished (relative path bug, now fixed); it is marked failed.
+
+### Experiment ASAL-LID-20261002-lid-comparison-349e98: ensemble gate
+Added `EnsembleLID` and tuned its low threshold on SIB-200 dev only (dev splits for 10
+non-Somali languages added to the lid-eval manifest). Dev F1 rises monotonically with t up
+to 0.5, i.e. the heuristic alone, because Oromo sentences get heuristic scores of 0.2–0.5
+exactly where Lingua says Somali. Test results are therefore identical to the heuristic.
+**Decision:** keep the heuristic as the primary gate. Do not build an ensemble on FLORES-style
+labels alone. Get native labels on web sentences and GlotLID. Every backend's prediction stays
+on each record so the gate can be re-decided later without re-running LID.
+
+### New pipeline behaviour (applies to runs after v0.1)
+- `machine_translated: suspected` from a URL heuristic (language subdomain or `/so/` path; `.so`
+  domains exempt). Flag only, never a removal. Precision unknown: `/so/` paths include human
+  translations (jw.org, Minnesota public institutions).
+- `domain: religion` from a Somali religious lexicon (Islamic and Christian terms). Flag only.
+  Recall on Bible narrative is poor.
+- Segment-level LID annotation with a `code_switched` flag (sentence-level; intra-sentence
+  switching is not detected). 68 NLLB sentences were flagged.
+- Manifests support `byte_range` (pinned prefixes of large objects).
+
+### Review tooling
+`scripts/data/draw_review_sample.py` draws seeded, decision-shuffled sheets per stage and per
+flag, and summarises filled sheets with Wilson 95% intervals. This is what gate G0 needs. It is
+waiting on a native-speaker reviewer.
+
+---
+
 ## 2026-10-02: ASAL DATA INTELLIGENCE v0.1
 
 ### Environment constraints (affect every result below)

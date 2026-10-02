@@ -9,7 +9,7 @@ Only entries with `inspected = yes` have Asal-measured values.
 |---|---|---|---|---|---|---|---|---|---|
 | `aya-dataset-som` | Aya Dataset (Somali subset) | training_candidate | unknown (unknown) | review_required | review_required | no | unknown | no | no |
 | `belebele-som` | Belebele (som_Latn) | evaluation | unknown (unknown) | review_required | review_required | no | unknown | no | no |
-| `cc100-so` | CC100 (Somali) | training_candidate | unknown (unknown) | review_required | review_required | unknown | unknown | no | no |
+| `cc100-so` | CC100 (Somali) | training_candidate | CC-BY-SA-4.0 (secondary_source) | review_required | review_required | unknown | unknown | no | no |
 | `finepdfs-so` | FinePDFs (som_Latn) | training_candidate | ODC-BY (secondary_source) | review_required | review_required | unknown | unknown | no | no |
 | `fineweb-2-so` | FineWeb-2 (som_Latn) | training_candidate | ODC-BY (secondary_source) | review_required | review_required | unknown | unknown | no | no |
 | `fleurs-so` | FLEURS (so_so) | evaluation, training_candidate | unknown (unknown) | review_required | review_required | no | unknown | no | no |
@@ -21,25 +21,25 @@ Only entries with `inspected = yes` have Asal-measured values.
 | `goobolabs-somnlp-corpus` | SomNLP-Corpus | training_candidate | mixed-upstream (provider_claim) | review_required | review_required | partial | yes | no | no |
 | `goobolabs-somnlp-stt-corpus` | SomNLP-STT-Corpus | training_candidate | unknown (unknown) | review_required | review_required | unknown | unknown | no | no |
 | `goobolabs-translation-asr-resources` | Goobo Labs translation and ASR resources | training_candidate, evaluation | unknown (unknown) | review_required | review_required | unknown | unknown | no | no |
-| `hplt-v2-so` | HPLT v2 (Somali) | training_candidate | unknown (unknown) | review_required | review_required | unknown | unknown | no | no |
-| `madlad-400-so` | MADLAD-400 (Somali) | training_candidate | unknown (unknown) | review_required | review_required | unknown | unknown | no | no |
+| `hplt-v2-so` | HPLT v2 (Somali) | training_candidate | CC0-1.0 (secondary_source) | review_required | review_required | unknown | unknown | no | no |
+| `madlad-400-so` | MADLAD-400 (Somali) | training_candidate | ODC-BY (secondary_source) | review_required | review_required | unknown | unknown | no | no |
 | `masakhanews-som` | MasakhaNEWS (Somali) | evaluation, pipeline_validation_sample | unknown (unknown) | review_required | review_required | no | unknown | yes | no |
-| `mc4-so` | mC4 (Somali) | training_candidate | unknown (unknown) | review_required | review_required | unknown | unknown | no | no |
-| `mt560-so` | MT560 (Somali) | training_candidate | unknown (unknown) | review_required | review_required | unknown | review_required | no | no |
-| `nllb-en-so` | NLLB mined bitext (English-Somali) | training_candidate | unknown (unknown) | review_required | review_required | partial | unknown | no | no |
-| `opus-en-so` | OPUS (English-Somali) | training_candidate | unknown (unknown) | review_required | review_required | partial | partial | no | no |
+| `mc4-so` | mC4 (Somali) | training_candidate | ODC-BY (secondary_source) | review_required | review_required | unknown | unknown | no | no |
+| `mt560-so` | MT560 (Somali) | training_candidate | CC-BY-4.0 (secondary_source) | review_required | review_required | unknown | review_required | no | no |
+| `nllb-en-so` | NLLB mined bitext (English-Somali) | training_candidate | ODC-BY (secondary_source) | review_required | review_required | partial | yes | yes | no |
+| `opus-en-so` | OPUS (English-Somali) | training_candidate | CC0-1.0 (ParaCrawl en-so only) (secondary_source) | review_required | review_required | partial | partial | no | no |
 | `quranenc-so` | QuranEnc (Somali translation) | training_candidate | unknown (unknown) | review_required | review_required | no | yes | no | no |
 | `sib200-som` | SIB-200 (Somali, som_Latn) | evaluation, pipeline_validation_sample | review_required (verified_in_source) | review_required | review_required | no | no | yes | no |
 | `somali-alpaca` | Somali Alpaca (burtugeey/Somali_dataset) | training_candidate | MIT (secondary_source) | review_required | review_required | unknown | unknown | no | no |
 | `somali-tinystories` | Somali TinyStories (Zyroxx66/somali-tinystories) | training_candidate | unknown (secondary_source) | review_required | review_required | unknown | unknown | no | no |
-| `somali-web-corpus` | Somali-Web-Corpus | training_candidate | unknown (unknown) | review_required | review_required | unknown | unknown | no | no |
+| `somali-web-corpus` | Somali-Web-Corpus | training_candidate | MIT (secondary_source) | review_required | review_required | unknown | unknown | no | no |
 | `somberta-fakenews-toxicity` | SomBERTa fake-news and toxicity sets | evaluation | unknown (unknown) | review_required | review_required | unknown | unknown | no | no |
 | `tanzil-so` | Tanzil (Somali translation) | training_candidate | unknown (unknown) | review_required | review_required | no | yes | no | no |
 | `unkadlabs-awesome-somali-nlp` | Awesome Somali NLP | reference | CC0-1.0 (verified_in_source) | yes | yes | no | no | yes | no |
 | `unkadlabs-somalibench-v0` | SomaliBench v0 | evaluation | unknown (unknown) | review_required | review_required | unknown | unknown | no | no |
 | `unkadlabs-somaliweb-v1` | SomaliWeb v1 | training_candidate | CC-BY-SA-4.0 (secondary_source) | review_required | review_required | unknown | unknown | no | no |
-| `wikipedia-so` | Somali Wikipedia | training_candidate | unknown (unknown) | review_required | review_required | unknown | partial | no | no |
-| `xlsum-somali` | XL-Sum (Somali) | evaluation, training_candidate | review_required (unknown) | review_required | review_required | unknown | unknown | no | no |
+| `wikipedia-so` | Somali Wikipedia | training_candidate | CC-BY-SA-4.0 (secondary_source) | review_required | review_required | unknown | partial | no | no |
+| `xlsum-somali` | XL-Sum (Somali) | evaluation, training_candidate | CC-BY-4.0 (secondary_source) | review_required | review_required | unknown | unknown | no | no |
 
 ## Shared upstreams (do not add these corpora's sizes together)
 
@@ -68,6 +68,19 @@ Only entries with `inspected = yes` have Asal-measured values.
 
 | id | figure | value | claim source |
 |---|---|---|---|
+| `cc100-so` | documents | 396524 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `cc100-so` | tokens_approx | 81000000 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `cc100-so` | goobo_final_documents | 296154 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `cc100-so` | goobo_final_words | 49297018 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `finepdfs-so` | documents | 21781 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `finepdfs-so` | goobo_final_documents | 20771 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `finepdfs-so` | goobo_final_words | 18625820 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `fineweb-2-so` | documents | 1070384 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `fineweb-2-so` | goobo_final_documents | 589824 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `fineweb-2-so` | goobo_final_words | 156995286 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `glot500-c-so` | documents | 3915898 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `glot500-c-so` | goobo_final_documents | 1432277 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `glot500-c-so` | goobo_final_words | 66937207 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
 | `goobolabs-somnlp-corpus` | documents | 7981982 | goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02); the 2026-09-02 figures also appear in Asal build specification v1 (section 5 example; figures supplied by the project owner, not yet checked against the provider) |
 | `goobolabs-somnlp-corpus` | words | 832264349 | goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02); the 2026-09-02 figures also appear in Asal build specification v1 (section 5 example; figures supplied by the project owner, not yet checked against the provider) |
 | `goobolabs-somnlp-corpus` | tokens | 1136027958 | goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02); the 2026-09-02 figures also appear in Asal build specification v1 (section 5 example; figures supplied by the project owner, not yet checked against the provider) |
@@ -79,11 +92,52 @@ Only entries with `inspected = yes` have Asal-measured values.
 | `goobolabs-somnlp-corpus` | previous_build_2026_09_02_words | 665985672 | goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02); the 2026-09-02 figures also appear in Asal build specification v1 (section 5 example; figures supplied by the project owner, not yet checked against the provider) |
 | `goobolabs-somnlp-corpus` | previous_build_2026_09_02_tokens | 911824557 | goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02); the 2026-09-02 figures also appear in Asal build specification v1 (section 5 example; figures supplied by the project owner, not yet checked against the provider) |
 | `goobolabs-somnlp-corpus` | previous_build_2026_09_02_storage_gb | 7.2 | goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02); the 2026-09-02 figures also appear in Asal build specification v1 (section 5 example; figures supplied by the project owner, not yet checked against the provider) |
+| `hplt-v2-so` | documents | 966507 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `hplt-v2-so` | tokens_approx | 505000000 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `hplt-v2-so` | goobo_final_documents | 554851 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `hplt-v2-so` | goobo_final_words | 184700703 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `madlad-400-so` | documents | 200494 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `madlad-400-so` | goobo_final_documents | 128700 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `madlad-400-so` | goobo_final_words | 61831676 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
 | `masakhanews-som` | documents | 2915 | unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02); masakhane-io/masakhane-news README |
+| `mc4-so` | documents | 893012 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `mc4-so` | goobo_final_documents | 586265 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `mc4-so` | goobo_final_words | 214035586 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `mt560-so` | pairs | 161865 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `mt560-so` | goobo_final_documents | 49195 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `mt560-so` | goobo_final_words | 1162745 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `nllb-en-so` | pairs | 10229073 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `nllb-en-so` | goobo_final_documents | 4108233 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `nllb-en-so` | goobo_final_words | 62072423 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `opus-en-so` | documents | 14879 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `opus-en-so` | goobo_final_documents | 12126 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `opus-en-so` | goobo_final_words | 381716 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `quranenc-so` | rows | 7373 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `quranenc-so` | goobo_final_documents | 7072 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `quranenc-so` | goobo_final_words | 160068 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-alpaca` | rows | 44839 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-alpaca` | goobo_final_documents | 37512 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-alpaca` | goobo_final_words | 5781223 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-tinystories` | rows | 42000 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-tinystories` | verbatim_duplicate_rows | 20900 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-tinystories` | goobo_final_documents | 21100 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-tinystories` | goobo_final_words | 2396895 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-web-corpus` | documents | 217528 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-web-corpus` | goobo_final_documents | 121764 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `somali-web-corpus` | goobo_final_words | 4890563 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
 | `somberta-fakenews-toxicity` | fake_news_instances | 1900 | unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02) |
 | `somberta-fakenews-toxicity` | toxicity_comments | 3000 | unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02) |
+| `tanzil-so` | ayahs | 6236 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `tanzil-so` | goobo_final_documents | 5773 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `tanzil-so` | goobo_final_words | 106282 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
 | `unkadlabs-somalibench-v0` | items | 200 | unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02) |
 | `unkadlabs-somalibench-v0` | categories | 7 | unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02) |
 | `unkadlabs-somaliweb-v1` | documents | 819000 | unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02) |
 | `unkadlabs-somaliweb-v1` | tokens | 303000000 | unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02) |
 | `unkadlabs-somaliweb-v1` | tokenizer_used_for_count | unknown (list says a matched 16K-vocab Somali tokenizer exists) | unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02) |
+| `wikipedia-so` | documents | 9021 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `wikipedia-so` | goobo_final_documents | 5338 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `wikipedia-so` | goobo_final_words | 1130331 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `xlsum-somali` | documents | 7452 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `xlsum-somali` | goobo_final_documents | 5027 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |
+| `xlsum-somali` | goobo_final_words | 1758807 | goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02) |

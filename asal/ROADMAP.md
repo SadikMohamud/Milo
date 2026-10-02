@@ -18,6 +18,9 @@ Cross-cutting from Phase 0 onward: dialect annotation (native speakers, inter-an
 agreement), AsalBench construction (with a private held-out portion), human evaluation.
 
 ## Immediate next steps (Phase 0 → 1)
+0. **Native-speaker review** of the drawn sheets (v0.1 and NLLB runs): LID rejections, the
+   suspected-MT and religion flags, and decontamination hits. This closes the last open G0 item
+   and is the only way to settle the LID gate for short web sentences.
 1. Get network access to huggingface.co, dumps.wikimedia.org, opus.nlpl.eu and
    dl.fbaipublicfiles.com (blocked in the v0.1 environment), then pin and download samples of
    SomNLP-Corpus, SomaliWeb, CC100, HPLT, MADLAD, Wikipedia.

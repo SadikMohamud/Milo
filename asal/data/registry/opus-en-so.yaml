@@ -16,7 +16,11 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    documents: 14879
+    goobo_final_documents: 12126
+    goobo_final_words: 381716
   verified:
     documents: unknown
     words: unknown
@@ -33,12 +37,13 @@ provenance:
   - mixed
   - religion
 license:
-  corpus_license: unknown
-  license_basis: unknown
+  corpus_license: CC0-1.0 (ParaCrawl en-so only)
+  license_basis: secondary_source
   per_source_licenses: review_required
   commercial_use: review_required
   redistribution: review_required
   attribution_required: review_required
+  license_claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
 quality:
   provider_claims: {}
   verified_by_asal:
@@ -58,7 +63,7 @@ status:
 source:
   homepage: https://opus.nlpl.eu/
   repository: ''
-  dataset_url: ''
+  dataset_url: https://huggingface.co/datasets/Helsinki-NLP/opus_paracrawl
   discovered_via: unkadlabs/awesome-somali-nlp@de1aaadfa3af4b2580a97bc9192cc9de5f5488d4 (README, read 2026-10-02)
 notes: Collection of corpora, each with its own licence. Several OPUS collections are known to include crawled/aligned
   or machine-translated text and Bible/Quran/JW300-type religious text; inspect per collection. JW300 in particular

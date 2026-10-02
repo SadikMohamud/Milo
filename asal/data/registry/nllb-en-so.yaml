@@ -16,47 +16,62 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    pairs: 10229073
+    goobo_final_documents: 4108233
+    goobo_final_words: 62072423
   verified:
     documents: unknown
     words: unknown
     tokens: unknown
     after_cross_source_dedup: unknown
+    measured_by: scripts/data/run_sample_pipeline.py (nllb-sample-v0.2 prefix only)
+    sample_pairs_read: 51806
 provenance:
   aggregation: false
   derived_from:
   - Common Crawl
   machine_translated: partial
   machine_translated_basis: secondary_source
-  religious_text: unknown
+  religious_text: true
   domains:
   - web
+  - religion
 license:
-  corpus_license: unknown
-  license_basis: unknown
+  corpus_license: ODC-BY
+  license_basis: secondary_source
   per_source_licenses: review_required
   commercial_use: review_required
   redistribution: review_required
   attribution_required: review_required
+  license_claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
 quality:
   provider_claims: {}
   verified_by_asal:
-    deduplicated: unknown
-    language_identified: unknown
-    cleaned: unknown
-    provenance_preserved: unknown
+    deduplicated: false
+    language_identified: partial
+    cleaned: false
+    provenance_preserved: true
 evaluation_overlap:
   contains_known_eval_sources: review_required
   decontaminated: false
 status:
   discovered: true
-  inspected: false
-  sampled: false
+  inspected: true
+  sampled: true
   approved_for_training: false
+  sensitivity_review: required
 source:
   homepage: ''
   repository: ''
-  dataset_url: ''
+  dataset_url: https://storage.googleapis.com/allennlp-data-bucket/nllb/eng_Latn-som_Latn.gz
   discovered_via: SomNLP-Corpus derived_from list
-notes: 'Mined (not human-verified) bitext; alignment quality varies; treat like synthetic data until a native-speaker
-  sample review. Not verified by Asal: huggingface.co was blocked by the session network policy on 2026-10-02.'
+  pinned_revision: gcs-generation-1659916954735522
+  access_date: '2026-10-02'
+notes: 'Mined, not human-verified, bitext. Columns: eng, som, LASER score, eng/som LID scores, source and URL per
+  side. The file is sorted by LASER score (descending); Asal inspected the first 8 MiB (51,806 pairs). That prefix
+  is dominated by religious text (Quran and Bible translations) and by pages on language subdomains of foreign sites
+  (e.g. so.<site>), which are suspected machine translations; see RESEARCH_LOG.md (v0.2). Per Goobo Labs it supplies
+  4.1M of the 8.0M SomNLP-Corpus documents (sentence-class, not LID-gated). Licence per Goobo: ODC-BY (secondary
+  source).'

@@ -1,0 +1,41 @@
+id: ASAL-DATA-20261002-nllb-head-pipeline-ca4c88
+kind: DATA
+description: Data pipeline on nllb-sample-v0.2 (validation only, not for training).
+created: '2026-10-02T15:36:58+00:00'
+status: failed
+config:
+  mode: validation
+  primary_lid: asal-heuristic
+  quality_thresholds: {}
+  near_dup_threshold: 0.8
+  boilerplate_min_docs: 3
+  boilerplate_min_fraction: 0.01
+  boilerplate_min_chars: 15
+  decontam_n:
+  - 13
+  - 8
+  manifest: nllb-sample-v0.2
+model: not_applicable
+track: not_applicable
+base_model: unknown
+parameters: unknown
+dataset: nllb-sample-v0.2
+dataset_fingerprint: unknown
+epochs: unknown
+tokenizer: unknown
+tokenizer_version: unknown
+context_length: unknown
+batch_size: unknown
+learning_rate: unknown
+optimizer: unknown
+scheduler: unknown
+precision: unknown
+steps: unknown
+seed: unknown
+hardware: unknown
+gpu_hours: unknown
+estimated_cost: unknown
+git_commit: f4016eb8f1f263bd6bef644d7fa4be75731f7721-dirty
+results: unknown
+failure: Script crashed after the pipeline finished, while writing the run record
+  (relative report path). Re-run as the next nllb-head-pipeline experiment.

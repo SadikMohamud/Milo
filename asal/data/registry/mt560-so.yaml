@@ -16,7 +16,11 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    pairs: 161865
+    goobo_final_documents: 49195
+    goobo_final_words: 1162745
   verified:
     documents: unknown
     words: unknown
@@ -32,12 +36,13 @@ provenance:
   domains:
   - mixed
 license:
-  corpus_license: unknown
-  license_basis: unknown
+  corpus_license: CC-BY-4.0
+  license_basis: secondary_source
   per_source_licenses: review_required
   commercial_use: review_required
   redistribution: review_required
   attribution_required: review_required
+  license_claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
 quality:
   provider_claims: {}
   verified_by_asal:
@@ -56,6 +61,6 @@ status:
 source:
   homepage: ''
   repository: ''
-  dataset_url: ''
+  dataset_url: https://huggingface.co/datasets/michsethowusu/english-somali_sentence-pairs_mt560
   discovered_via: SomNLP-Corpus derived_from list
 notes: Many-to-English aggregation; upstream composition and licences unknown to Asal.

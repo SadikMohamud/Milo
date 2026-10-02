@@ -22,9 +22,9 @@ from pathlib import Path
 from typing import Callable
 
 from . import PIPELINE_VERSION
-from . import dedup, normalize, pii, quality
+from . import dedup, flags, normalize, pii, quality
 from .decontam import EvalIndex, scan
-from .lid import SOMALI, AsalHeuristicLID
+from .lid import SOMALI, AsalHeuristicLID, segment_lid
 from .stats import corpus_stats
 from .textutil import content_hash
 
@@ -102,10 +102,14 @@ class Pipeline:
 
     def s_language_identification(self, recs):
         kept, rej = [], []
-        agree = Counter()
+        agree, switched = Counter(), 0
+        seg_backend = AsalHeuristicLID()
         for r in recs:
             preds = {b.name: b.predict(r["text"]) for b in self.lid_backends}
             ann = {name: {"label": p.label, "somali_score": p.somali_score} for name, p in preds.items()}
+            seg = segment_lid(r["text"], seg_backend)
+            ann["segments"] = seg
+            switched += seg["code_switched"]
             primary = preds[self.cfg.primary_lid]
             agree["all_agree" if len({p.label == SOMALI for p in preds.values()}) == 1 else "disagree"] += 1
             r = {**r, "language": SOMALI if primary.label == SOMALI else primary.label,
@@ -115,7 +119,8 @@ class Pipeline:
             else:
                 rej.append(_reject(r, "language_identification", LID_NOT_SOMALI, predicted=primary.label))
         stats = {"primary_backend": self.cfg.primary_lid, "backends": [b.name for b in self.lid_backends],
-                 "backend_agreement_on_is_somali": dict(agree)}
+                 "backend_agreement_on_is_somali": dict(agree),
+                 "code_switched_documents (segment-level, asal-heuristic)": switched}
         return StageResult("language_identification", kept, rej, stats)
 
     def s_quality_filter(self, recs):
@@ -179,16 +184,25 @@ class Pipeline:
         return StageResult("boilerplate_removal", kept, rej, stats, log)
 
     def s_machine_translation_flagging(self, recs):
-        out, counts = [], Counter()
+        out, counts, by_reason, hosts = [], Counter(), Counter(), Counter()
         for r in recs:
             prov = self.registry[r["source"]]["provenance"]
             mt = prov["machine_translated"]
+            basis = prov.get("machine_translated_basis", "unknown")
+            reason = flags.mt_suspect_from_url((r.get("meta") or {}).get("url"))
+            if reason and mt is not True:
+                mt, basis = flags.MT_SUSPECTED, f"heuristic:{reason}"
+                by_reason[reason] += 1
+                hosts[flags.url_host(r["meta"]["url"])] += 1
             counts[str(mt)] += 1
-            out.append({**r, "machine_translated": mt,
-                        "synthetic": True if mt is True else ("unknown" if mt in ("unknown", "partial", "review_required") else False),
-                        "ann": {**r["ann"], "mt_basis": prov.get("machine_translated_basis", "unknown")}})
-        return StageResult("machine_translation_flagging", out, [], {"machine_translated": dict(counts)},
-                           ["v0.1 sets the flag from the source's registry entry; no document-level MT detector yet."])
+            synthetic = True if mt is True else (False if mt is False else "unknown")
+            out.append({**r, "machine_translated": mt, "synthetic": synthetic,
+                        "ann": {**r["ann"], "mt_basis": basis}})
+        stats = {"machine_translated": dict(counts), "suspected_by_rule": dict(by_reason),
+                 "top_suspected_hosts": hosts.most_common(20)}
+        return StageResult("machine_translation_flagging", out, [], stats,
+                           ["Source-level flag from the registry, overridden to 'suspected' by the URL "
+                            "language-subdomain/path heuristic (asal.flags). Suspected records are kept, not removed."])
 
     def s_dialect_classification(self, recs):
         out = [{**r, "dialect": "unknown", "dialect_confidence": None} for r in recs]
@@ -200,11 +214,14 @@ class Pipeline:
         out, counts = [], Counter()
         for r in recs:
             domains = self.registry[r["source"]]["provenance"]["domains"]
-            dom = domains[0] if domains else "unknown"
+            dom, basis = (domains[0] if domains else "unknown"), "source_default"
+            if flags.is_religious(r["text"]):
+                dom, basis = "religion", "heuristic:religion-lexicon"
             counts[dom] += 1
-            out.append({**r, "domain": dom, "ann": {**r["ann"], "domain_basis": "source_default"}})
+            out.append({**r, "domain": dom, "ann": {**r["ann"], "domain_basis": basis}})
         return StageResult("domain_classification", out, [], {"domain": dict(counts)},
-                           ["v0.1 assigns the source's primary domain from the registry; no document classifier yet."])
+                           ["Source default domain from the registry, overridden to 'religion' by the "
+                            "religious-lexicon heuristic (asal.flags). No general document classifier yet."])
 
     def s_evaluation_decontamination(self, recs):
         summaries, clean = {}, recs

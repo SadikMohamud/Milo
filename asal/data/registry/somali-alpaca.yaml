@@ -13,7 +13,11 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    rows: 44839
+    goobo_final_documents: 37512
+    goobo_final_words: 5781223
   verified:
     documents: unknown
     words: unknown

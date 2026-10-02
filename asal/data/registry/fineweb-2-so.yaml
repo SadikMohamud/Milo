@@ -14,7 +14,11 @@ dialects:
   observed: unknown
   provider_claim: unknown
 size:
-  provider_reported: {}
+  provider_reported:
+    claim_source: goobolabs/somnlp-corpus@add401b docs/SOURCES.md (read 2026-10-02)
+    documents: 1070384
+    goobo_final_documents: 589824
+    goobo_final_words: 156995286
   verified:
     documents: unknown
     words: unknown
@@ -55,7 +59,7 @@ status:
 source:
   homepage: ''
   repository: ''
-  dataset_url: ''
+  dataset_url: https://huggingface.co/datasets/HuggingFaceFW/fineweb-2
   discovered_via: goobolabs/somnlp-corpus@add401b27137180d1eab8387f92f2b76e10c17e5 README (read 2026-10-02)
 notes: 'Upstream of SomNLP-Corpus (added 2026-09-24). Common Crawl derived; overlaps other web crawls. Not verified
   by Asal: huggingface.co was blocked by the session network policy on 2026-10-02.'
