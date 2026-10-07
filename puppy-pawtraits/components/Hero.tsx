@@ -5,7 +5,7 @@ import { Magnetic } from './mechanics/Magnetic';
 import { Marquee } from './mechanics/Marquee';
 import { Parallax } from './mechanics/Parallax';
 import { SplitText } from './mechanics/SplitText';
-import { Paw } from './Paw';
+import { Logo } from './Logo';
 import { Plate } from './Plate';
 
 const stack = [
@@ -65,7 +65,7 @@ export function Hero() {
         {services.map((s) => (
           <span key={s} className="band__item">
             {s}
-            <Paw className="band__paw" />
+            <Logo className="band__logo" />
           </span>
         ))}
       </Marquee>

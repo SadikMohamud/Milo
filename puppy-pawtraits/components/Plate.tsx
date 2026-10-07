@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import type { CSSProperties } from 'react';
 import type { Work } from '@/lib/catalogue';
-import { Paw } from './Paw';
+import { Logo } from './Logo';
 
 interface PlateProps {
   work: Work;
@@ -23,7 +23,7 @@ export function Plate({ work, sizes, priority, compact }: PlateProps) {
   const [ground, mark] = work.tones;
   return (
     <div className="plate plate--toned" style={{ '--ground': ground, '--mark': mark } as CSSProperties} role="img" aria-label={`${work.name}, ${work.breed}`}>
-      <Paw className="plate__paw" />
+      <Logo className="plate__logo" />
       {!compact && (
         <span className="plate__caption" aria-hidden="true">
           <span className="plate__name">{work.name}</span>

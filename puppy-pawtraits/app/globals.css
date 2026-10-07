@@ -661,10 +661,18 @@ button:hover > .roll::after {
   white-space: nowrap;
 }
 
-.band__paw {
-  width: 0.9em;
-  height: 0.9em;
+.band__logo {
+  width: 2.6em;
   color: var(--clay);
+}
+
+/* Full logo, tinted by currentColor. */
+.logo-mark {
+  display: block;
+  aspect-ratio: 1502 / 951;
+  background: currentColor;
+  -webkit-mask: url('/brand/logo-ink.png') center / contain no-repeat;
+  mask: url('/brand/logo-ink.png') center / contain no-repeat;
 }
 
 /* Plates: a photograph, or a toned card until one is set */
@@ -698,13 +706,13 @@ button:hover > .roll::after {
   pointer-events: none;
 }
 
-.plate__paw {
+.plate__logo {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 34%;
-  max-width: 220px;
-  translate: -50% -58%;
+  width: 62%;
+  max-width: 360px;
+  translate: -50% -60%;
   opacity: 0.9;
 }
 
