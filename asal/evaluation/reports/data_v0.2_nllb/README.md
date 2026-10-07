@@ -14,6 +14,9 @@ python scripts/evaluation/compare_lid.py
 | `pipeline_summary.json` | ASAL-DATA-20261002-nllb-head-pipeline-961d5c |
 | `lid_comparison.json`, `lid_comparison.md` | ASAL-LID-20261002-lid-comparison-349e98 |
 
+> **Superseded for estimates by [v0.3](../data_v0.3_nllb_random/README.md)** (uniform sample
+> of the whole file, CLD2 gate). This report stays as the record of the prefix run.
+
 ## What was sampled, and the bias
 NLLB's `eng_Latn-som_Latn.gz` (1.70 GB, about 10.2M pairs according to Goobo Labs) is
 one gzip stream sorted by LASER alignment score, highest first. Asal fetched the first 8 MiB,

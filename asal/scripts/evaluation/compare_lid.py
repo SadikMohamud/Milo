@@ -25,7 +25,7 @@ from asal import experiments, lid, paths, readers
 from asal.download import load_manifest
 from asal.textutil import words
 
-REPORT_DIR = paths.REPORTS / "data_v0.2_nllb"
+REPORT_DIR = paths.REPORTS / "data_v0.3_nllb_random"
 
 
 def build_items(split: str = "test"):

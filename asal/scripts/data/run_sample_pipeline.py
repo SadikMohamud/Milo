@@ -24,7 +24,8 @@ from asal.stats import by_key, corpus_stats
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", default=str(paths.MANIFESTS / "sample-v0.1.yaml"))
-    ap.add_argument("--primary-lid", default="asal-heuristic")
+    ap.add_argument("--primary-lid", default="auto",
+                    help="backend that gates LID; 'auto' = cld2 if installed, else asal-heuristic (RESEARCH_LOG 2026-10-07)")
     ap.add_argument("--no-lingua", action="store_true", help="skip the Lingua backend (saves ~1 GB RAM)")
     ap.add_argument("--report-dir", default=str(paths.REPORTS / "data_intelligence_v0.1"))
     ap.add_argument("--slug", default="sample-pipeline")
@@ -37,7 +38,20 @@ def main() -> int:
         print("registry has errors; run scripts/data/validate_registry.py", file=sys.stderr)
         return 1
 
-    config = PipelineConfig(mode="validation", primary_lid=args.primary_lid)
+    backends = [lid.AsalHeuristicLID()]
+    try:
+        backends.append(lid.Cld2LID())
+    except ImportError:
+        print("pycld2 not installed; cld2 backend unavailable")
+    if not args.no_lingua:
+        try:
+            backends.append(lid.LinguaLID())
+        except ImportError:
+            print("lingua not installed; skipping the Lingua backend")
+    primary = args.primary_lid
+    if primary == "auto":
+        primary = "cld2" if any(b.name == "cld2" for b in backends) else "asal-heuristic"
+    config = PipelineConfig(mode="validation", primary_lid=primary)
     exp_id, run_path = experiments.register(
         "DATA", args.slug, config=dict(vars(config), manifest=manifest["manifest_id"]),
         description=f"Data pipeline on {manifest['manifest_id']} (validation only, not for training).",
@@ -51,12 +65,6 @@ def main() -> int:
     manifests = {m["manifest_id"]: m for m in (load_manifest(p) for p in sorted(paths.MANIFESTS.glob("*.yaml")))}
     eval_items, pending = evalsets.load_items(manifests)
 
-    backends = [lid.AsalHeuristicLID()]
-    if not args.no_lingua:
-        try:
-            backends.append(lid.LinguaLID())
-        except ImportError:
-            print("lingua not installed; running with the Asal heuristic only")
 
     raw_stats = {"per_source": by_key(records, lambda r: r["source"]), "all": corpus_stats(records)}
     pipe = Pipeline(config, reg.entries, eval_items, backends, experiment_id=exp_id, manifest=manifest)

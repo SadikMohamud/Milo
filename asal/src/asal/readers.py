@@ -75,7 +75,38 @@ def read_nllb_gz_prefix(entry: dict, raw_dir: Path) -> list[dict]:
     return records
 
 
-READERS = {"tsv": read_tsv, "nllb_gz_prefix": read_nllb_gz_prefix}
+def _nllb_record(entry: dict, rid: str, cols: list[str]) -> dict | None:
+    if len(cols) < 5:
+        return None
+    row = dict(zip(NLLB_COLUMNS, cols))
+    url = row.get("som_url", "_")
+    return {
+        "id": f"{entry['source_id']}:{rid}",
+        "source": entry["source_id"],
+        "source_record_id": rid,
+        "split": entry["split"],
+        "text": row["som"].strip(),
+        "meta": {"laser_score": float(row["laser_score"]), "som_lid_score": float(row["som_lid_score"]),
+                 "som_source": row.get("som_source"), "url": None if url in ("_", "") else url},
+        "raw_file_sha256": entry.get("sha256"),
+    }
+
+
+def read_nllb_line_sample(entry: dict, raw_dir: Path) -> list[dict]:
+    """Read a hash_line_sample of NLLB: gzip TSV of ``<upstream line number>\t<NLLB line>``."""
+    import gzip
+
+    records = []
+    with gzip.open(raw_dir / entry["path"], "rt", encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            lineno, _, rest = line.rstrip("\n").partition("\t")
+            rec = _nllb_record(entry, f"line-{lineno}", rest.split("\t"))
+            if rec:
+                records.append(rec)
+    return records
+
+
+READERS = {"tsv": read_tsv, "nllb_gz_prefix": read_nllb_gz_prefix, "nllb_line_sample": read_nllb_line_sample}
 
 
 def read(entry: dict, raw_dir: Path) -> list[dict]:

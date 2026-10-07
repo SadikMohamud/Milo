@@ -154,6 +154,36 @@ class EnsembleLID:
                              backend=self.name)
 
 
+# --- CLD2 ---------------------------------------------------------------------
+
+class Cld2LID:
+    """Google CLD2 via pycld2 (offline). Has Somali, Oromo and Afar classes.
+
+    CLD2 returns "un" (unknown) for text it cannot decide; that maps to "und".
+    """
+
+    name = "cld2"
+    # CLD2 codes -> ISO 639-3 for the languages in Asal's LID evaluation.
+    CODE_MAP = {"so": SOMALI, "om": "gaz", "aa": "aar", "en": "eng", "sw": "swh", "ar": "arb", "am": "amh",
+                "ti": "tir", "ha": "hau", "yo": "yor", "af": "afr", "id": "ind", "un": UNDETERMINED}
+
+    def __init__(self):
+        import pycld2  # optional dependency
+
+        self._cld2 = pycld2
+
+    def predict(self, text: str) -> LIDPrediction:
+        clean = "".join(ch for ch in text if ch.isprintable() or ch in "\n\t")
+        try:
+            _reliable, _nbytes, details = self._cld2.detect(clean, bestEffort=True)
+        except self._cld2.error:
+            return LIDPrediction(label=UNDETERMINED, somali_score=0.0, backend=self.name)
+        code = details[0][1]
+        label = self.CODE_MAP.get(code, code)
+        som = sum(d[2] for d in details if d[1] == "so") / 100.0
+        return LIDPrediction(label=label, somali_score=round(som, 4), backend=self.name)
+
+
 # --- fastText-format models (lid.176, GlotLID) --------------------------------
 
 class FastTextLID:
@@ -222,10 +252,11 @@ def segment_lid(text: str, backend=None, min_words: int = 4) -> dict:
 def available_backends(fasttext_model: str | None = None, glotlid_model: str | None = None) -> list:
     """Instantiate every backend that can run in this environment."""
     backends: list = [AsalHeuristicLID()]
-    try:
-        backends.append(LinguaLID())
-    except ImportError:
-        pass
+    for cls in (LinguaLID, Cld2LID):
+        try:
+            backends.append(cls())
+        except ImportError:
+            pass
     for factory, path in ((fasttext_lid176, fasttext_model), (glotlid, glotlid_model)):
         if path:
             try:

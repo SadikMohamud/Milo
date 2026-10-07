@@ -1,0 +1,27 @@
+manifest_id: nllb-random-v0.3
+created: '2026-10-07'
+purpose: Representative sample of NLLB eng_Latn-som_Latn mined bitext. The whole object is streamed once (MD5-verified against
+  the pinned GCS object) and line i is kept iff blake2b("<seed>:<i>") < rate * 2^64, i.e. a uniform ~0.5% sample over all
+  LASER scores (unlike the score-sorted prefix in nllb-sample-v0.2). File-level statistics (line count, LASER score histogram)
+  are written next to the sample. Not approved for training.
+files:
+- source_id: nllb-en-so
+  split: random0p5
+  role: pipeline_validation_sample
+  url: https://storage.googleapis.com/allennlp-data-bucket/nllb/eng_Latn-som_Latn.gz
+  upstream_generation: '1659916954735522'
+  upstream_bytes: 1703902544
+  derive:
+    method: hash_line_sample
+    seed: 20261007
+    rate: 0.005
+    source_md5_base64: gS5eDvCrd26LRP7o8YsB7Q==
+    score_column: 2
+  path: nllb-en-so/1659916954735522/random-seed20261007-rate0.005.tsv.gz
+  format: nllb_line_sample
+  record_class: sentence
+  sha256: a73295819a9e55dd99468b900f44ba68f76838536445b07e44aaf81671d6ac90
+  bytes: 8842523
+  measured:
+    upstream_lines: 10229073
+    sampled_lines: 51277

@@ -6,10 +6,10 @@ Implementation: `src/asal/pipeline.py`. Run: `python scripts/data/run_sample_pip
 
 | # | Stage | v0.1 behaviour | Reason codes |
 |---|---|---|---|
-| 0 | download | `scripts/data/download_sample.py`: SHA-256-pinned manifest | `ChecksumMismatch` aborts |
+| 0 | download | `scripts/data/download_sample.py`: SHA-256-pinned manifest; byte-range prefixes; `derive: hash_line_sample` streams a whole object (MD5-verified) and keeps a seeded uniform line sample | `ChecksumMismatch`, `SourceChecksumMismatch` abort |
 | 1 | normalise | NFC; apostrophe variants → `'`; curly double quotes → `"`; zero-width/control removed; whitespace collapsed | n/a (change counts) |
 | 2 | format_validation | required fields, non-empty text, registered source | `format_missing_fields`, `format_empty_text`, `unregistered_source` |
-| 3 | language_identification | all backends predict; the primary backend gates; segment-level LID adds `segments` and a `code_switched` flag (annotation only) | `lid_not_somali` |
+| 3 | language_identification | all backends predict; the primary backend gates (default `cld2` since v0.3, else `asal-heuristic`); segment-level LID adds `segments` and a `code_switched` flag (annotation only) | `lid_not_somali` |
 | 4 | quality_filter | see table below | `too_short`, `too_long`, `html_markup`, `url_heavy`, `excessive_punctuation`, `mojibake`, `replacement_character`, `repeated_lines`, `low_information`, `low_alpha_ratio` |
 | 5 | pii_filter | redact e-mail and phone (`<EMAIL>`, `<PHONE>`) | n/a (redaction counts) |
 | 6 | exact_dedup | casefold + whitespace-collapsed SHA-256; first occurrence wins; `within_source` / `cross_source` | `exact_duplicate` |

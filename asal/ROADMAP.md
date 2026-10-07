@@ -26,7 +26,7 @@ agreement), AsalBench construction (with a private held-out portion), human eval
    SomNLP-Corpus, SomaliWeb, CC100, HPLT, MADLAD, Wikipedia.
 2. Verify licences at source for those entries; fill `license_basis: verified_in_source`.
 3. Register FLORES-200 devtest, Belebele, XL-Sum test, SomBench, SomaliBench as indexed eval sets.
-4. Run GlotLID and fastText lid.176 in the LID comparison (needs the model files); GlotLID
-   covers Oromo and Maay, the two gaps found in v0.1.
+4. Run GlotLID and fastText lid.176 in the LID comparison (needs the model files). CLD2 (v0.3)
+   closed the Oromo gap on labelled data; GlotLID is still the only candidate with a Maay class.
 5. Locate the Goobo 48K tokenizer and SomaliWeb 16K tokenizer; benchmark them.
 6. Recruit native-speaker reviewers; review rejected-record samples per stage.

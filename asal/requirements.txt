@@ -4,3 +4,5 @@ numpy>=1.24
 pytest>=7
 # Optional: second language-ID backend (offline, includes Somali)
 lingua-language-detector>=2.0
+# Optional: third LID backend (CLD2; has Somali, Oromo and Afar classes)
+pycld2>=0.41

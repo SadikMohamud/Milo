@@ -34,3 +34,5 @@ A superseded run is kept and gets a `superseded_reason`. Run records are never d
 | ASAL-DATA-20261002-nllb-head-pipeline-ca4c88 | failed (crash while writing its run record) |
 | ASAL-DATA-20261002-nllb-head-pipeline-961d5c | completed |
 | ASAL-LID-20261002-lid-comparison-349e98 | completed (adds the ensemble, tuned on dev) |
+| ASAL-LID-20261007-lid-comparison-eee8b8 | completed (adds CLD2) |
+| ASAL-DATA-20261007-nllb-random-pipeline-45ad3f | completed (uniform NLLB sample, CLD2 gate) |

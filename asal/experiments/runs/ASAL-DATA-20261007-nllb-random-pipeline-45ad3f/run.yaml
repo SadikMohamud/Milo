@@ -1,0 +1,43 @@
+id: ASAL-DATA-20261007-nllb-random-pipeline-45ad3f
+kind: DATA
+description: Data pipeline on nllb-random-v0.3 (validation only, not for training).
+created: '2026-10-07T12:19:14+00:00'
+status: completed
+config:
+  mode: validation
+  primary_lid: cld2
+  quality_thresholds: {}
+  near_dup_threshold: 0.8
+  boilerplate_min_docs: 3
+  boilerplate_min_fraction: 0.01
+  boilerplate_min_chars: 15
+  decontam_n:
+  - 13
+  - 8
+  manifest: nllb-random-v0.3
+model: not_applicable
+track: not_applicable
+base_model: unknown
+parameters: unknown
+dataset: nllb-random-v0.3
+dataset_fingerprint: 91bc4bd9911be328711d61c127cb4b73a023507cd39daa3310de0c696dad5986
+epochs: unknown
+tokenizer: unknown
+tokenizer_version: unknown
+context_length: unknown
+batch_size: unknown
+learning_rate: unknown
+optimizer: unknown
+scheduler: unknown
+precision: unknown
+steps: unknown
+seed: unknown
+hardware: unknown
+gpu_hours: unknown
+estimated_cost: unknown
+git_commit: 5fd22650415ef65fbd9685459c5fc9c987b6b823-dirty
+results:
+  input_records: 51277
+  final_records: 45659
+  report: evaluation/reports/data_v0.3_nllb_random/pipeline_summary.json
+  outputs: data/interim/ASAL-DATA-20261007-nllb-random-pipeline-45ad3f

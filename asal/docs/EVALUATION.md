@@ -37,3 +37,7 @@ partly contaminated.
 test, and a synthetic Somali-English mix. Thresholds (e.g. the ensemble's) are tuned on the dev
 splits only. Maay, natural code-switched text and short informal web sentences are still missing
 from the labelled data. The v0.2 NLLB run shows the last of these is where the tools disagree most.
+
+v0.3 (ASAL-LID-20261007-lid-comparison-eee8b8): CLD2 scores F1 1.000 on test and dev, with no
+Oromo false positives, and is now the default gate. Heuristic 0.972, Lingua 0.874 (Lingua labels
+67.6% of Oromo as Somali).

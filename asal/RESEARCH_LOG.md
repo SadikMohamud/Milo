@@ -5,6 +5,39 @@ still unknown. Experiment IDs refer to `experiments/runs/<id>/run.yaml`.
 
 ---
 
+## 2026-10-07: v0.3, CLD2, and a uniform NLLB sample
+
+### CLD2 as a third LID backend (ASAL-LID-20261007-lid-comparison-eee8b8)
+`pycld2` installs from PyPI and has Somali, Oromo and Afar classes. On test it scored
+P = R = F1 = 1.000 with 0/204 Oromo false positives. On dev, which Asal also checked before
+adopting it, it scored 1.000 too (the heuristic got 0.982).
+**Decision:** CLD2 becomes the primary LID gate for new runs (`--primary-lid auto`). Old runs
+keep their recorded gate. This is a backend choice informed by test *and* dev results; no
+threshold was tuned. The open risks are short informal web text and Maay, neither of which is
+labelled yet. The compare_lid run briefly overwrote the v0.2 report files; they were restored
+from git, and v0.3 results live in `evaluation/reports/data_v0.3_nllb_random/`.
+
+### Uniform sample of NLLB (ASAL-DATA-20261007-nllb-random-pipeline-45ad3f)
+New `asal.sampling.hash_line_sample`: it streams the whole object once, verifies its MD5
+against the pinned GCS object, keeps line i iff blake2b(seed:i) < rate, and writes a
+deterministic gzip (mtime 0). A re-derivation was byte-identical.
+- **Verified: NLLB eng-som has 10,229,073 pairs**, equal to Goobo's figure. This is the first
+  Asal-verified upstream size. LASER scores: 66% below 1.07, 0.9% at 1.12 or above (the v0.2
+  prefix was the top 0.5%).
+- Representative estimates are in the v0.3 report: suspected-MT URLs 14.7% of sentences
+  (46.5% of the URL-bearing ones), religious ≥2.9%, MasakhaNEWS leakage 0.08% (15 of 294
+  test articles hit at n=13 in a 0.5% sample).
+- Leaked benchmark sentences come from ParaCrawl monolingual, Common Crawl and the AfriBERTa
+  corpus.
+- Duplication cannot be estimated from a 0.5% line sample (pairs of copies are rarely both
+  sampled), so the 0.8% figure is not a duplication estimate.
+
+### Housekeeping
+Registry YAMLs are edited directly from now on. The one-off generator script used for v0.1/v0.2
+was a scratch file and has been retired.
+
+---
+
 ## 2026-10-02 (later): v0.2, real web-mined Somali, review tooling, MT/religion flags
 
 ### Access

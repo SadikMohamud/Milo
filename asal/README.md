@@ -7,7 +7,8 @@ goal is to build, understand, evaluate and progressively train a Somali-native A
 covering Standard Somali, Benaadir, Waqooyi/Northern Somali, Maay (as its own variety),
 Somali-English code-switching, speech, reasoning, translation, coding, retrieval and agents.
 
-> **Status: Phase 0, milestone ASAL DATA INTELLIGENCE v0.1, plus a v0.2 run on web-mined Somali (NLLB).** No model has been trained.
+> **Status: Phase 0, milestone ASAL DATA INTELLIGENCE v0.1, plus web-mined Somali runs on NLLB
+> (v0.2 biased prefix, v0.3 uniform sample of all 10.2M pairs).** No model has been trained.
 > No dataset is approved for training. Every number below was measured in this repository,
 > on a small validation sample, and is reproducible with the commands shown.
 
@@ -34,21 +35,23 @@ track wins on measured Somali performance is carried forward (docs/MODEL.md).
 | Suspected-MT (URL), religion (lexicon) and code-switch (segment LID) flags | `src/asal/flags.py`, `src/asal/lid.py` | Flags only; precision awaiting native review |
 | Native-speaker review sheets and error-rate summaries | `src/asal/review.py`, `scripts/data/draw_review_sample.py` | Sheets drawn; no reviewer yet |
 | Exact + MinHash near deduplication, within and across sources | `src/asal/dedup.py` | Tested |
-| Language ID with 2 working backends (+ fastText lid.176 / GlotLID adapters) | `src/asal/lid.py` | Compared on held-out data |
+| Language ID with 3 working backends: CLD2 (default gate), Lingua, Asal heuristic (+ fastText lid.176 / GlotLID adapters) | `src/asal/lid.py` | Compared on held-out dev and test data |
+| Single-pass, MD5-verified, seeded uniform sampling of large gzip files | `src/asal/sampling.py` | Used for NLLB (10,229,073 pairs verified) |
 | Evaluation-set registry and n-gram decontamination | `evaluation/decontamination/`, `src/asal/decontam.py` | Runs on the sample |
 | Tokenizer metric harness and candidate list | `src/asal/tokenizer_metrics.py`, `tokenizer/configs/candidates.yaml` | Harness tested; candidates not yet measured |
 | Asal-Adapted base-model candidates | `models/asal_adapted/candidates.yaml` | Listed, not measured |
 | Experiment ID system and training guard | `src/asal/experiments.py`, `training/scripts/train.py` | Training refuses to start without an approved TRAIN experiment |
 
 Results: [v0.1 sample](evaluation/reports/data_intelligence_v0.1/README.md) ·
-[v0.2 NLLB web-mined Somali](evaluation/reports/data_v0.2_nllb/README.md).
+[v0.2 NLLB prefix](evaluation/reports/data_v0.2_nllb/README.md) ·
+[v0.3 NLLB uniform sample + CLD2](evaluation/reports/data_v0.3_nllb_random/README.md).
 
 ## Quick start
 
 ```bash
 cd asal
-pip install -r requirements.txt          # PyYAML, jsonschema, numpy, pytest, lingua (optional)
-python -m pytest -q                       # 49 tests (add -m "not slow" to skip loading Lingua)
+pip install -r requirements.txt          # PyYAML, jsonschema, numpy, pytest; lingua + pycld2 (optional)
+python -m pytest -q                       # 52 tests (add -m "not slow" to skip loading Lingua)
 
 python scripts/data/validate_registry.py  # validate registry, regenerate CATALOGUE.md
 python scripts/data/download_sample.py    # fetch + verify the pinned sample (~6 MB)

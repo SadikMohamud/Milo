@@ -54,6 +54,8 @@ def fetch(entry: dict, raw_dir: Path = paths.RAW, timeout: int = 60) -> FetchRes
     expected = entry.get("sha256")
     if dest.exists() and expected and sha256_file(dest) == expected:
         return FetchResult(dest, expected, dest.stat().st_size, downloaded=False)
+    if entry.get("derive"):
+        return _derive(entry, dest)
 
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_suffix(dest.suffix + ".part")
@@ -75,6 +77,21 @@ def fetch(entry: dict, raw_dir: Path = paths.RAW, timeout: int = 60) -> FetchRes
         tmp.unlink()
         raise ChecksumMismatch(f"{entry['url']}: expected sha256 {expected}, got {digest}")
     tmp.replace(dest)
+    return FetchResult(dest, digest, dest.stat().st_size, downloaded=True)
+
+
+def _derive(entry: dict, dest: Path) -> FetchResult:
+    """Produce a file by a pinned, deterministic procedure over an upstream object."""
+    from .sampling import hash_line_sample
+
+    d = entry["derive"]
+    if d["method"] != "hash_line_sample":
+        raise ValueError(f"unknown derive method {d['method']}")
+    hash_line_sample(entry["url"], dest, seed=d["seed"], rate=d["rate"],
+                     expected_md5_b64=d.get("source_md5_base64"), score_column=d.get("score_column"))
+    digest = sha256_file(dest)
+    if entry.get("sha256") and digest != entry["sha256"]:
+        raise ChecksumMismatch(f"derived {dest.name}: expected sha256 {entry['sha256']}, got {digest}")
     return FetchResult(dest, digest, dest.stat().st_size, downloaded=True)
 
 

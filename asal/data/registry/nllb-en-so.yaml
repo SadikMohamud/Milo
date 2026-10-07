@@ -26,8 +26,9 @@ size:
     words: unknown
     tokens: unknown
     after_cross_source_dedup: unknown
-    measured_by: scripts/data/run_sample_pipeline.py (nllb-sample-v0.2 prefix only)
-    sample_pairs_read: 51806
+    measured_by: asal.sampling.hash_line_sample full-object stream, MD5-verified (nllb-random-v0.3), 2026-10-07
+    sample_pairs_read: 103083
+    pairs: 10229073
 provenance:
   aggregation: false
   derived_from:
@@ -70,8 +71,11 @@ source:
   pinned_revision: gcs-generation-1659916954735522
   access_date: '2026-10-02'
 notes: 'Mined, not human-verified, bitext. Columns: eng, som, LASER score, eng/som LID scores, source and URL per
-  side. The file is sorted by LASER score (descending); Asal inspected the first 8 MiB (51,806 pairs). That prefix
-  is dominated by religious text (Quran and Bible translations) and by pages on language subdomains of foreign sites
-  (e.g. so.<site>), which are suspected machine translations; see RESEARCH_LOG.md (v0.2). Per Goobo Labs it supplies
-  4.1M of the 8.0M SomNLP-Corpus documents (sentence-class, not LID-gated). Licence per Goobo: ODC-BY (secondary
-  source).'
+  side. The file is sorted by LASER score (descending); Asal streamed the whole object once (MD5 verified; 10,229,073
+  lines, matching Goobo''s figure) and drew a uniform 0.5% sample (51,277 pairs, nllb-random-v0.3), and separately
+  inspected the top-scored 8 MiB prefix (51,806 pairs, nllb-sample-v0.2). The prefix is dominated by religious text
+  (Quran and Bible translations) and by pages on language subdomains of foreign sites (e.g. so.<site>), which are
+  suspected machine translations; see RESEARCH_LOG.md (v0.2). Per Goobo Labs it supplies 4.1M of the 8.0M SomNLP-Corpus
+  documents (sentence-class, not LID-gated). Licence per Goobo: ODC-BY (secondary source). Random-sample estimates
+  (v0.3, CLD2 gate): 14.7% of kept sentences from suspected-MT URLs (46.5% of those that carry a URL); 2.9% religious
+  by lexicon; ~0.08% match MasakhaNEWS dev/test n-grams.'
