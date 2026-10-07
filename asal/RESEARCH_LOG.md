@@ -5,6 +5,26 @@ still unknown. Experiment IDs refer to `experiments/runs/<id>/run.yaml`.
 
 ---
 
+## 2026-10-07 (later): native-speaker review set up
+
+The project owner is a native Somali speaker and will do the review. They chose to keep
+Apache-2.0 for the code and the USD 0 compute limit as they are.
+- Review page: a private claude.ai artifact ("Asal Review", source in
+  `evaluation/human_eval/review-v0.3/asal-review.html`). It holds 140 sentences from
+  ASAL-DATA-20261007-nllb-random-pipeline-45ad3f: 60 language-ID items (stratified by
+  CLD2/heuristic agreement: 30 CLD2-only, 15 heuristic-only, 8 both, 7 neither), 50 MT items
+  (20 language-subdomain, 20 `/so/` path, 10 URL-bearing unflagged controls) and 30 religion
+  items (20 flagged, 10 unflagged). Strata and tool labels are hidden from the reviewer; the key
+  is in `evaluation/human_eval/review-v0.3/key.json`.
+- Answers save to the artifact's database. `scripts/evaluation/score_review.py` turns an export
+  into per-stratum rates (Wilson 95% CIs) and population-weighted precision / false-reject
+  estimates for each LID gate.
+- Chrome control and WebFetch are unavailable in this cloud session: WebFetch is blocked by the
+  same egress policy as curl. The blocked hosts still need to be allowed in the environment's
+  network settings.
+
+---
+
 ## 2026-10-07: v0.3, CLD2, and a uniform NLLB sample
 
 ### CLD2 as a third LID backend (ASAL-LID-20261007-lid-comparison-eee8b8)

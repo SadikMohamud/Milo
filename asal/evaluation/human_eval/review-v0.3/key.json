@@ -1,0 +1,847 @@
+{
+ "experiment_id": "ASAL-DATA-20261007-nllb-random-pipeline-45ad3f",
+ "seed": 20261007,
+ "note": "Answer key for the Asal Review page. Strata are hidden from the reviewer. Text is not stored here (redistribution unverified).",
+ "items": [
+  {
+   "item": "lid-001",
+   "set": "lid",
+   "stratum": "neither",
+   "record_id": "nllb-en-so:line-3535369"
+  },
+  {
+   "item": "lid-002",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-621855"
+  },
+  {
+   "item": "lid-003",
+   "set": "lid",
+   "stratum": "both",
+   "record_id": "nllb-en-so:line-399457"
+  },
+  {
+   "item": "lid-004",
+   "set": "lid",
+   "stratum": "both",
+   "record_id": "nllb-en-so:line-556202"
+  },
+  {
+   "item": "lid-005",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-10223272"
+  },
+  {
+   "item": "lid-006",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-9080045"
+  },
+  {
+   "item": "lid-007",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-9777254"
+  },
+  {
+   "item": "lid-008",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-6548467"
+  },
+  {
+   "item": "lid-009",
+   "set": "lid",
+   "stratum": "neither",
+   "record_id": "nllb-en-so:line-956755"
+  },
+  {
+   "item": "lid-010",
+   "set": "lid",
+   "stratum": "both",
+   "record_id": "nllb-en-so:line-10114939"
+  },
+  {
+   "item": "lid-011",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-2377345"
+  },
+  {
+   "item": "lid-012",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-4353407"
+  },
+  {
+   "item": "lid-013",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-5308059"
+  },
+  {
+   "item": "lid-014",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-3903325"
+  },
+  {
+   "item": "lid-015",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-8432909"
+  },
+  {
+   "item": "lid-016",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-38661"
+  },
+  {
+   "item": "lid-017",
+   "set": "lid",
+   "stratum": "both",
+   "record_id": "nllb-en-so:line-256296"
+  },
+  {
+   "item": "lid-018",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-6864823"
+  },
+  {
+   "item": "lid-019",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-10088366"
+  },
+  {
+   "item": "lid-020",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-2714312"
+  },
+  {
+   "item": "lid-021",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-9086123"
+  },
+  {
+   "item": "lid-022",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-3242715"
+  },
+  {
+   "item": "lid-023",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-677649"
+  },
+  {
+   "item": "lid-024",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-1146924"
+  },
+  {
+   "item": "lid-025",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-10170979"
+  },
+  {
+   "item": "lid-026",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-4880801"
+  },
+  {
+   "item": "lid-027",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-3120468"
+  },
+  {
+   "item": "lid-028",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-8569813"
+  },
+  {
+   "item": "lid-029",
+   "set": "lid",
+   "stratum": "both",
+   "record_id": "nllb-en-so:line-612509"
+  },
+  {
+   "item": "lid-030",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-7398633"
+  },
+  {
+   "item": "lid-031",
+   "set": "lid",
+   "stratum": "neither",
+   "record_id": "nllb-en-so:line-992552"
+  },
+  {
+   "item": "lid-032",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-1614146"
+  },
+  {
+   "item": "lid-033",
+   "set": "lid",
+   "stratum": "neither",
+   "record_id": "nllb-en-so:line-9228946"
+  },
+  {
+   "item": "lid-034",
+   "set": "lid",
+   "stratum": "neither",
+   "record_id": "nllb-en-so:line-903788"
+  },
+  {
+   "item": "lid-035",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-9420118"
+  },
+  {
+   "item": "lid-036",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-7685116"
+  },
+  {
+   "item": "lid-037",
+   "set": "lid",
+   "stratum": "both",
+   "record_id": "nllb-en-so:line-8072312"
+  },
+  {
+   "item": "lid-038",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-2804798"
+  },
+  {
+   "item": "lid-039",
+   "set": "lid",
+   "stratum": "both",
+   "record_id": "nllb-en-so:line-1800183"
+  },
+  {
+   "item": "lid-040",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-3557378"
+  },
+  {
+   "item": "lid-041",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-1521173"
+  },
+  {
+   "item": "lid-042",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-9522442"
+  },
+  {
+   "item": "lid-043",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-1725786"
+  },
+  {
+   "item": "lid-044",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-1026085"
+  },
+  {
+   "item": "lid-045",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-4041678"
+  },
+  {
+   "item": "lid-046",
+   "set": "lid",
+   "stratum": "both",
+   "record_id": "nllb-en-so:line-7162379"
+  },
+  {
+   "item": "lid-047",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-7597401"
+  },
+  {
+   "item": "lid-048",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-2832783"
+  },
+  {
+   "item": "lid-049",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-1856362"
+  },
+  {
+   "item": "lid-050",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-4837878"
+  },
+  {
+   "item": "lid-051",
+   "set": "lid",
+   "stratum": "heuristic_only",
+   "record_id": "nllb-en-so:line-603721"
+  },
+  {
+   "item": "lid-052",
+   "set": "lid",
+   "stratum": "neither",
+   "record_id": "nllb-en-so:line-6325805"
+  },
+  {
+   "item": "lid-053",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-9395614"
+  },
+  {
+   "item": "lid-054",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-93923"
+  },
+  {
+   "item": "lid-055",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-1491215"
+  },
+  {
+   "item": "lid-056",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-2520843"
+  },
+  {
+   "item": "lid-057",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-7718627"
+  },
+  {
+   "item": "lid-058",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-8253002"
+  },
+  {
+   "item": "lid-059",
+   "set": "lid",
+   "stratum": "neither",
+   "record_id": "nllb-en-so:line-5609546"
+  },
+  {
+   "item": "lid-060",
+   "set": "lid",
+   "stratum": "cld2_only",
+   "record_id": "nllb-en-so:line-1500879"
+  },
+  {
+   "item": "mt-001",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-6530233"
+  },
+  {
+   "item": "mt-002",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-3434439"
+  },
+  {
+   "item": "mt-003",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-1365509"
+  },
+  {
+   "item": "mt-004",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-8775578"
+  },
+  {
+   "item": "mt-005",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-3655748"
+  },
+  {
+   "item": "mt-006",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-5520414"
+  },
+  {
+   "item": "mt-007",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-3714499"
+  },
+  {
+   "item": "mt-008",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-5635421"
+  },
+  {
+   "item": "mt-009",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-5131203"
+  },
+  {
+   "item": "mt-010",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-586313"
+  },
+  {
+   "item": "mt-011",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-3744966"
+  },
+  {
+   "item": "mt-012",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-5286830"
+  },
+  {
+   "item": "mt-013",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-287863"
+  },
+  {
+   "item": "mt-014",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-377380"
+  },
+  {
+   "item": "mt-015",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-4832726"
+  },
+  {
+   "item": "mt-016",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-2735217"
+  },
+  {
+   "item": "mt-017",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-489668"
+  },
+  {
+   "item": "mt-018",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-8364"
+  },
+  {
+   "item": "mt-019",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-3613423"
+  },
+  {
+   "item": "mt-020",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-4835471"
+  },
+  {
+   "item": "mt-021",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-5495519"
+  },
+  {
+   "item": "mt-022",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-1082892"
+  },
+  {
+   "item": "mt-023",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-4900322"
+  },
+  {
+   "item": "mt-024",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-1967127"
+  },
+  {
+   "item": "mt-025",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-7886780"
+  },
+  {
+   "item": "mt-026",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-2255393"
+  },
+  {
+   "item": "mt-027",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-3738266"
+  },
+  {
+   "item": "mt-028",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-4585356"
+  },
+  {
+   "item": "mt-029",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-458326"
+  },
+  {
+   "item": "mt-030",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-940253"
+  },
+  {
+   "item": "mt-031",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-4740001"
+  },
+  {
+   "item": "mt-032",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-713149"
+  },
+  {
+   "item": "mt-033",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-5606296"
+  },
+  {
+   "item": "mt-034",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-4888968"
+  },
+  {
+   "item": "mt-035",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-3423709"
+  },
+  {
+   "item": "mt-036",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-5075718"
+  },
+  {
+   "item": "mt-037",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-6366987"
+  },
+  {
+   "item": "mt-038",
+   "set": "mt",
+   "stratum": "url_not_flagged",
+   "record_id": "nllb-en-so:line-1921336"
+  },
+  {
+   "item": "mt-039",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-6409962"
+  },
+  {
+   "item": "mt-040",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-4513650"
+  },
+  {
+   "item": "mt-041",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-1134202"
+  },
+  {
+   "item": "mt-042",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-4386215"
+  },
+  {
+   "item": "mt-043",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-2519359"
+  },
+  {
+   "item": "mt-044",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-3014727"
+  },
+  {
+   "item": "mt-045",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-3507423"
+  },
+  {
+   "item": "mt-046",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-5411455"
+  },
+  {
+   "item": "mt-047",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-6917071"
+  },
+  {
+   "item": "mt-048",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-1084187"
+  },
+  {
+   "item": "mt-049",
+   "set": "mt",
+   "stratum": "path",
+   "record_id": "nllb-en-so:line-1803047"
+  },
+  {
+   "item": "mt-050",
+   "set": "mt",
+   "stratum": "subdomain",
+   "record_id": "nllb-en-so:line-7641566"
+  },
+  {
+   "item": "religion-001",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-4181026"
+  },
+  {
+   "item": "religion-002",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-4164681"
+  },
+  {
+   "item": "religion-003",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-6832190"
+  },
+  {
+   "item": "religion-004",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-8483276"
+  },
+  {
+   "item": "religion-005",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-440991"
+  },
+  {
+   "item": "religion-006",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-1594346"
+  },
+  {
+   "item": "religion-007",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-21211"
+  },
+  {
+   "item": "religion-008",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-9208338"
+  },
+  {
+   "item": "religion-009",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-10018148"
+  },
+  {
+   "item": "religion-010",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-6857549"
+  },
+  {
+   "item": "religion-011",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-3256760"
+  },
+  {
+   "item": "religion-012",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-5201523"
+  },
+  {
+   "item": "religion-013",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-7112779"
+  },
+  {
+   "item": "religion-014",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-4812095"
+  },
+  {
+   "item": "religion-015",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-2605186"
+  },
+  {
+   "item": "religion-016",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-2629514"
+  },
+  {
+   "item": "religion-017",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-6199055"
+  },
+  {
+   "item": "religion-018",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-478490"
+  },
+  {
+   "item": "religion-019",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-914990"
+  },
+  {
+   "item": "religion-020",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-6819324"
+  },
+  {
+   "item": "religion-021",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-4417901"
+  },
+  {
+   "item": "religion-022",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-414197"
+  },
+  {
+   "item": "religion-023",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-3658529"
+  },
+  {
+   "item": "religion-024",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-4390677"
+  },
+  {
+   "item": "religion-025",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-1146816"
+  },
+  {
+   "item": "religion-026",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-195739"
+  },
+  {
+   "item": "religion-027",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-459668"
+  },
+  {
+   "item": "religion-028",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-9665579"
+  },
+  {
+   "item": "religion-029",
+   "set": "religion",
+   "stratum": "not_flagged",
+   "record_id": "nllb-en-so:line-2646322"
+  },
+  {
+   "item": "religion-030",
+   "set": "religion",
+   "stratum": "flagged",
+   "record_id": "nllb-en-so:line-1081458"
+  }
+ ]
+}

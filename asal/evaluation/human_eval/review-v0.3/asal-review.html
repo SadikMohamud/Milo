@@ -1,0 +1,284 @@
+<title>Asal Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Serif:wght@400;500&display=swap">
+<style>
+/* Layout: one review card centred in a narrow reading column; set tabs and progress above, answers below. */
+:root {
+  --bg: #f3f6f9;
+  --surface: #ffffff;
+  --ink: #15212c;
+  --muted: #5b6b7a;
+  --line: #d7e0e8;
+  --accent: #2b78c5;      /* Somali flag blue, deepened for contrast */
+  --accent-soft: #e3eef9;
+  --ok: #2f7d4f;
+  --ok-soft: #e2f2e8;
+  --warn: #9a6a12;
+  --font-ui: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-text: "Noto Serif", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f161d; --surface: #17212b; --ink: #e6edf3; --muted: #9aabbb; --line: #2a3846;
+    --accent: #6aacec; --accent-soft: #1c3147; --ok: #6cc28f; --ok-soft: #173326; --warn: #e0b45a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f161d; --surface: #17212b; --ink: #e6edf3; --muted: #9aabbb; --line: #2a3846;
+  --accent: #6aacec; --accent-soft: #1c3147; --ok: #6cc28f; --ok-soft: #173326; --warn: #e0b45a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 720px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 48px; display: grid; gap: 18px; }
+header { display: grid; gap: 6px; }
+h1 { font-size: 1.5rem; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0; font-size: .95rem; }
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tab { font: inherit; text-align: left; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  border-radius: 10px; padding: 10px 12px; cursor: pointer; display: grid; gap: 4px; min-width: 0; }
+.tab[aria-selected="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.tab b { font-size: .95rem; }
+.tab small { color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--ok); width: 0; transition: width .2s; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 16px; }
+.q { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+.q h2 { font-size: 1.1rem; margin: 0; }
+.q h2 span { display: block; color: var(--muted); font-weight: 400; font-size: .9rem; }
+.pos { color: var(--muted); font-variant-numeric: tabular-nums; font-size: .9rem; }
+.text { font-family: var(--font-text); font-size: 1.25rem; line-height: 1.6; margin: 0; padding: 16px; border-radius: 10px;
+  background: var(--accent-soft); overflow-wrap: anywhere; min-height: 4.5em; }
+.answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.ans { font: inherit; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px;
+  padding: 12px; text-align: left; cursor: pointer; display: grid; gap: 2px; }
+.ans:hover { border-color: var(--accent); }
+.ans[aria-pressed="true"] { background: var(--ok-soft); border-color: var(--ok); }
+.ans b { font-size: 1rem; }
+.ans small { color: var(--muted); }
+.ans kbd { font-family: var(--font-ui); font-size: .75rem; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; justify-self: start; }
+label { font-size: .9rem; color: var(--muted); display: grid; gap: 6px; }
+textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; min-height: 3.2em; resize: vertical; }
+.nav { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.btn { font: inherit; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 8px 14px; cursor: pointer; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.btn:disabled { opacity: .45; cursor: default; }
+.status { margin-left: auto; color: var(--muted); font-size: .9rem; }
+.status.err { color: var(--warn); }
+.note { color: var(--muted); font-size: .9rem; margin: 0; }
+.empty { text-align: center; color: var(--muted); padding: 32px 8px; }
+button:focus-visible, textarea:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Asal Review</h1>
+    <p class="sub">Dib-u-eegis: akhri jumlad kasta oo dooro jawaabta saxda ah. Read each sentence and pick the answer that fits. Every answer saves straight away.</p>
+  </header>
+
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+
+  <section class="card" id="card" aria-live="polite">
+    <div class="empty" id="empty">Loading the sentences to review…</div>
+    <div id="item" hidden>
+      <div class="q">
+        <h2 id="question"></h2>
+        <div class="pos" id="pos"></div>
+      </div>
+      <p class="text" id="text" lang="so"></p>
+      <div class="answers" id="answers"></div>
+      <label for="note">Faallo (ikhtiyaari) · Note, optional: dialect, region, why you chose this
+        <textarea id="note" placeholder="Tusaale: Maay, ama 'waa turjumaad mashiin'"></textarea>
+      </label>
+      <div class="nav">
+        <button class="btn" id="prev" type="button">← Hore</button>
+        <button class="btn" id="next" type="button">Xiga →</button>
+        <button class="btn primary" id="jump" type="button">Next unanswered</button>
+        <span class="status" id="status"></span>
+      </div>
+    </div>
+  </section>
+
+  <p class="note">Keys: 1–5 answer · ← → move. The sentences come from public web-mined data (NLLB). The tools' own labels are hidden so they don't sway you.</p>
+</div>
+
+<script>
+const SETS = {
+  lid: {
+    title: "Ma Soomaali baa?", en: "Is this Somali?", tab: "Luqadda · Language",
+    options: [
+      ["somali", "Soomaali", "Somali (any Maxaa variety)"],
+      ["maay", "Maay", "Maay variety"],
+      ["mixed", "Soomaali + luqad kale", "Somali mixed with another language"],
+      ["not_somali", "Maaha Soomaali", "Not Somali"],
+      ["unsure", "Lama hubo", "Unsure"],
+    ],
+  },
+  mt: {
+    title: "Qof baa qoray mise mashiin?", en: "Written by a person, or machine-translated?", tab: "Turjumaad · MT",
+    options: [
+      ["natural", "Qof baa qoray", "Natural Somali, written by a person"],
+      ["machine_translated", "Turjumaad mashiin", "Reads like machine translation"],
+      ["not_somali", "Maaha Soomaali", "Not Somali at all"],
+      ["unsure", "Lama hubo", "Unsure"],
+    ],
+  },
+  religion: {
+    title: "Ma qoraal diini ah baa?", en: "Is this religious text?", tab: "Diin · Religion",
+    options: [
+      ["religious", "Haa, waa diin", "Religious text (scripture, prayer, sermon…)"],
+      ["mentions", "Wuu xusayaa", "Mentions religion, but isn't religious text"],
+      ["not_religious", "Maya", "Not religious"],
+      ["unsure", "Lama hubo", "Unsure"],
+    ],
+  },
+};
+const ORDER = ["lid", "mt", "religion"];
+
+const state = { items: [], verdicts: {}, set: "lid", idx: 0, saving: false };
+let db = null;
+
+const $ = (id) => document.getElementById(id);
+function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+function recall(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+function itemsOf(set) { return state.items.filter((i) => i.set === set); }
+function current() { return itemsOf(state.set)[state.idx]; }
+
+function renderTabs() {
+  const tabs = $("tabs");
+  tabs.textContent = "";
+  for (const s of ORDER) {
+    const list = itemsOf(s);
+    const done = list.filter((i) => state.verdicts[i.id]).length;
+    const b = document.createElement("button");
+    b.className = "tab"; b.type = "button"; b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", String(s === state.set));
+    const t = document.createElement("b"); t.textContent = SETS[s].tab;
+    const c = document.createElement("small"); c.textContent = `${done} / ${list.length || "–"}`;
+    const bar = document.createElement("div"); bar.className = "bar";
+    const fill = document.createElement("i"); fill.style.width = list.length ? `${(100 * done) / list.length}%` : "0";
+    bar.append(fill); b.append(t, c, bar);
+    b.addEventListener("click", () => { state.set = s; state.idx = firstUnanswered(s); store("asal-set", s); render(); });
+    tabs.append(b);
+  }
+}
+
+function firstUnanswered(set) {
+  const list = itemsOf(set);
+  const i = list.findIndex((it) => !state.verdicts[it.id]);
+  return i === -1 ? 0 : i;
+}
+
+function render() {
+  renderTabs();
+  const list = itemsOf(state.set);
+  if (!list.length) { $("item").hidden = true; $("empty").hidden = false; return; }
+  $("empty").hidden = true; $("item").hidden = false;
+  state.idx = Math.max(0, Math.min(state.idx, list.length - 1));
+  const it = list[state.idx];
+  const cfg = SETS[it.set];
+  const v = state.verdicts[it.id];
+  const q = $("question"); q.textContent = cfg.title;
+  const en = document.createElement("span"); en.textContent = cfg.en; q.append(en);
+  $("pos").textContent = `${state.idx + 1} / ${list.length}`;
+  $("text").textContent = it.text;
+  const box = $("answers"); box.textContent = "";
+  cfg.options.forEach(([val, so, enLabel], k) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "ans"; b.setAttribute("aria-pressed", String(v?.answer === val));
+    const kb = document.createElement("kbd"); kb.textContent = String(k + 1);
+    const t = document.createElement("b"); t.textContent = so;
+    const s = document.createElement("small"); s.textContent = enLabel;
+    b.append(kb, t, s);
+    b.addEventListener("click", () => answer(val));
+    box.append(b);
+  });
+  const note = $("note");
+  if (document.activeElement !== note) note.value = v?.note || "";
+  $("prev").disabled = state.idx === 0;
+  $("next").disabled = state.idx >= list.length - 1;
+  const remaining = state.items.filter((i) => !state.verdicts[i.id]).length;
+  $("jump").disabled = remaining === 0;
+  $("jump").textContent = remaining === 0 ? "All done · Dhammaad" : `Next unanswered (${remaining} left)`;
+}
+
+function setStatus(msg, err) { const s = $("status"); s.textContent = msg; s.className = "status" + (err ? " err" : ""); }
+
+async function save(it, body) {
+  if (!db) { setStatus("Saving is unavailable here. Open this page in claude.ai while signed in.", true); return false; }
+  state.saving = true; setStatus("Saving…");
+  try {
+    await db.collection("verdicts").doc(it.id).set(body);
+    setStatus("Saved");
+    return true;
+  } catch (e) {
+    setStatus(e && e.code === "quota_exceeded" ? "Storage is full. Tell Claude." : "Not saved. Check your connection and tap the answer again.", true);
+    return false;
+  } finally { state.saving = false; }
+}
+
+async function answer(val) {
+  const it = current(); if (!it || state.saving) return;
+  const body = { answer: val, note: $("note").value.trim(), set: it.set, at: new Date().toISOString() };
+  state.verdicts[it.id] = body; render();
+  if (await save(it, body)) {
+    const list = itemsOf(state.set);
+    const next = list.findIndex((x, i) => i > state.idx && !state.verdicts[x.id]);
+    if (next !== -1) { state.idx = next; $("note").value = ""; render(); }
+  }
+}
+
+$("note").addEventListener("blur", async () => {
+  const it = current(); const v = it && state.verdicts[it.id];
+  const note = $("note").value.trim();
+  if (!v || v.note === note || state.saving) return;
+  const body = { ...v, note, at: new Date().toISOString() };
+  state.verdicts[it.id] = body;
+  await save(it, body);
+});
+$("prev").addEventListener("click", () => { state.idx--; $("note").value = ""; render(); });
+$("next").addEventListener("click", () => { state.idx++; $("note").value = ""; render(); });
+$("jump").addEventListener("click", () => {
+  for (const s of [state.set, ...ORDER.filter((x) => x !== state.set)]) {
+    const i = itemsOf(s).findIndex((it) => !state.verdicts[it.id]);
+    if (i !== -1) { state.set = s; state.idx = i; $("note").value = ""; render(); return; }
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "TEXTAREA" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const it = current(); if (!it) return;
+  const n = Number(e.key);
+  if (n >= 1 && n <= SETS[it.set].options.length) { answer(SETS[it.set].options[n - 1][0]); e.preventDefault(); }
+  else if (e.key === "ArrowLeft" && state.idx > 0) { state.idx--; render(); }
+  else if (e.key === "ArrowRight" && state.idx < itemsOf(state.set).length - 1) { state.idx++; render(); }
+});
+
+const savedSet = recall("asal-set");
+if (savedSet && SETS[savedSet]) state.set = savedSet;
+render();
+
+(async () => {
+  db = await claude.use("db");
+  if (!db) { $("empty").textContent = "This view can't load the review data. Open the page in claude.ai while signed in."; return; }
+  try {
+    const snap = await db.collection("items").limit(1000).get();
+    state.items = snap.docs.map((d) => d.data()).filter(Boolean)
+      .sort((a, b) => ORDER.indexOf(a.set) - ORDER.indexOf(b.set) || a.n - b.n);
+    if (!state.items.length) { $("empty").textContent = "No sentences yet. Claude adds them after publishing."; }
+  } catch (e) {
+    $("empty").textContent = "Couldn't load the sentences. Reload the page to try again.";
+    return;
+  }
+  db.collection("verdicts").limit(1000).onSnapshot((snap) => {
+    const v = {};
+    for (const d of snap.docs) v[d.id] = d.data();
+    state.verdicts = v;
+    if (!state.started) { state.started = true; state.idx = firstUnanswered(state.set); }
+    render();
+  }, () => setStatus("Live updates stopped. Reload the page.", true));
+  render();
+})();
+</script>
